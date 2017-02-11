@@ -52,8 +52,8 @@
 <meta property="og:description" content="刷完了jvm虚拟机,再研究点算法     关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题      假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?      最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现    //因为的对java熟悉，就用ja">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/10.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/11.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/12.png">
-<meta property="og:updated_time" content="2017-02-11T01:38:24.991Z">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/12.bmp">
+<meta property="og:updated_time" content="2017-02-11T02:03:07.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论kmp算法">
 <meta name="twitter:description" content="刷完了jvm虚拟机,再研究点算法     关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题      假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?      最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现    //因为的对java熟悉，就用ja">
@@ -118,7 +118,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             <i class="menu-item-icon icon-next-home"></i> <br />
-            Startseite
+            Home
           </a>
         </li>
       
@@ -126,7 +126,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             <i class="menu-item-icon icon-next-archives"></i> <br />
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -134,7 +134,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             <i class="menu-item-icon icon-next-about"></i> <br />
-            Über
+            About
           </a>
         </li>
       
@@ -309,7 +309,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          Posted on
           <time itemprop="dateCreated" datetime="2017-02-10T19:11:58+08:00" content="2017-02-10">
             2017-02-10
           </time>
@@ -330,13 +330,12 @@
 
       
         <span itemprop="articleBody"><p>刷完了jvm虚拟机,再研究点算法<br>     关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题<br>      假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?<br>      最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现<br>    //因为的对java熟悉，就用java实现吧,语言不分家嘛,意思都一样<br>public int bf(String str1,String str2){<br>   char[] ch1=str1.toCharArray();<br>   char[] ch2=str2.toCharArray();  //将字符串转换成字符数组<br>   int i=0;<br>   int j=0;<br>    while(i&lt;ch1.length&amp;&amp;j&lt;ch2.lenth)<br>  {<br>     if(ch1[i]==ch2[j])<br>       {  //说明当前字符匹配成功 i  j指标都向后移动，比较后面的<br>           i++；<br>       j++;</p>
-<pre><code>}else{
-</code></pre><p>  //匹配失败  则主串移动到最开始的位置+1  副串从头开始<br>   i=i-j+1;<br>   j=0<br>     }<br>  }<br>   if(j==ch2.length)<br>    {<br>        return i-j;<br>    }else{<br>        return -1;  //-1表示没有匹配成功</p>
+<p>   }else{<br>  //匹配失败  则主串移动到最开始的位置+1  副串从头开始<br>   i=i-j+1;<br>   j=0<br>     }<br>  }<br>   if(j==ch2.length)<br>    {<br>        return i-j;<br>    }else{<br>        return -1;  //-1表示没有匹配成功</p>
 <pre><code>    }
 }
 </code></pre><p>上述代码示例 如A B C D E F        C D E F<br>  开始比较  A  B  C D E F<br>            C  D  E F         当A!=C  所以     A B C D E F    B!=C  A B C D E F<br>                                         C D E F                C D E F 成功  则返回C在主串中的数组下标<br>   但是这种方法明显的缺陷是每次副串都会回溯到开始，主串也会回溯回去。也就会造成性能瓶颈。所以我们的前辈肯定不干这种出力不讨好的事情了<br>   D.E.Knuth、J.H.Morris和V.R.Pratt这三位大牛同时发现了一种新的算法,可以很大程度上提高效率,上述代码的时间复杂度n(m*n),而我们今天要介<br>   绍的KMP算法可以实现复杂度n(m+n)—-不得不佩服这些大牛<br>    KMP的核心思想就是利用已经部分匹配过的字符 这个有效的信息，保存i指针不回溯,通过修改j指针，让副串劲量移动到有效的位置，而不是一<br>    个一个的移动,效率太低,所以使用kmp算法的话，每当遇到不匹配的时候，j指针如何移动呢，这就是next[]数组的职责，下面将next职责。</p>
 <p>例如:如图进行匹配：(偷的图，见谅)<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/10.png" alt=""><br> 其中C D发生不匹配了,如何移动j指针呢?那肯定是移动到第2位呀，当我们把j移动到B字符上，然后把i  j对其，<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/11.png" alt=""></p>
-<p> 那我们如何寻找移动j的规律呢<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/12.png" alt=""><br> 有没有发现,当匹配失败后,j要移动的的下一个位置k有一个小规律就是副串中前k指针前的字符和j指针前k个字符相同,如上图中的<br> k指针是B 他前面的字符是A   J指针D的前1个字符是A  相同，大家可以找找其他的字符进行测试都是如此！<br> 个人理解就是 当我们进行匹配时候，如果遇到不匹配了,但是在我们已经匹配过的中都是可以匹配的，如上图中的A B A 都是匹配成<br>功的,当我们到D的时候不匹配了,那么他前面的A是已经匹配到了，我们如何做呢，找在这个串中是否有和A相同的字符串,然后已2个<br>相同的A 为分区，找他们的中间那个作为k,K前面的A已经被D前面的那个A匹配成功，我们可以用K指针前面那个A替代D后面的A，这样<br>我们只要比较当前K指针的字符和i指针的字符，前面肯定是匹配的，因为我们完全利用了已经匹配过的这个有效信息，寻找替代来缩短<br>比较过程!!!所以kmp的思想真的很好，利用已经匹配过的这个信息，减少我们后续的比较。</p>
+<p> 那我们如何寻找移动j的规律呢<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/12.bmp" alt=""><br> 有没有发现,当匹配失败后,j要移动的的下一个位置k有一个小规律就是副串中前k指针前的字符和j指针前k个字符相同,如上图中的<br> k指针是B 他前面的字符是A   J指针D的前1个字符是A  相同，大家可以找找其他的字符进行测试都是如此！<br> 个人理解就是 当我们进行匹配时候，如果遇到不匹配了,但是在我们已经匹配过的中都是可以匹配的，如上图中的A B A 都是匹配成<br>功的,当我们到D的时候不匹配了,那么他前面的A是已经匹配到了，我们如何做呢，找在这个串中是否有和A相同的字符串,然后已2个<br>相同的A 为分区，找他们的中间那个作为k,K前面的A已经被D前面的那个A匹配成功，我们可以用K指针前面那个A替代D后面的A，这样<br>我们只要比较当前K指针的字符和i指针的字符，前面肯定是匹配的，因为我们完全利用了已经匹配过的这个有效信息，寻找替代来缩短<br>比较过程!!!所以kmp的思想真的很好，利用已经匹配过的这个信息，减少我们后续的比较。</p>
 <p>以上纯属个人简介,既然我们知道了k这个坐标的重要性,如何求呢?<br>     其实上面说的next[]数组就是用来保存k这个值的 next[j]=k;  直到这里才明白了  栾一峰  大神的文章中的前缀和后缀计算原理,<br>     说白了我们前面的那个k就是 以k为分界点,找一个对称点，而前缀就是对称点的左半边，同理后面就是右半边, 有兴趣的可以百度下<br>   栾一峰 kmp算法<br>    现在贴出next的代码<br>    public static int[] getNext(String ps) {<br>     char[] p = ps.toCharArray();<br>           int[] next = new int[p.length];<br>           next[0] = -1;  //第一个字符肯定不能向后移动了，所以用-1初始化<br>           int j = 0;<br>           int k = -1;<br>           while (j &lt; p.length - 1) {<br>              if (k == -1 || p[j] == p[k]) {<br>          if (p[++j] == p[++k]) { // 当两个字符相等时要跳过<br>              next[j] = next[k];<br>           } else {<br>              next[j] = k;<br>               }<br>                     } else {<br>           k = next[k];<br>           }<br>        }<br>            return next;<br>    }</p>
 <pre><code>KMP算法
 </code></pre><p>public static int[] getNext(String ps) {<br>    char[] p = ps.toCharArray();<br>    int[] next = new int[p.length];<br>    next[0] = -1;<br>    int j = 0;<br>    int k = -1;<br>    while (j &lt; p.length - 1) {<br>       if (k == -1 || p[j] == p[k]) {<br>           next[++j] = ++k;<br>       } else {<br>           k = next[k];<br>       }<br>    }<br>    return next;<br>}<br>    眼熟不,其实kmp算法的核心是求那个next[]数组,而kmp只是在传统算法中修改了几行.</p>
@@ -419,10 +418,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -437,21 +436,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">Kategorien</span>
+              <span class="site-state-item-name">categories</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
               <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">Tags</span>
+              <span class="site-state-item-name">tags</span>
               
           </div>
 
@@ -485,7 +484,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
