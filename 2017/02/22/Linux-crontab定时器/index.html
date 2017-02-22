@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="linux," />
 
 
 
@@ -42,25 +42,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="description" content="继上次博客后，完成了vpn的拨号，但是如何想要实现动态监测vpn的在线人数呢？动机何在呢？那是因为一台linux服务器负载7-8个VPN人数，就会出现不稳定现象，这也就出现了我们如何实现负载均衡到几台服务器上，我们只需要使用HTTP接口，把负载不多的服务器优先转发给用户即可，那么现在的问题就集中在我们如何统计Linux的在线VPN人数，通过命令查询得知使用
+last | grep still |">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(1)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/22/java虚拟机总结(1)/index.html">
+<meta property="og:title" content="Linux crontab定时器和一次小负载均衡实践">
+<meta property="og:url" content="https://vincelz.github.io/2017/02/22/Linux-crontab定时器/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
-<meta property="og:updated_time" content="2017-01-24T06:35:42.682Z">
+<meta property="og:description" content="继上次博客后，完成了vpn的拨号，但是如何想要实现动态监测vpn的在线人数呢？动机何在呢？那是因为一台linux服务器负载7-8个VPN人数，就会出现不稳定现象，这也就出现了我们如何实现负载均衡到几台服务器上，我们只需要使用HTTP接口，把负载不多的服务器优先转发给用户即可，那么现在的问题就集中在我们如何统计Linux的在线VPN人数，通过命令查询得知使用
+last | grep still |">
+<meta property="og:updated_time" content="2017-02-22T13:40:52.343Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(1)">
-<meta name="twitter:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="twitter:title" content="Linux crontab定时器和一次小负载均衡实践">
+<meta name="twitter:description" content="继上次博客后，完成了vpn的拨号，但是如何想要实现动态监测vpn的在线人数呢？动机何在呢？那是因为一台linux服务器负载7-8个VPN人数，就会出现不稳定现象，这也就出现了我们如何实现负载均衡到几台服务器上，我们只需要使用HTTP接口，把负载不多的服务器优先转发给用户即可，那么现在的问题就集中在我们如何统计Linux的在线VPN人数，通过命令查询得知使用
+last | grep still |">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +64,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(1) | 1000 words a Day </title>
+  <title> Linux crontab定时器和一次小负载均衡实践 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +298,7 @@
           
           
             
-              java虚拟机总结(1)
+              Linux crontab定时器和一次小负载均衡实践
             
           
         </h1>
@@ -313,8 +307,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-01-22T10:49:52+08:00" content="2017-01-22">
-            2017-01-22
+          <time itemprop="dateCreated" datetime="2017-02-22T19:56:17+08:00" content="2017-02-22">
+            2017-02-22
           </time>
         </span>
 
@@ -332,12 +326,46 @@
       
 
       
-        <span itemprop="articleBody"><p>回到了家，终于有时间可以更新下自己的博客了,长话短说</p>
-<hr>
-<p>抽时间读完了&lt;深入理解java虚拟机&gt;,收获颇丰总结如下：</p>
-<p>1.jvm中共享的数据区为:方法区  堆(heap)<br>  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等<br>      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，<br>      主要垃圾回收机制可以向管理java堆一样管理这部分内存，能够省去专门为方法区编写内存管理<br>      运行时常量池：是方法区的一部分，Class文件除了有类的版本 字段 方法 接口等描述信息外<br>      还有一项信息是常量池<br>  1.2 堆  是jvm中内存最大的一块，是所有的线程共享的存放对象实例（数组）也是垃圾回收的主<br>      要地方，细分为新生代，老年代<br>2.jvm线程中独有的数据区: 虚拟机栈 本地方法区  程序计数器<br>  2.1 栈 线程私有的， 他的生命周期和线程一致 ，每个方法在执行的同时都会创建一个栈帧用于<br>      存储局部变量,操作数栈,动态链接，方法出口，存放着编译期的各种基本数据类型<br>      boolean byte char short int float long double 对象引用reference类型<br>      对于栈，一般饱满后就会报stackOverflowError错误, 但是如果虚拟机容许自由扩展，那么可能报<br>      OutOfMemoryError错误<br>  2.2 本地方法区 同栈他是为java方法服务的，而本地方法区是为使用Native方法服务的<br>  2.3 程序计数器 一块较小的内存空间,他可以看作是执行的字节码的行号指示器各线程之间的计数器互不影响独立存储</p>
-<p>虚拟机生成对象的过程<br>    检测指令的参数是否在常量池中定位到–&gt;类是否被加载 解析 初始化 ——&gt;若没有则执行相应的类加载过程<br>    –&gt;检测通过后将为新生对象分配内存<br>分配内存由2种方法：<br>    指针碰撞：用过的内存放一边,没有使用的放在另外一边,中间放着一个指针作为分界点的指示器, Serial  parNew回收垃圾<br>    空闲表法:内存不是规整的,那么就需要维护一张表,记录哪些内存可以用,哪些不可以用  CMS垃圾回收<br>对象的内存分布：<br>    对象在内存区域中布局分为 对象头 实例数据  对齐填充<br>    对象头分为2部分：第一部分存储对象自身的运行数据 哈希吗 GC分带年龄 锁状态标识 线程持有的锁  偏向线程id<br>    另外一部分是:类型指针 对象指向的类元数据的指针，虚拟机通过这个对象确定对象是哪个类的实例，<br>    实例数据：部分是对象真正存储的有效信息，<br>    对齐填充：无特别意义，占位符的作用<br>虚拟机如何访问引用的对象呢？<br>    对象访问定位有2种方法:句柄  直接指针<br>    使用句柄访问，那么java堆中划分一块内存来作为句柄池，reference中存储的是对象的句柄地址<br>而句柄中包含了对象实例数据与类型数据各自的具体地址信息<br>    直接指针访问： reference中存储的是对象地址<br>    PS： String.intern()是一个本地方法，作用是 如果字符串常量池中已经包含了一个等于此字符串的，则返回池中的对象<br>    否则将String对象添加到常量池中，并且返回引用</p>
-<p>刚开始更新博客,哪里写的不好,请多见谅!!!!  续更</p>
+        <span itemprop="articleBody"><p>继上次博客后，完成了vpn的拨号，但是如何想要实现动态监测vpn的在线人数呢？动机何在呢？那是因为一台<br>linux服务器负载7-8个VPN人数，就会出现不稳定现象，这也就出现了我们如何实现负载均衡到几台服务器上，我们只需要使用HTTP接口，把负载不多的服务器优先转发给用户即可，那么现在的问题就集中在我们如何统计Linux的在线VPN人数，通过命令查询得知使用</p>
+<pre><code>last | grep still | grep ppp   即可统计出vpn的在线人数
+</code></pre><p>那么问题又来了，我们的中心服务器是一个web项目,如何才能拿到这些数据呢？最终我们可以让linux VPN服务器每到一定的时间就发送一个请求给中心服务器，告诉中心服务器我的IP是多少，我现在负载多少个用户,中心服务器拿到数据后，保存到数据库中，</p>
+<pre><code>Linux VPN 需要的实现
+ 写一个脚本，使用crontab定时任务执行脚本，告诉中心服务器自己的数据
+ 脚本如下：
+ #!/bin/bash
+ count=$(last | grep still | grep ppp | wc -l);
+ wget(http://xxxxxxxxxxxxxx/vpn.action?count=${count},ip=${ip}
+
+ 我们可以使用wget去模拟一个get请求，而不需要crul命令，方便很多。之后就是crontab 定时任务了
+    基本格式 :
+        *　　*　　*　　*　　*　　command
+        分   时   天  月   年  
+        第1列表示分钟1～59 每分钟用*或者 */1表示
+        第2列表示小时1～23（0表示0点）
+        第3列表示日期1～31
+        第4列表示月份1～12
+        第5列标识号星期0～6（0表示星期天）
+        第6列要运行的命令
+
+     * 表示任意值, */1  * * * *  表示每1分钟去执行，ps 之前遇到一个坑
+     * */1 * * *  一种认为这个指令是每1小时去执行，但是最终结果是错误的，我们需要修改为
+     0 */1 * * *  才可以实现每1个小时才去执行的命令
+     并且每一个* 可以有多个值 如：10,20,30,40,50 * * * * 这行指令表示每小时的10 20 30 40 50去执行
+
+
+    还有特殊的几个指令需要记忆
+        crontab -e  编辑定时任务
+        crontab -l 显示任务
+        crontab  -r 删除全部定时任务
+</code></pre><p>完成了VPN服务器，接下来我们需要对web中心服务器进行负载均衡，如何实现呢？</p>
+<pre><code>既然我们拿到了每个VPN服务器在线人数，我们就可以根据人数的多少来判断优先服务器，到此大事告成，但是
+运行一段时间后，发现还是不稳定，出现一个新的问题,假如其中一台VPN服务器挂了，但是负载还会优先选择这个已经挂了的服务器，如何处理呢？
+
+2种方案：
+    1 ping  我们可以利用cmd  ping的能对选中的服务器进行网络评测,但是有个坑,ping 的次数是4次，有时候回一直无响应，导致这个线程一直
+    停留在这里，造成web服务的响应失败，所以我们需要对ping进行限制,只ping 一次，后取出响应文本，判断文本来判断失败与否
+    2 在上述中对vpn服务器在线人数的统计，同时把时间记录到数据库中，每次把VPN服务器集合List 遍历，通过一定时间范围内进行过滤，最终即可实现
+</code></pre><p>这就是我架设几台VPN服务器，进行负载均衡的实现，当然 实际运行起来还是有很多问题，但不管如何也是自己对负载均衡的一种实现，希望以后能接触像阿里，京东等电商的负载均衡的实现………</p>
 </span>
       
     </div>
@@ -346,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/linux/" rel="tag">#linux</a>
           
         </div>
       
@@ -355,11 +383,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="prev">java虚拟机总结(2)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/JNA-java调用本地接口/" rel="next">JNA java调用本地接口</a>
             
           </div>
         </div>
