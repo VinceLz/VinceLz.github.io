@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java新特性," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -42,19 +42,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
+<meta name="description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
+Java JNA?
+什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
+立在JNI基础上的一个框架,它极大的简化了JNI方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="总结java8 新特性">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/27/总结java8-新特征/index.html">
+<meta property="og:title" content="JNA java调用本地接口">
+<meta property="og:url" content="https://vincelz.github.io/2017/02/22/JNA-java调用本地接口/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
-<meta property="og:updated_time" content="2017-01-27T13:28:39.694Z">
+<meta property="og:description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
+Java JNA?
+什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
+立在JNI基础上的一个框架,它极大的简化了JNI方法">
+<meta property="og:updated_time" content="2017-02-22T11:44:07.054Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="总结java8 新特性">
-<meta name="twitter:description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
+<meta name="twitter:title" content="JNA java调用本地接口">
+<meta name="twitter:description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
+Java JNA?
+什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
+立在JNI基础上的一个框架,它极大的简化了JNI方法">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -64,7 +70,7 @@
   };
 </script>
 
-  <title> 总结java8 新特性 | 1000 words a Day </title>
+  <title> JNA java调用本地接口 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -298,7 +304,7 @@
           
           
             
-              总结java8 新特性
+              JNA java调用本地接口
             
           
         </h1>
@@ -307,8 +313,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-01-27T19:55:52+08:00" content="2017-01-27">
-            2017-01-27
+          <time itemprop="dateCreated" datetime="2017-02-22T16:55:13+08:00" content="2017-02-22">
+            2017-02-22
           </time>
         </span>
 
@@ -326,173 +332,49 @@
       
 
       
-        <span itemprop="articleBody"><p>Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。</p>
-<p>1.Lambda表达式和函数式接口<br>        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数<br>        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开发者,对于java8以前，我们只<br>        能匿名函数来实现这一功能，Lambda现在帮我们轻松实现这一个功能。<br>        demo:<br>         Arrays.asList(“a”,”b”,”c”,”d”).forEach(e -&gt; System.out.print(e));<br>        另外一种写法<br>         Arrays.asList(“a”,”b”,”c”,”d”).forEach((String e) -&gt; System.out.print(e)); </p>
-<pre><code>输出结果:   abcd 
-如果我们不声明参数的类型，那么编译器会自动推测出来的
-有时候我们需要在方法里写入复杂的逻辑时可以使用
-Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;).forEach((String e) -&gt; {
-   System.out.print(e)
-   System.out.print(e)
-});   后面使用一个大的{}包起来，写入其他逻辑代码
-Lambda可以引用类的成员变量与局部变量（如果这些变量不是final的话，它们会被隐含的转为final
-这样效率更高）。例如，下面两个代码片段是等价的
-1 String separator = &quot;,&quot;;
-2 Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).forEach( 
-3 ( String e ) -&gt; System.out.print( e + separator ) );
+        <span itemprop="articleBody"><p>之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA </p>
+<p>Java JNA?</p>
+<pre><code>什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
+立在JNI基础上的一个框架,它极大的简化了JNI方法，同时也非常强大！
+</code></pre><p>java jni?</p>
+<pre><code>我们知道,使用JNI调用dll/so类库是非常的麻烦的，你得先使用SUN规定的数据类型来替代c语言的数据类型，然后才可以通过native 声明的本地方法来调
+用dll中的公开方法,就这2部已经极大的加大了我们的开发难度。所以才会诞生了JNA
+</code></pre><p>如何使用？</p>
+<pre><code>如何使用JNI 我们就在这里不多介绍了，毕竟有了比它更简单方便的框架了 
 
-1 final String separator = &quot;,&quot;;
-2 Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).forEach( 
-3  ( String e ) -&gt; System.out.print( e + separator ) );
+ 1.下载相关的jar包
+     可以去相关的官方下载jan.jar包 
+ 2.开始使用jna 
 
+    java代码：
 
-Lambda可能会返回一个值。返回值的类型也是由编译器推测出来的。如果lambda的函数体只有一行的话，
-那么没有必要显式使用return语句。下面两个代码片段是等价的
+    public  class test{
 
-  Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).sort( ( e1, e2 ) -&gt; e1.compareTo( e2 ) );
-</code></pre><p>2.java8增加了一种特殊的注解 @FunctionalInterface（Java 8中所有类库的已有接口都添加了</p>
-<pre><code>@FunctionalInterface
-public interface Functional {
-        void method();
-}
-</code></pre><p>3 接口的默认方法与静态方法<br>        Java 8用默认方法与静态方法这两个新概念来扩展接口的声明。默认方法使接口有点像Traits（<br>        Scala中特征(trait)类似于Java中的Interface，但它可以包含实现代码，也就是目前Java8新增的功能）<br>        但与传统的接口又有些不一样，它允许在已有的接口中添加新方法，而同时又保持了与旧版本代码的兼容性。<br>        private interface Defaulable {<br>                // Interfaces now allow default methods, the implementer may or<br>                // may not implement (override) them.<br>                default String notRequired() {<br>            return “Default implementation”;<br>                }<br>            }</p>
-<pre><code>private static class DefaultableImpl implements Defaulable {
-}
+        public interface vpn extends Library{
 
-private static class OverridableImpl implements Defaulable {
-@Override
-public String notRequired() {
-    return &quot;Overridden implementation&quot;;
-}
-}
-上述代码中Defaulable接口使用了default声明了默认方法，他的实现者之一DefaultableImpl,并使用了默认的
-方法实现，OverridableImpl 则用自己的方法覆盖了默认的方法
-</code></pre><p>4 方法引用<br>            方法引用提供了非常有用的语法，可以直接引用已有Java类或对象（实例）的方法或构造器。<br>            与lambda联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</p>
-<pre><code>第一种方法引用是构造器引用，它的语法是Class::new，或者更一般的Class&lt; T &gt;::new。
-    final Car car = Car.create( Car::new );
-    final List&lt; Car &gt; cars = Arrays.asList( car );
-第二种方法引用是静态方法引用，它的语法是Class::static_method。请注意这个方法接受一个Car类型的参数。
-    cars.forEach( Car::collide );
-第三种方法引用是特定类的任意对象的方法引用，它的语法是Class::method。请注意，这个方法没有参数
-    cars.forEach( Car::repair );
-第四种方法引用是特定对象的方法引用，它的语法是instance::method。请注意，这个方法接受一个Car类型的参数
-    final Car police = Car.create( Car::new );
-    cars.forEach( police::follow );
-</code></pre><p>5 重复注解<br>        自从Java 5引入了注解机制，这一特性就变得非常流行并且广为使用。然而，使用注解的一个限制是相同的注解在<br>        同一位置只能声明一次，不能声明多次。Java 8打破了这条规则，引入了重复注解机制，这样相同的注解可以在同一<br>        地方声明多次。重复注解机制本身必须用@Repeatable注解。事实上，这并不是语言层面上的改变，更多的是编译器<br>        的技巧，底层的原理保持不变<br>6 更好的类型推测机制<br>           Java 8在类型推测方面有了很大的提高。在很多情况下，编译器可以推测出确定的参数类型，这样就能使代码更整洁</p>
-<pre><code>1 package com.javacodegeeks.java8.type.inference;
-2  public class Value&lt; T &gt; {
-3     public static&lt; T &gt; T defaultValue() { 
-4              return null; 
-5           }
-6      public T getOrDefault( T value, T defaultValue ) {
-7         return ( value != null ) ? value : defaultValue;
-8       }
-9   }
+         vpn vpnHelp=Native.loadLibrary(&quot;rasapi32&quot;,vpn.class)            
+         //上述代码表示我们要调用系统的rasapi32.dll的函数
+        //以下开始声明我们所需要调用的函数
+        int RasSetEntryPropertiesA(String lpszPhonebook,String lpszEntry,RASENTRY rasEntry,int dwSize,int DeviceInfo,int infoSzie);
 
-这里是Value&lt; String &gt;类型的用法。
+        int RasDialA(int rasDal,String phoneBook,RASDIALPARAMS rs,int type,int fier,int rasConnn);
+    } 
+    //至此我们声明完毕，
 
+    public static void main(String []arg){
 
-    package com.javacodegeeks.java8.type.inference;
+        vpn.vpnHelp.RasSetEntryPropertiesA(); //创建vpn
+        vpn.vpnHelp.RasDialA(); //拨号vpn
 
-    public class TypeInference {
-    public static void main(String[] args) {
-        final Value&lt; String &gt; value = new Value&lt;&gt;();
-        value.getOrDefault( &quot;22&quot;, Value.defaultValue() );
-        }
-    }
-Value.defaultValue()的参数类型可以被推测出，所以就不必明确给出。在Java 7中，相同的例子将不会通过编译，
-正确的书写方式是 Value.&lt; String &gt;defaultValue()。
-</code></pre><p>7 扩展注解的支持<br>            Java 8扩展了注解的上下文。现在几乎可以为任何东西添加注解：局部变量、泛型类、父类与接口的实现，<br>            就连方法的异常也能添加注解。下面演示几个例子：</p>
-<pre><code>package com.javacodegeeks.java8.annotations;
-
-    import java.lang.annotation.ElementType;
-    import java.lang.annotation.Retention;
-    import java.lang.annotation.RetentionPolicy;
-    import java.lang.annotation.Target;
-    import java.util.ArrayList;
-    import java.util.Collection;
-
-public class Annotations {
-    @Retention( RetentionPolicy.RUNTIME )
-    @Target( { ElementType.TYPE_USE, ElementType.TYPE_PARAMETER } )
-    public @interface NonEmpty {        
     }
 
-    public static class Holder&lt; @NonEmpty T &gt; extends @NonEmpty Object {
-        public void method() throws @NonEmpty Exception {           
-        }
-    }
 
-    @SuppressWarnings( &quot;unused&quot; )
-    public static void main(String[] args) {
-        final Holder&lt; String &gt; holder = new @NonEmpty Holder&lt; String &gt;();       
-        @NonEmpty Collection&lt; @NonEmpty String &gt; strings = new ArrayList&lt;&gt;();       
-    }
 }
-</code></pre><p>8 Java编译器的新特性</p>
-<pre><code>1. 参数名字
-     很长一段时间里Java程序员一直在发明不同的方式使得方法参数的名字能保留在Java字节码中，并且能够在运行时获取它们
-        最终，在Java 8中把这个强烈要求的功能添加到语言层面（通过反射API与Parameter.getName()方法）与字节码文件
-          package com.javacodegeeks.java8.parameter.names;
+</code></pre><p>简单吧，其实SUN开发的这个框架极大了简化了我们调用dll/so的成本，只需要我们继承Library,就可以加载<br>    系统dll/第三方dll,即可实现调用dll,并且不需要担心类型不匹配，框架内部已经为我们实现了类型之间的转换。</p>
+<pre><code>如何选择？
 
-          import java.lang.reflect.Method;
-          import java.lang.reflect.Parameter;
-
-          public class ParameterNames {
-              public static void main(String[] args) throws Exception {
-                  Method method = ParameterNames.class.getMethod( &quot;main&quot;, String[].class );
-                  for( final Parameter parameter: method.getParameters() ) {
-                      System.out.println( &quot;Parameter: &quot; + parameter.getName() );
-                  }
-              }
-          }
-   需要使用javac -parameters 来进行编译
-</code></pre><p>9 Java 类库的新特性</p>
-<pre><code> 1. Optional 
-     Optional实际上是个容器：它可以保存类型T的值，或者仅仅保存null。Optional提供很多有用的方法，这样我们就不用显式进行空值检测
-     我们下面用两个小例子来演示如何使用Optional类：一个允许为空值，一个不允许为空值
-       Optional&lt; String &gt; fullName = Optional.ofNullable( null );
-       System.out.println( &quot;Full Name is set? &quot; + fullName.isPresent() );        
-       System.out.println( &quot;Full Name: &quot; + fullName.orElseGet( () -&gt; &quot;[none]&quot; ) ); 
-       System.out.println( fullName.map( s -&gt; &quot;Hey &quot; + s + &quot;!&quot; ).orElse( &quot;Hey Stranger!&quot; ) );
-         如果Optional类的实例为非空值的话，isPresent()返回true，否从返回false。为了防止Optional为空值，orElseGet()方法通过
-       回调函数来产生一个默认值。map()函数对当前Optional的值进行转化，然后返回一个新的Optional实例。orElse()方法和orElseGet()方法类似，
-       但是orElse接受一个默认值而不是一个回调函数
- 2. Stream
-     最新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。这是目前为止对Java类库最好的补充，
-     因为Stream API可以极大提供Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。
- 3. 3 Date/Time API (JSR 310)
-     这种情况直接导致了Joda-Time——一个可替换标准日期/时间处理且功能非常强大的Java API的诞生。Java 8新的Date-Time API (JSR 310)
-     在很大程度上受到Joda-Time的影响，并且吸取了其精髓。新的java.time包涵盖了所有处理日期，时间，日期/时间，时区，时刻（instants），
-     过程（during）与时钟（clock）的操作。在设计新版API时，十分注重与旧版API的兼容性：不允许有任何的改变（从java.util.Calendar中得到的深刻教训）。
-     如果需要修改，会返回这个类的一个新实例
- 4. JavaScript引擎Nashorn
-     不得不承认，近几年的js发展速度可怕, Nashorn就是支持了在jvm上运行一些js代码 实例：
-       ScriptEngineManager manager = new ScriptEngineManager();
-       ScriptEngine engine = manager.getEngineByName( &quot;JavaScript&quot; );     
-       System.out.println( engine.getClass().getName() );
-       System.out.println( &quot;Result:&quot; + engine.eval( &quot;function f() { return 1; }; f() + 1;&quot; ) );
- 5  Base64
-     曾几何时，为了实现加密到处找base64的实现，这倒好 java8集成了base 64，使用就方便多了
- 6 并行（parallel）数组
-    Java 8增加了大量的新方法来对数组进行并行处理。可以说，最重要的是parallelSort()方法，因为它可以在多核机器上极大提高数组排序的速度
- 7 并发（Concurrency）
-   新增Stream机制与lambda的基础之上，在java.util.concurrent.ConcurrentHashMap中加入了一些新方法来支持聚集操作。
-   同时也在java.util.concurrent.ForkJoinPool类中加入了一些新方法来支持共有资源池（common pool）
-   新增的java.util.concurrent.locks.StampedLock类提供一直基于容量的锁，这种锁有三个模型来控制读写操作（它被认为是不太有名的java.util.concurrent.locks.ReadWriteLock类的替代者）。
-
-   在java.util.concurrent.atomic包中还增加了下面这些类：
-
-   DoubleAccumulator
-   DoubleAdder
-   LongAccumulator
-   LongAdder
-
-8 Java虚拟机（JVM）的新特性
-
-   PermGen空间被移除了，取而代之的是Metaspace（JEP 122）。JVM选项-XX:PermSize与
-   -XX:MaxPermSize分别被-XX:MetaSpaceSize与-XX:MaxMetaspaceSize所代替。
-</code></pre><p>总结:有想了解jvm虚拟机的话，可以看我之前的帖子，听所java 9将在2017年7月发布，将又会有一些新的特性等待我们学习呢!!!!!</p>
+那么我们如何选择JNA/JNI呢？ 如果我们对性能要求不是很高的话，使用JNA是最好的选择了，但是对性能要求的话，我建议大家使用JNI吧，毕竟他没有通过框架运作，几乎没有什么性能损失,同时面临着类型转换的难题,各有利弊吧！！
+</code></pre><p> 上述只是JAVA 版的vpn的一部分代码，如果有朋友想要实现Java版的VPN拨号程序，可以到<br> <a href="https://github.com/VinceLz/JVpn" target="_blank" rel="external">https://github.com/VinceLz/JVpn</a>  下载源码</p>
 </span>
       
     </div>
@@ -501,7 +383,7 @@ public class Annotations {
       
         <div class="post-tags">
           
-            <a href="/tags/java新特性/" rel="tag">#java新特性</a>
+            <a href="/tags/java/" rel="tag">#java</a>
           
         </div>
       
@@ -510,13 +392,11 @@ public class Annotations {
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/10/论kmp算法/" rel="prev">论kmp算法</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="next">java虚拟机总结(2)</a>
+              <a href="/2017/02/13/常用的排序算法总结/" rel="next">几种经常用的排序算法总结</a>
             
           </div>
         </div>
