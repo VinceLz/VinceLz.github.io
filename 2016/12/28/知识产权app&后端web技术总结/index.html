@@ -42,30 +42,33 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
+<meta name="description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
+代码架构:
+
+项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
+此次项目是依赖于spring mvc+spring +mybatis框架的，采用经典的MVC模式
+ control">
 <meta property="og:type" content="article">
-<meta property="og:title" content="知识产权app&Android技术总结">
-<meta property="og:url" content="https://vincelz.github.io/2016/12/22/知识产权app&Android技术总结 - 副本/index.html">
+<meta property="og:title" content="知识产权app&后端web技术总结">
+<meta property="og:url" content="https://vincelz.github.io/2016/12/28/知识产权app&后端web技术总结/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/frame.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/dowm.png">
-<meta property="og:updated_time" content="2017-02-23T11:14:18.517Z">
+<meta property="og:description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
+代码架构:
+
+项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
+此次项目是依赖于spring mvc+spring +mybatis框架的，采用经典的MVC模式
+ control">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png">
+<meta property="og:updated_time" content="2017-02-23T12:03:31.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知识产权app&Android技术总结">
-<meta name="twitter:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
+<meta name="twitter:title" content="知识产权app&后端web技术总结">
+<meta name="twitter:description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
+代码架构:
+
+项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
+此次项目是依赖于spring mvc+spring +mybatis框架的，采用经典的MVC模式
+ control">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -75,7 +78,7 @@
   };
 </script>
 
-  <title> 知识产权app&Android技术总结 | 1000 words a Day </title>
+  <title> 知识产权app&后端web技术总结 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -126,7 +129,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             <i class="menu-item-icon icon-next-home"></i> <br />
-            Home
+            Startseite
           </a>
         </li>
       
@@ -134,7 +137,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             <i class="menu-item-icon icon-next-archives"></i> <br />
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -142,7 +145,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             <i class="menu-item-icon icon-next-about"></i> <br />
-            About
+            Über
           </a>
         </li>
       
@@ -309,7 +312,7 @@
           
           
             
-              知识产权app&Android技术总结
+              知识产权app&后端web技术总结
             
           
         </h1>
@@ -317,9 +320,9 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2016-12-22T16:55:13+08:00" content="2016-12-22">
-            2016-12-22
+          Veröffentlicht am
+          <time itemprop="dateCreated" datetime="2016-12-28T16:01:23+08:00" content="2016-12-28">
+            2016-12-28
           </time>
         </span>
 
@@ -337,64 +340,205 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力</p>
-<p>本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去实现，对于我们只是应届生，其实不管从技术上还是其他方面，都有一定的困难，对于我本人，我是一个技术狂热的人，所以迎难而上是我的作风…QAQ 废话不多说了，我们介绍我们的项目吧！！</p>
-<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h3 id="先来一波截图看看效果吧"><a href="#先来一波截图看看效果吧" class="headerlink" title="先来一波截图看看效果吧"></a>先来一波截图看看效果吧</h3><p><img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png" alt=""> <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png" alt=""></p>
-<hr>
-<p>我们先来看看项目代码架构：</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png" alt="首页"></p>
-<p>先从BaseApplication MyApplication说起吧，这2个类是继承关系，BaseApplication继承了Application，这个类的主要作用是对一些全局性的基本功能的实现，而MyApplication又继承了BaseApplication，它主要的功能就是对这个app的状态的控制，例如商家信息，用户信息，app状态的控制处理。</p>
-<h1 id="软件层架构"><a href="#软件层架构" class="headerlink" title="软件层架构"></a>软件层架构</h1><p><img src="http://ok9vfjkgl.bkt.clouddn.com/frame.png" alt=""></p>
-<h2 id="Home-主页"><a href="#Home-主页" class="headerlink" title=" Home  主页"></a> Home  主页</h2><p>   –</p>
-<h2 id="Send-发布"><a href="#Send-发布" class="headerlink" title=" Send  发布"></a> Send  发布</h2><p>   –</p>
-<h2 id="UserInfo-个人中心"><a href="#UserInfo-个人中心" class="headerlink" title=" UserInfo 个人中心"></a> UserInfo 个人中心</h2><p>   –</p>
-<h2 id="AllByby-F-购物车"><a href="#AllByby-F-购物车" class="headerlink" title=" AllByby_F  购物车"></a> AllByby_F  购物车</h2><p>   –</p>
-<h2 id="Category-搜索"><a href="#Category-搜索" class="headerlink" title=" Category 搜索"></a> Category 搜索</h2><p>项目主体采用了Frangment进行5大模块载体，这5大模块各自处理自己的业务，但通过又通过MyApplication进行数据交换和通信。其中具体实现功能请去github地址下载源码观看</p>
-<hr>
-<h1 id="通信工具-amp-图片缓存"><a href="#通信工具-amp-图片缓存" class="headerlink" title="通信工具&amp;图片缓存"></a>通信工具&amp;图片缓存</h1><p>项目采用了OkHttp请求框架，并且和picasso图像框架整合到了一起，为了优化流量消耗，所以集成了图像自动缓存本地的功能，其中如何实现picasso缓存功能，这里贴出部分代码，</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png" alt=""></p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/dowm.png" alt=""></p>
-<p>其中OkHttpDownLoader()他继承了DownLoader用于实现本地缓存化，最终在Okhttp初始时，把OkhpptDownloader交付给picasso已实现缓存</p>
-<h1 id="cookie缓存"><a href="#cookie缓存" class="headerlink" title="cookie缓存"></a>cookie缓存</h1><p>因为web基于java写的，所以java web有jcookie回话机制，用来保存当前session中的用户，但是安卓okhttp框架没有实现cookid的自动缓存，这样导致android一直处于无状态，那么web端也就无法实现对android用户的识别，期间想过使用token机制进行验证已检测身份，但是app的情况，最终还是选择了实现cookie缓存，还好okhttp框架比较强大，所以我们可以定制内部功能部分代码：</p>
-<pre><code>//将持久化的cookies缓存到内存中 即map cookies
-   Map&lt;String, ?&gt; prefsMap = cookiePrefs.getAll();
-   for (Map.Entry&lt;String, ?&gt; entry : prefsMap.entrySet()) {
-       String[] cookieNames = TextUtils.split((String) entry.getValue(), &quot;,&quot;);
-       for (String name : cookieNames) {
-           String encodedCookie = cookiePrefs.getString(name, null);
-           if (encodedCookie != null) {
-               Cookie decodedCookie = decodeCookie(encodedCookie);
-               if (decodedCookie != null) {
-                   if (!cookies.containsKey(entry.getKey())) {
-                       cookies.put(entry.getKey(), new ConcurrentHashMap&lt;String, Cookie&gt;());
-                   }
-                   cookies.get(entry.getKey()).put(name, decodedCookie);
-               }
-           }
-       }
+        <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现</p>
+<p>代码架构:</p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png" alt=""></p>
+<p>项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！</p>
+<p>此次项目是依赖于spring mvc+spring +mybatis框架的，采用经典的MVC模式</p>
+<p> controller  —-控制器</p>
+<p> dao     —-dao数据层</p>
+<p> service   —–服务层</p>
+<p>因为本次项目大部分接口都是与客户端进行通信的，所以基本上全部采用了JSON 进行前后端传输，对于我自己，从大一开始就用jsp/servlet进行开发网站的人来说，一下子全部要进行json通信，多少有点不适应，但也没办法，毕竟这是一种趋势嘛，那么下面开始介绍下几方面的技术</p>
+<h1 id="自定义JSON"><a href="#自定义JSON" class="headerlink" title="自定义JSON"></a>自定义JSON</h1><pre><code>public class JSON implements Serializable {
+
+private static final long serialVersionUID = 1L;
+private JSONObject json;
+
+public JSON(JSONObject jsonObject) {
+    jsonConfig.setJsonPropertyFilter(filter);
+    this.json = jsonObject;
+}
+
+public void add(String key, Object value) {
+    json.element(key, value, jsonConfig);
+}
+
+@Override
+public String toString() {
+    return json.toString();
+}
+
+JsonConfig jsonConfig = new JsonConfig();
+PropertyFilter filter = new PropertyFilter() {
+    public boolean apply(Object object, String fieldName, Object fieldValue) {
+        return null == fieldValue || &quot;&quot;.equals(fieldValue);
+    }
+};
+</code></pre><p>有人问为什么要自己写一个JSON呢，而且内部又使用了JSONObject呢？其实这个是因为我太“懒”，如何不这样，我们就要每一个接口都需要new JSONObject() 对于我这种极度“懒”分子，既然使用了spring 框架，那么我们为什么不让它给我们干活呢？？</p>
+<pre><code>public class JsonArguResolver implements WebArgumentResolver {
+@Override
+public Object resolveArgument(MethodParameter methodParameter,
+        NativeWebRequest webRequest) throws Exception {
+    HttpServletRequest request = webRequest
+            .getNativeRequest(HttpServletRequest.class);
+
+    if (methodParameter.getParameterType().equals(JSON.class)
+            &amp;&amp; methodParameter.getParameterType() != null) {
+        JSONObJect obj=new JSONObJect(1);
+        JSONObject currentJson = (JSONObject) request
+                .getAttribute(ResourceUtil.CURRENT_JSON);
+        JSON json = new JSON(currentJson);
+        return json;
+    }
+</code></pre><p>spring mvc可以对接口参数进行拦截，代码原理就是，检测某个方法有JSON这个参数，那么我们就可以在这里直接new 一个JSON对象，并且把status=1 ，最终把这个new出来的对象返回，这样，我们的接口如下</p>
+<pre><code>Object list(Page&lt;Business&gt; page, JSON json) {}
+</code></pre><p>我们只需要在接口方法中定义一个JSON对象，那么spring 框架将会自动给我们赋值，那么在接下来的业务中，我们只需要 json.add(key,value)即可实现传输数据给前端。</p>
+<h1 id="注解的使用-amp-Spring-mvc"><a href="#注解的使用-amp-Spring-mvc" class="headerlink" title="注解的使用&amp;Spring mvc"></a>注解的使用&amp;Spring mvc</h1><p>java的注解，极大的简化了我们的开发时间，为了实现权限验证，假如我对某个接口，需要做权限验证，如下</p>
+<pre><code>@Role(role = Role.ROLE_ADMIN)
+@JsonMenu(menu = &quot;Business&quot;)
+Object list(Page&lt;Business&gt; page, JSON json) {}
 
 
+                @Retention(RetentionPolicy.RUNTIME)
+                @Documented
+                @Inherited
+                public @interface JsonMenu {
+
+                    public String menu() default &quot;&quot;;
+                    public String url() default &quot;/menu/&quot;;
+                }
+
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+public @interface Role {
+public static int ROLE_BUSINESS = 2; // 只有商家
+public static int ROLE_USER = 1; // 只有普通用户
+public static int ROLE_ADMIN = 4; // 只有管理员
+public static int ROLE_USER_BUSINESS = 3; // 用户 和商家
+public static int ROLE_USER_ADMIN = 5; // 用户和 管理员
+public static int ROLE_BUSINESS_ADMIN = 6; // 商家和管理员
+public static int ALL = 7; // 所有的 但是必须登录过
+public static String Msg = &quot;权限不足&quot;;
+
+public int role() default 7;
 
 
-    //将cookies持久化到本地
-   SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
-   Log.v(&quot;#####SharedPr&quot;,&quot;SharedPreferences.cookie.save=&quot;);
-   prefsWriter.putString(url.host(), TextUtils.join(&quot;,&quot;, cookies.get(url.host()).keySet()));
-   prefsWriter.putString(name, encodeCookie(new SerializableOkHttpCookies(cookie)));
-   prefsWriter.apply();
-</code></pre><p>我们把cookie缓存到内存中，并最终实现持久化到本地，这样，我们后端就可以读取cookie，实现业务处理。</p>
-<h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><p>在遇到需要实时推送消息的时候，很长一段时间在考虑如何实现消息的推送功能，</p>
-<ol>
-<li>购买市面上的推送服务   —-资金问题不考虑</li>
-<li>使用http请求 轮询    —-不够及时推送，并且加大服务器的负载放弃</li>
-<li>DDPush    —-开源，免费 功能实现相对不错，</li>
-</ol>
-<p>因为这种app不会大量推送消息，所以最终我们选择了DDpush这个开源的推送框架，并且在实现后，功能相对比较满意。</p>
-<h1 id="短信功能"><a href="#短信功能" class="headerlink" title="短信功能"></a>短信功能</h1><p>俗话说现在的任务是无法脱离手机的，所以一款好的app必须要集成短信功能，所以最终选择了阿里大鱼短信服务平台，短信在android基本不需要什么实现，只需要加一个图形验证码就可以防止短信攻击，web后端有部分代码实现，我将会在另外一篇文章中介绍</p>
-<h1 id="其他模块"><a href="#其他模块" class="headerlink" title="其他模块"></a>其他模块</h1><p>做到后期，我们需要对app进行优化的地址太多，省电，智能化，体积小，稳定。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实要想做好一款好的app真的不简单，所以当我们遇到技术难题时，不管如何都要迎面而上，路就在前方！！！！</p>
-<p>废话不多说了，大家有想要源码的，可以去 <a href="https://github.com/VinceLz/ShopByAndroid" target="_blank" rel="external">https://github.com/VinceLz/ShopByAndroid</a> 下载   </p>
-<p>辛苦了一年，对自己致敬！！！！！</p>
+            JsonMenu annotation = method.getAnnotation(JsonMenu.class);
+            if (annotation != null) {
+                // 先检测当前用户是谁 从session中查 只给管理员返回
+                Object attribute = request.getSession().getAttribute(
+                        ResourceUtil.CURRENT_ADMIN);
+
+                // if (attribute != null) {
+                // 说明当前用户是admin
+                String menu = annotation.menu();
+                String url = annotation.url();
+                if (!menu.isEmpty()) {
+                    OrderedProperties properties = new OrderedProperties();
+                    url = url + menu + &quot;.properties&quot;;
+                    InputStream resourceAsStream = this.getClass().getClassLoader()
+                            .getResourceAsStream(url);
+                    properties.load(resourceAsStream);
+                    Object[][] order = MapUtil.propertsToArray(properties);
+                    jsonObjec.element(&quot;order&quot;, order);
+                    // }
+                }
+</code></pre><p>看懂了没有，我给方法添加一个JSONMenu注解，spring mvc可以在方法上面添加拦截器，那么我们在拦截中通过反射获取到注解类，如果包含这个注解类，那么就获取到注解类的值，假如值为4,表示该接口比较是管理员才可以访问，那么如何检测呢？既然管理员登录后，我们完全可以把管理员对象放到session中，然后只需要检测对应的session中是否有管理员对象存在，即可判断是否有权限。</p>
+<h1 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h1><p>mybatis确实要比hibernate轻量了很多，使用hibernate我们需要配置很多，而且对于sql不是很灵活，而mybatis确实可以很大的程度上灵活了很多，所以建议同学们动手学习下mybatis。</p>
+<h1 id="POJO-get-set"><a href="#POJO-get-set" class="headerlink" title="POJO get/set"></a>POJO get/set</h1><p>java实体类pojo我们一般都需要提供get/set方法，但是有时候我们也可以把get/set灵活的运用起来，如何用呢？    假如我们有一个值，对应的是数组，我们在数据库字段中要么一个值为一列，要么多个值使用特殊字符隔开，但是mybatis却不会对于的把查询到的值转换为数组的，那么我们就可以在get/set方法上面下功夫，其实框架不都是在Java反射的原理上进行的吗，反射最终访问属性都是通过get/set进行的，那么我们就可以把数据库中查询出来的字符串如 a,b,c,d,f,g,g  在java set方法中进行切分，然后赋值即可，实现如下</p>
+<pre><code>public static String[] stringImage2Array(String img) {
+    if (img==null||img.isEmpty()) {
+        return null;
+    }
+    String[] split = img.split(&quot;,&quot;);
+    return split;
+
+public String[] getGimage() {
+        return ArrayUtil.stringImage2Array(gimage);
+    }
+</code></pre><p>反正通过get/set我们完全可以把实体类的不同状态的数据进行数据转换，以转换成前端希望的样子</p>
+<h1 id="短信服务"><a href="#短信服务" class="headerlink" title="短信服务"></a>短信服务</h1><p>对于后端来说，短信一般用来注册、找回密码、等功能，那么注册，那么注册如何实现呢？ 代码</p>
+<pre><code>    User user = userService.getUserByUlogin(ulogin);
+    if (user != null) {
+        // 说明注册过了
+        json.add(&quot;status&quot;, 0);
+        return json + &quot;&quot;;
+    }
+
+    String isOk = (String) request.getSession().getAttribute(&quot;isSMS&quot;);
+    if (isOk == null || &quot;no&quot;.equals(isOk)) {
+        // 不能发送短信
+        json.add(&quot;status&quot;, -1);
+        return json + &quot;&quot;;
+    }
+    String accountSid = proper.getProperty(&quot;accountSid&quot;);
+    String token = proper.getProperty(&quot;token&quot;);
+    String appId = proper.getProperty(&quot;appId&quot;);
+    String templateId = proper.getProperty(&quot;templateId&quot;);
+    String para = SMSUtil.getRandNum(6);
+    SMSUtil.testTemplateSMS(true, accountSid, token, appId, templateId,
+            ulogin, para);
+    String encode = UUID.randomUUID().toString();
+    SMS sms = new SMS();
+    sms.setPhone(ulogin);
+    sms.setReturnCode(para);
+    sms.setSendTime(DateUtil.getSqlDate());
+    sms.setType(1);
+    sms.setEncode(encode);
+    json.add(&quot;ulogin&quot;, ulogin);
+    json.add(&quot;code&quot;, para);
+    json.add(&quot;encode&quot;, encode);
+    request.getSession().setAttribute(&quot;VirCode&quot;, sms);
+    return json.toString();
+}
+</code></pre><p>代码中的主要功能就是先进行检测是否注册过，若没有注册过，那么调用第三方短信服务进行发送短信，调用前我们需要给服务商传递验证码这个值的，最后切记我们需要把这个验证码保存到session中，不然下次请求后，我们无法判断验证码是否正确了</p>
+<pre><code>Object regist2(@RequestParam() String ulogin,
+        @RequestParam() String upassword, JSON json,
+        HttpServletRequest request) throws ParseException {
+
+    // 进行有效期的校验
+    // SMS sms = smsSerice.getSMS(ulogin); //
+    SMS sms = (SMS) request.getSession().getAttribute(&quot;VirCode&quot;);
+    if (sms == null) {
+        json.add(&quot;status&quot;, keyUtil.SERVICE_FAIL);
+        return json + &quot;&quot;;
+    }
+    String sendTime = sms.getSendTime();
+    // 比较时间
+    if (!DateUtil.compTo(sendTime, 10)) {
+        // 超过10分钟了
+        json.add(&quot;status&quot;, keyUtil.SERVICE_FAIL);
+        return json + &quot;&quot;;
+    }
+    User user = new User();
+    user.setUlogin(ulogin);
+    user.setUphone(ulogin);
+    user.setUdate(DateUtil.getSqlDate());
+    user.setUpassword(CyptoUtils.decode(sms.getEncode(), upassword));
+    userService.insertregist(user);
+    // 删除验证码
+    // smsSerice.deletedrop();
+    request.getSession().removeAttribute(&quot;VirCode&quot;);
+    return json + &quot;&quot;;
+}
+</code></pre><p>进行检测验证码是否正确，并且对时间进行判断，是否超过10分钟。</p>
+<pre><code>public static boolean compTo(String currentTime, int number)
+        throws ParseException {
+    SimpleDateFormat myFmt1 = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+    Date current = new java.util.Date();
+    Date parse = myFmt1.parse(currentTime);
+    long time = parse.getTime();
+    long time2 = current.getTime();
+    if ((time2 - time) / 60000 &lt;= number) {
+        return true;
+    } else {
+        return false;
+    }
+}
+</code></pre><h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><p>对于加密，一般有对称算法AES，非对称算法RSA，MD5 ,BASE64 等，对于这个项目中，因为面临交易，所以必须对登录，交易进行加密，最终我们选择了非对称算法RSA ,即在用户请求登录的时候，去请求服务器，服务器返回公钥，服务器拥有私钥。最终，我们自客户端对密码进行加密，服务器最终解密，完成本次登录。其实对于安全问题，还有很大的学问，所以我们还需要学习，研究。</p>
+<h1 id="项目总结"><a href="#项目总结" class="headerlink" title="项目总结"></a>项目总结</h1><p>至此web后端的基本极大要点技术讲完，如果有想要源码的，可以去<a href="https://github.com/VinceLz/Shop下载。" target="_blank" rel="external">https://github.com/VinceLz/Shop下载。</a></p>
 </span>
       
     </div>
@@ -481,10 +625,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -499,21 +643,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">categories</span>
+              <span class="site-state-item-name">Kategorien</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
               <span class="site-state-item-count">5</span>
-              <span class="site-state-item-name">tags</span>
+              <span class="site-state-item-name">Tags</span>
               
           </div>
 
@@ -547,7 +691,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来一波截图看看效果吧"><span class="nav-number">2.0.1.</span> <span class="nav-text">先来一波截图看看效果吧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件层架构"><span class="nav-number">3.</span> <span class="nav-text">软件层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Home-主页"><span class="nav-number">3.1.</span> <span class="nav-text"> Home  主页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Send-发布"><span class="nav-number">3.2.</span> <span class="nav-text"> Send  发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UserInfo-个人中心"><span class="nav-number">3.3.</span> <span class="nav-text"> UserInfo 个人中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AllByby-F-购物车"><span class="nav-number">3.4.</span> <span class="nav-text"> AllByby_F  购物车</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-搜索"><span class="nav-number">3.5.</span> <span class="nav-text"> Category 搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信工具-amp-图片缓存"><span class="nav-number">4.</span> <span class="nav-text">通信工具&图片缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie缓存"><span class="nav-number">5.</span> <span class="nav-text">cookie缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实时推送"><span class="nav-number">6.</span> <span class="nav-text">实时推送</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信功能"><span class="nav-number">7.</span> <span class="nav-text">短信功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他模块"><span class="nav-number">8.</span> <span class="nav-text">其他模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义JSON"><span class="nav-number">2.</span> <span class="nav-text">自定义JSON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解的使用-amp-Spring-mvc"><span class="nav-number">3.</span> <span class="nav-text">注解的使用&Spring mvc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mybatis"><span class="nav-number">4.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POJO-get-set"><span class="nav-number">5.</span> <span class="nav-text">POJO get/set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信服务"><span class="nav-number">6.</span> <span class="nav-text">短信服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密"><span class="nav-number">7.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总结"><span class="nav-number">8.</span> <span class="nav-text">项目总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
