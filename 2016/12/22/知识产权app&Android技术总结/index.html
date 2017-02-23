@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -42,25 +42,30 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
+本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(1)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/22/java虚拟机总结(1)/index.html">
+<meta property="og:title" content="知识产权app&Android技术总结">
+<meta property="og:url" content="https://vincelz.github.io/2016/12/22/知识产权app&Android技术总结/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
-<meta property="og:updated_time" content="2017-01-24T06:35:42.682Z">
+<meta property="og:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
+本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/frame.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/dowm.png">
+<meta property="og:updated_time" content="2017-02-23T11:14:18.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(1)">
-<meta name="twitter:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="twitter:title" content="知识产权app&Android技术总结">
+<meta name="twitter:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
+本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +75,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(1) | 1000 words a Day </title>
+  <title> 知识产权app&Android技术总结 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +309,7 @@
           
           
             
-              java虚拟机总结(1)
+              知识产权app&Android技术总结
             
           
         </h1>
@@ -313,8 +318,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-01-22T10:49:52+08:00" content="2017-01-22">
-            2017-01-22
+          <time itemprop="dateCreated" datetime="2016-12-22T16:55:13+08:00" content="2016-12-22">
+            2016-12-22
           </time>
         </span>
 
@@ -332,12 +337,64 @@
       
 
       
-        <span itemprop="articleBody"><p>回到了家，终于有时间可以更新下自己的博客了,长话短说</p>
+        <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力</p>
+<p>本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去实现，对于我们只是应届生，其实不管从技术上还是其他方面，都有一定的困难，对于我本人，我是一个技术狂热的人，所以迎难而上是我的作风…QAQ 废话不多说了，我们介绍我们的项目吧！！</p>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h3 id="先来一波截图看看效果吧"><a href="#先来一波截图看看效果吧" class="headerlink" title="先来一波截图看看效果吧"></a>先来一波截图看看效果吧</h3><p><img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png" alt=""> <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png" alt=""></p>
 <hr>
-<p>抽时间读完了&lt;深入理解java虚拟机&gt;,收获颇丰总结如下：</p>
-<p>1.jvm中共享的数据区为:方法区  堆(heap)<br>  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等<br>      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，<br>      主要垃圾回收机制可以向管理java堆一样管理这部分内存，能够省去专门为方法区编写内存管理<br>      运行时常量池：是方法区的一部分，Class文件除了有类的版本 字段 方法 接口等描述信息外<br>      还有一项信息是常量池<br>  1.2 堆  是jvm中内存最大的一块，是所有的线程共享的存放对象实例（数组）也是垃圾回收的主<br>      要地方，细分为新生代，老年代<br>2.jvm线程中独有的数据区: 虚拟机栈 本地方法区  程序计数器<br>  2.1 栈 线程私有的， 他的生命周期和线程一致 ，每个方法在执行的同时都会创建一个栈帧用于<br>      存储局部变量,操作数栈,动态链接，方法出口，存放着编译期的各种基本数据类型<br>      boolean byte char short int float long double 对象引用reference类型<br>      对于栈，一般饱满后就会报stackOverflowError错误, 但是如果虚拟机容许自由扩展，那么可能报<br>      OutOfMemoryError错误<br>  2.2 本地方法区 同栈他是为java方法服务的，而本地方法区是为使用Native方法服务的<br>  2.3 程序计数器 一块较小的内存空间,他可以看作是执行的字节码的行号指示器各线程之间的计数器互不影响独立存储</p>
-<p>虚拟机生成对象的过程<br>    检测指令的参数是否在常量池中定位到–&gt;类是否被加载 解析 初始化 ——&gt;若没有则执行相应的类加载过程<br>    –&gt;检测通过后将为新生对象分配内存<br>分配内存由2种方法：<br>    指针碰撞：用过的内存放一边,没有使用的放在另外一边,中间放着一个指针作为分界点的指示器, Serial  parNew回收垃圾<br>    空闲表法:内存不是规整的,那么就需要维护一张表,记录哪些内存可以用,哪些不可以用  CMS垃圾回收<br>对象的内存分布：<br>    对象在内存区域中布局分为 对象头 实例数据  对齐填充<br>    对象头分为2部分：第一部分存储对象自身的运行数据 哈希吗 GC分带年龄 锁状态标识 线程持有的锁  偏向线程id<br>    另外一部分是:类型指针 对象指向的类元数据的指针，虚拟机通过这个对象确定对象是哪个类的实例，<br>    实例数据：部分是对象真正存储的有效信息，<br>    对齐填充：无特别意义，占位符的作用<br>虚拟机如何访问引用的对象呢？<br>    对象访问定位有2种方法:句柄  直接指针<br>    使用句柄访问，那么java堆中划分一块内存来作为句柄池，reference中存储的是对象的句柄地址<br>而句柄中包含了对象实例数据与类型数据各自的具体地址信息<br>    直接指针访问： reference中存储的是对象地址<br>    PS： String.intern()是一个本地方法，作用是 如果字符串常量池中已经包含了一个等于此字符串的，则返回池中的对象<br>    否则将String对象添加到常量池中，并且返回引用</p>
-<p>刚开始更新博客,哪里写的不好,请多见谅!!!!  续更</p>
+<p>我们先来看看项目代码架构：</p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png" alt="首页"></p>
+<p>先从BaseApplication MyApplication说起吧，这2个类是继承关系，BaseApplication继承了Application，这个类的主要作用是对一些全局性的基本功能的实现，而MyApplication又继承了BaseApplication，它主要的功能就是对这个app的状态的控制，例如商家信息，用户信息，app状态的控制处理。</p>
+<h1 id="软件层架构"><a href="#软件层架构" class="headerlink" title="软件层架构"></a>软件层架构</h1><p><img src="http://ok9vfjkgl.bkt.clouddn.com/frame.png" alt=""></p>
+<h2 id="Home-主页"><a href="#Home-主页" class="headerlink" title=" Home  主页"></a> Home  主页</h2><p>   –</p>
+<h2 id="Send-发布"><a href="#Send-发布" class="headerlink" title=" Send  发布"></a> Send  发布</h2><p>   –</p>
+<h2 id="UserInfo-个人中心"><a href="#UserInfo-个人中心" class="headerlink" title=" UserInfo 个人中心"></a> UserInfo 个人中心</h2><p>   –</p>
+<h2 id="AllByby-F-购物车"><a href="#AllByby-F-购物车" class="headerlink" title=" AllByby_F  购物车"></a> AllByby_F  购物车</h2><p>   –</p>
+<h2 id="Category-搜索"><a href="#Category-搜索" class="headerlink" title=" Category 搜索"></a> Category 搜索</h2><p>项目主体采用了Frangment进行5大模块载体，这5大模块各自处理自己的业务，但通过又通过MyApplication进行数据交换和通信。其中具体实现功能请去github地址下载源码观看</p>
+<hr>
+<h1 id="通信工具-amp-图片缓存"><a href="#通信工具-amp-图片缓存" class="headerlink" title="通信工具&amp;图片缓存"></a>通信工具&amp;图片缓存</h1><p>项目采用了OkHttp请求框架，并且和picasso图像框架整合到了一起，为了优化流量消耗，所以集成了图像自动缓存本地的功能，其中如何实现picasso缓存功能，这里贴出部分代码，</p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png" alt=""></p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/dowm.png" alt=""></p>
+<p>其中OkHttpDownLoader()他继承了DownLoader用于实现本地缓存化，最终在Okhttp初始时，把OkhpptDownloader交付给picasso已实现缓存</p>
+<h1 id="cookie缓存"><a href="#cookie缓存" class="headerlink" title="cookie缓存"></a>cookie缓存</h1><p>因为web基于java写的，所以java web有jcookie回话机制，用来保存当前session中的用户，但是安卓okhttp框架没有实现cookid的自动缓存，这样导致android一直处于无状态，那么web端也就无法实现对android用户的识别，期间想过使用token机制进行验证已检测身份，但是app的情况，最终还是选择了实现cookie缓存，还好okhttp框架比较强大，所以我们可以定制内部功能部分代码：</p>
+<pre><code>//将持久化的cookies缓存到内存中 即map cookies
+   Map&lt;String, ?&gt; prefsMap = cookiePrefs.getAll();
+   for (Map.Entry&lt;String, ?&gt; entry : prefsMap.entrySet()) {
+       String[] cookieNames = TextUtils.split((String) entry.getValue(), &quot;,&quot;);
+       for (String name : cookieNames) {
+           String encodedCookie = cookiePrefs.getString(name, null);
+           if (encodedCookie != null) {
+               Cookie decodedCookie = decodeCookie(encodedCookie);
+               if (decodedCookie != null) {
+                   if (!cookies.containsKey(entry.getKey())) {
+                       cookies.put(entry.getKey(), new ConcurrentHashMap&lt;String, Cookie&gt;());
+                   }
+                   cookies.get(entry.getKey()).put(name, decodedCookie);
+               }
+           }
+       }
+
+
+
+
+    //将cookies持久化到本地
+   SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
+   Log.v(&quot;#####SharedPr&quot;,&quot;SharedPreferences.cookie.save=&quot;);
+   prefsWriter.putString(url.host(), TextUtils.join(&quot;,&quot;, cookies.get(url.host()).keySet()));
+   prefsWriter.putString(name, encodeCookie(new SerializableOkHttpCookies(cookie)));
+   prefsWriter.apply();
+</code></pre><p>我们把cookie缓存到内存中，并最终实现持久化到本地，这样，我们后端就可以读取cookie，实现业务处理。</p>
+<h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><p>在遇到需要实时推送消息的时候，很长一段时间在考虑如何实现消息的推送功能，</p>
+<ol>
+<li>购买市面上的推送服务   —-资金问题不考虑</li>
+<li>使用http请求 轮询    —-不够及时推送，并且加大服务器的负载放弃</li>
+<li>DDPush    —-开源，免费 功能实现相对不错，</li>
+</ol>
+<p>因为这种app不会大量推送消息，所以最终我们选择了DDpush这个开源的推送框架，并且在实现后，功能相对比较满意。</p>
+<h1 id="短信功能"><a href="#短信功能" class="headerlink" title="短信功能"></a>短信功能</h1><p>俗话说现在的任务是无法脱离手机的，所以一款好的app必须要集成短信功能，所以最终选择了阿里大鱼短信服务平台，短信在android基本不需要什么实现，只需要加一个图形验证码就可以防止短信攻击，web后端有部分代码实现，我将会在另外一篇文章中介绍</p>
+<h1 id="其他模块"><a href="#其他模块" class="headerlink" title="其他模块"></a>其他模块</h1><p>做到后期，我们需要对app进行优化的地址太多，省电，智能化，体积小，稳定。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实要想做好一款好的app真的不简单，所以当我们遇到技术难题时，不管如何都要迎面而上，路就在前方！！！！</p>
+<p>废话不多说了，大家有想要源码的，可以去 <a href="https://github.com/VinceLz/ShopByAndroid" target="_blank" rel="external">https://github.com/VinceLz/ShopByAndroid</a> 下载   </p>
+<p>辛苦了一年，对自己致敬！！！！！</p>
 </span>
       
     </div>
@@ -346,7 +403,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/java/" rel="tag">#java</a>
           
         </div>
       
@@ -355,13 +412,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="prev">java虚拟机总结(2)</a>
+              <a href="/2016/12/22/知识产权app&Android技术总结 - 副本/" rel="prev">知识产权app&Android技术总结</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/12/22/知识产权app&Android技术总结 - 副本/" rel="next">知识产权app&Android技术总结</a>
             
           </div>
         </div>
@@ -490,7 +545,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来一波截图看看效果吧"><span class="nav-number">2.0.1.</span> <span class="nav-text">先来一波截图看看效果吧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件层架构"><span class="nav-number">3.</span> <span class="nav-text">软件层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Home-主页"><span class="nav-number">3.1.</span> <span class="nav-text"> Home  主页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Send-发布"><span class="nav-number">3.2.</span> <span class="nav-text"> Send  发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UserInfo-个人中心"><span class="nav-number">3.3.</span> <span class="nav-text"> UserInfo 个人中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AllByby-F-购物车"><span class="nav-number">3.4.</span> <span class="nav-text"> AllByby_F  购物车</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-搜索"><span class="nav-number">3.5.</span> <span class="nav-text"> Category 搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信工具-amp-图片缓存"><span class="nav-number">4.</span> <span class="nav-text">通信工具&图片缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie缓存"><span class="nav-number">5.</span> <span class="nav-text">cookie缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实时推送"><span class="nav-number">6.</span> <span class="nav-text">实时推送</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信功能"><span class="nav-number">7.</span> <span class="nav-text">短信功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他模块"><span class="nav-number">8.</span> <span class="nav-text">其他模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
