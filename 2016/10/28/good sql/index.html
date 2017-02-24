@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java," />
+  <meta name="keywords" content="sql," />
 
 
 
@@ -42,25 +42,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
-Java JNA?
-什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
-立在JNI基础上的一个框架,它极大的简化了JNI方法">
+<meta name="description" content="前言俗话说成功者都注重细节，而我就是那个失败者，就拿sql语句来说，看过别人的项目后发现自己与别人的最大差距不是能力，而是对于一些技术的小细节处理的不够好，所以拿起键盘，希望记录下自己的感悟，以提醒自己，也希望看过这篇文章的同学们，也可以有所提高!
+为什么要优化sql当前互联网时代，尤其是电商网站，那1秒都是上千万次的并发请求，譬如阿里巴巴2016 11.11 总的成交额就是1207亿，对于这个数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JNA java调用本地接口">
-<meta property="og:url" content="https://vincelz.github.io/2017/02/22/JNA-java调用本地接口/index.html">
+<meta property="og:title" content="sql优化小技巧">
+<meta property="og:url" content="https://vincelz.github.io/2016/10/28/good sql/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
-Java JNA?
-什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
-立在JNI基础上的一个框架,它极大的简化了JNI方法">
-<meta property="og:updated_time" content="2017-02-22T11:44:07.054Z">
+<meta property="og:description" content="前言俗话说成功者都注重细节，而我就是那个失败者，就拿sql语句来说，看过别人的项目后发现自己与别人的最大差距不是能力，而是对于一些技术的小细节处理的不够好，所以拿起键盘，希望记录下自己的感悟，以提醒自己，也希望看过这篇文章的同学们，也可以有所提高!
+为什么要优化sql当前互联网时代，尤其是电商网站，那1秒都是上千万次的并发请求，譬如阿里巴巴2016 11.11 总的成交额就是1207亿，对于这个数">
+<meta property="og:updated_time" content="2017-02-24T04:18:49.903Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JNA java调用本地接口">
-<meta name="twitter:description" content="之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA 
-Java JNA?
-什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
-立在JNI基础上的一个框架,它极大的简化了JNI方法">
+<meta name="twitter:title" content="sql优化小技巧">
+<meta name="twitter:description" content="前言俗话说成功者都注重细节，而我就是那个失败者，就拿sql语句来说，看过别人的项目后发现自己与别人的最大差距不是能力，而是对于一些技术的小细节处理的不够好，所以拿起键盘，希望记录下自己的感悟，以提醒自己，也希望看过这篇文章的同学们，也可以有所提高!
+为什么要优化sql当前互联网时代，尤其是电商网站，那1秒都是上千万次的并发请求，譬如阿里巴巴2016 11.11 总的成交额就是1207亿，对于这个数">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +64,7 @@ Java JNA?
   };
 </script>
 
-  <title> JNA java调用本地接口 | 1000 words a Day </title>
+  <title> sql优化小技巧 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +298,7 @@ Java JNA?
           
           
             
-              JNA java调用本地接口
+              sql优化小技巧
             
           
         </h1>
@@ -313,8 +307,8 @@ Java JNA?
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-02-22T16:55:13+08:00" content="2017-02-22">
-            2017-02-22
+          <time itemprop="dateCreated" datetime="2016-10-28T16:01:23+08:00" content="2016-10-28">
+            2016-10-28
           </time>
         </span>
 
@@ -332,49 +326,44 @@ Java JNA?
       
 
       
-        <span itemprop="articleBody"><p>之前有个小项目需要做一个关于vpn的拨号的功能,google后发现java版的vpn拨号基本没有,所以办法了只能自己动手写一个关于java版的vpn工具类，所以特此介绍下关于java JNA </p>
-<p>Java JNA?</p>
-<pre><code>什么是java jna呢？  JNA(java native access) 是一个开源的java框架，是SUN公司主导开发的一套建
-立在JNI基础上的一个框架,它极大的简化了JNI方法，同时也非常强大！
-</code></pre><p>java jni?</p>
-<pre><code>我们知道,使用JNI调用dll/so类库是非常的麻烦的，你得先使用SUN规定的数据类型来替代c语言的数据类型，然后才可以通过native 声明的本地方法来调
-用dll中的公开方法,就这2部已经极大的加大了我们的开发难度。所以才会诞生了JNA
-</code></pre><p>如何使用？</p>
-<pre><code>如何使用JNI 我们就在这里不多介绍了，毕竟有了比它更简单方便的框架了 
-
- 1.下载相关的jar包
-     可以去相关的官方下载jan.jar包 
- 2.开始使用jna 
-
-    java代码：
-
-    public  class test{
-
-        public interface vpn extends Library{
-
-         vpn vpnHelp=Native.loadLibrary(&quot;rasapi32&quot;,vpn.class)            
-         //上述代码表示我们要调用系统的rasapi32.dll的函数
-        //以下开始声明我们所需要调用的函数
-        int RasSetEntryPropertiesA(String lpszPhonebook,String lpszEntry,RASENTRY rasEntry,int dwSize,int DeviceInfo,int infoSzie);
-
-        int RasDialA(int rasDal,String phoneBook,RASDIALPARAMS rs,int type,int fier,int rasConnn);
-    } 
-    //至此我们声明完毕，
-
-    public static void main(String []arg){
-
-        vpn.vpnHelp.RasSetEntryPropertiesA(); //创建vpn
-        vpn.vpnHelp.RasDialA(); //拨号vpn
-
-    }
-
-
-}
-</code></pre><p>简单吧，其实SUN开发的这个框架极大了简化了我们调用dll/so的成本，只需要我们继承Library,就可以加载<br>    系统dll/第三方dll,即可实现调用dll,并且不需要担心类型不匹配，框架内部已经为我们实现了类型之间的转换。</p>
-<pre><code>如何选择？
-
-那么我们如何选择JNA/JNI呢？ 如果我们对性能要求不是很高的话，使用JNA是最好的选择了，但是对性能要求的话，我建议大家使用JNI吧，毕竟他没有通过框架运作，几乎没有什么性能损失,同时面临着类型转换的难题,各有利弊吧！！
-</code></pre><p> 上述只是JAVA 版的vpn的一部分代码，如果有朋友想要实现Java版的VPN拨号程序，可以到<br> <a href="https://github.com/VinceLz/JVpn" target="_blank" rel="external">https://github.com/VinceLz/JVpn</a>  下载源码</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>俗话说成功者都注重细节，而我就是那个失败者，就拿sql语句来说，看过别人的项目后发现自己与别人的最大差距不是能力，而是对于一些技术的小细节处理的不够好，所以拿起键盘，希望记录下自己的感悟，以提醒自己，也希望看过这篇文章的同学们，也可以有所提高!</p>
+<h1 id="为什么要优化sql"><a href="#为什么要优化sql" class="headerlink" title="为什么要优化sql"></a>为什么要优化sql</h1><p>当前互联网时代，尤其是电商网站，那1秒都是上千万次的并发请求，譬如阿里巴巴2016 11.11 总的成交额就是1207亿，对于这个数字我觉得拿身边的东西也无法形容它的庞大，其实阿里巴巴的成功背后，就是他们的技术带动，才能有今天的成就，其实背后也是千千万万个程序员的付出，所以，当我们把硬件优化到最大程度后，剩下的也只有对软件方面进行优化了，所以一个优秀的程序员和一个一般的程序员最大的区别就是对于代码的优化程度，所以我们很有必要学习下如何优化sql语句，对我们是又很大的帮助的。</p>
+<h1 id="sql优化方向"><a href="#sql优化方向" class="headerlink" title="sql优化方向"></a>sql优化方向</h1><p>sql其实是有三方面的优化方向，</p>
+<ol>
+<li>sql服务器的内核优化—–此优化方案一般由运维人员进行优化的</li>
+<li>sql的配置参数优化 —-my.cnf  一般这种优化是需要压力测试才可以进行优化的</li>
+<li>sql语句和表的优化，这才是我们需要关心的地方</li>
+</ol>
+<h1 id="一：查询缓存优化查询结构"><a href="#一：查询缓存优化查询结构" class="headerlink" title="一：查询缓存优化查询结构"></a>一：查询缓存优化查询结构</h1><p>大多数的mysql服务器都会开启了查询缓存，这是提高性能最有效的办法之一，当有很多次查询时，系统会把很多相同的结果放到缓存中，当下次查询时，就可以直接从缓存中进行读取，后续的查询就不需要操作表了，速度可想而知。但是，mysql的有些语句是不会使用缓存的，所以我们开发人员应该尽量让数据库使用缓存，所以总结如下<br>    案例如下：</p>
+<pre><code>1 select username from user where signup_date&gt;=CURDATE()
+2 select username from user where signup_date&gt;=&quot;2016-08-08&quot;
+</code></pre><p>上述2句sql语句有什么区别，无非就是一个使用了curdate()函数来获取当前系统时间，另外一个我们进行手工赋值，但是最大的区别就是，当我们使用了CURDATE()函数后，MySQL的缓存就不起作用了，所以，像NOW(),RAND()或者其他诸如此类的函数我们尽量不要使用，以此用来提高性能也是很不错的。</p>
+<h1 id="二：EXPLAIN-检测功能"><a href="#二：EXPLAIN-检测功能" class="headerlink" title="二：EXPLAIN 检测功能"></a>二：EXPLAIN 检测功能</h1><p>使用EXPLAIN函数可以让我们知道sql语句是如何查询你想要的数据的整个过程，所以有时候我们利用这个函数进行比较2条语句的区别，并选择最佳语句</p>
+<h1 id="三-limit-1"><a href="#三-limit-1" class="headerlink" title="三:limit 1"></a>三:limit 1</h1><p>mysql中进行分页一般会使用limit 进行分页查询的，但是当我们可以确定查询结果只有一条时，其实我们可以在语句后面加上limit 1 ,这样就可以增加很大性能，原理就是，当我们查询时，哪怕查询一条，数据库也会遍历整个数据库的，所以我们加上limit 1就是告诉系统，我只需要一条数据，那么数据库查找到后就会返回。</p>
+<h1 id="四：请为你的搜索字段建立索引"><a href="#四：请为你的搜索字段建立索引" class="headerlink" title="四：请为你的搜索字段建立索引"></a>四：请为你的搜索字段建立索引</h1><p>其实索引并不一定给主键或者唯一字段的，如果咋你的表中，有某个字段经常被搜索的话，那么为其建立索引，可以很大程度上提高查询速度。</p>
+<h1 id="五：-号的使用"><a href="#五：-号的使用" class="headerlink" title="五：%号的使用"></a>五：%号的使用</h1><p>当我们进行模糊查询的时候，经常会用％,但是你却不知道，这个%会极大程度上影响我们的查询速度，所以我们需要对%进行优化，例如:</p>
+<pre><code>select * from db_xxx where name like &quot;%X&quot;;
+sleect * from db_xxx where name like &quot;x%&quot;;
+</code></pre><p>这2句sql查询的速度区别很大，第一条他会跑遍整个数据库的，而第二条只会找X开头的数据，你猜哪条速度快呢<br>有些同学肯定会说，这不简单，只要给%的字段加个索引不就好了，其实，如果我们给%app%上加上索引，其实也没有意义的，或者说性能提升很小，反而索引会造成空间浪费。</p>
+<h1 id="六：在Join表的时候使用相当类型，并将其索引"><a href="#六：在Join表的时候使用相当类型，并将其索引" class="headerlink" title="六：在Join表的时候使用相当类型，并将其索引"></a>六：在Join表的时候使用相当类型，并将其索引</h1><p>如果你的应该程序有很多JION 查询的话，你就应该确认俩个表中JOIN字段是否被建立过索引，这样，mysql内部会优化你的速度</p>
+<h1 id="七：千万不要使用order-by-rand"><a href="#七：千万不要使用order-by-rand" class="headerlink" title="七：千万不要使用order by rand()"></a>七：千万不要使用order by rand()</h1><p>这句语句表示自己用过，当时天真的觉得自己真聪明，打乱返回的数据，可以实现随机挑选几条数据，但是正如前面所说，这个函数会导致系统遍历整个数据库，从而速度变慢。</p>
+<h1 id="八：避免select"><a href="#八：避免select" class="headerlink" title="八：避免select *"></a>八：避免select *</h1><p>select <em> 刚开始会使用sql语句后，使用最多的大概也就是slelect </em> 吧，但是，方便必然带来性能问题，所以建议大家以后查询的时候，使用什么字段，就查询该字段，如果是全表字段都需要，那么也不要写成* ，而是手写把字段写上去，培养成习惯。</p>
+<p>#九：永远为每张表设置一个ID#<br>我们设计的任何表，都应该加一个id主键字段，并且最好的INT型的，设置自动增长，并且不要用 varchar来作为主键，不然这样会导致速度很慢。。</p>
+<p>#十：尽量使用ENUM 来替代Varchar#<br>ENUM类型的是非常快和紧凑的，实际上他内部保存的也是TINYINT类型的，所以当我们有一个字段“性别”，”国家”,“民族”都可以使用ENUM来替代</p>
+<p>#十一：尽可能的使用NOT NULL#<br>除非你有特殊原因必须使用NULL,不然你应该尽量保持值的 NOT NULL ，原因在于，NULL也需要空间的，而且需要额外的空间，并且 NULL对我们的程序比较而更加复杂，所以经历不要使用。并附带MYSQL对NULL的定义：”NULL columns require additional space in the row to record whether their values are NULL For MYISAM tables each NULL column takes one bit extra rounded up to he nearest byte”</p>
+<p>#十二：固定长度会让表更快#<br>如果表中的字段固定长度，那么整个表可以认为是static ，固定长度的表会明显提高性能，以为 MySQL内部搜索会采取优化机制，所以更快一些，并且固定长度更容易被缓存和重建，不过唯一的副作用是对空间的一些浪费，所以同学们需要自己针对实际情况斟酌。</p>
+<p>#十三：垂直分割#<br>垂直分割 是一种把数据库中的表按列变成几张表的方法，这样可以降低表的复杂度和字段的数目，从而达到优化目的(ps 我没有试过，有兴趣的同学可以试试）；</p>
+<p>#十四：拆分大的DELETE or INSERT #<br>如果你在线的网站去执行一个较大的DELETE or INSERT 的话，就要小心了，因为这2个操作会锁表的，表一锁住，导致用户访问不到，所以，我们可以利用多线程，每隔一点时间去执行小的操作，避免出现影响用户访问。</p>
+<p>#十五：越小的列会越快#<br>对于大多数的数据库引擎来说，磁盘操作可能是最大的瓶颈吧,I/O对于CPU来说，实在是太慢了，所以，把我们的列变小，变的紧凑会有很大的帮助。</p>
+<p>#十六：选择正确的数据库引擎#<br>对于MySQL来说，有2个存储引擎，MYISAM  INnoDB 每个引擎各有利弊，所以，我们选择引擎的时候，就要正确我们的网站而定，具体选择，我在这不多说了，大家可以去google。</p>
+<p>#其他优化#<br>其实我们上面讲的无法都是在程序方面进行改进的，但是毕竟改进的程度有限，所以我们也需要从硬件，系统架构上进行系统数据库优化的，例如 </p>
+<ol>
+<li><p>在数据库与业务层增加缓存数据库 / redis / Memcached </p>
+<p> redis我自己在几次项目中使用过，咋么说呢，确实可以在一定范围内提高我们服务器的速度，但是这种附加缓存是针对那些并发量很高的网站才会用到的，对于我们的网站并发量并不会很高，反而用了它浪费系统资源，所以大家应该针对自己的项目情况进行考虑是否使用</p>
+</li>
+<li>mysql读写分离+主从复制<br>这种架构应该是现在电商网站用的最多的了，因为这从硬件上解决了高并发量的问题，这种架构我只在虚拟机集群中体验过，咋么说呢，毕竟不是我们这些小人物玩的，他对于电商确实有很大的帮助，所以还是那句，根据自己的项目情况选择。</li>
+</ol>
+<p>#总结#<br>对于硬件的优化，那些都是运维人员做的，我们作为后端开发工程师，我们只能对自己的程序进行最大化的性能优化，所以，同学们把前16条建议学会，足够我们使用了。</p>
 </span>
       
     </div>
@@ -383,7 +372,7 @@ Java JNA?
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag">#java</a>
+            <a href="/tags/sql/" rel="tag">#sql</a>
           
         </div>
       
@@ -392,13 +381,11 @@ Java JNA?
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/22/Linux-crontab定时器/" rel="prev">Linux crontab定时器和一次小负载均衡实践</a>
+              <a href="/2016/12/22/app&Android/" rel="prev">知识产权app&Android技术总结</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/02/13/常用的排序算法总结/" rel="next">几种经常用的排序算法总结</a>
             
           </div>
         </div>
@@ -527,7 +514,7 @@ Java JNA?
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要优化sql"><span class="nav-number">2.</span> <span class="nav-text">为什么要优化sql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sql优化方向"><span class="nav-number">3.</span> <span class="nav-text">sql优化方向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一：查询缓存优化查询结构"><span class="nav-number">4.</span> <span class="nav-text">一：查询缓存优化查询结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二：EXPLAIN-检测功能"><span class="nav-number">5.</span> <span class="nav-text">二：EXPLAIN 检测功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-limit-1"><span class="nav-number">6.</span> <span class="nav-text">三:limit 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四：请为你的搜索字段建立索引"><span class="nav-number">7.</span> <span class="nav-text">四：请为你的搜索字段建立索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五：-号的使用"><span class="nav-number">8.</span> <span class="nav-text">五：%号的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六：在Join表的时候使用相当类型，并将其索引"><span class="nav-number">9.</span> <span class="nav-text">六：在Join表的时候使用相当类型，并将其索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七：千万不要使用order-by-rand"><span class="nav-number">10.</span> <span class="nav-text">七：千万不要使用order by rand()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八：避免select"><span class="nav-number">11.</span> <span class="nav-text">八：避免select *</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
