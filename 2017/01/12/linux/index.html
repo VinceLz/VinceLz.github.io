@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -42,25 +42,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(1)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/22/java虚拟机总结(1)/index.html">
+<meta property="og:title" content="Linux自学路（一）">
+<meta property="og:url" content="https://vincelz.github.io/2017/01/12/linux/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
-<meta property="og:updated_time" content="2017-01-24T06:35:42.682Z">
+<meta property="og:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
+<meta property="og:updated_time" content="2017-02-26T10:05:41.940Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(1)">
-<meta name="twitter:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="twitter:title" content="Linux自学路（一）">
+<meta name="twitter:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +61,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(1) | 1000 words a Day </title>
+  <title> Linux自学路（一） | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +295,7 @@
           
           
             
-              java虚拟机总结(1)
+              Linux自学路（一）
             
           
         </h1>
@@ -313,8 +304,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-01-22T10:49:52+08:00" content="2017-01-22">
-            2017-01-22
+          <time itemprop="dateCreated" datetime="2017-01-12T16:01:23+08:00" content="2017-01-12">
+            2017-01-12
           </time>
         </span>
 
@@ -332,12 +323,356 @@
       
 
       
-        <span itemprop="articleBody"><p>回到了家，终于有时间可以更新下自己的博客了,长话短说</p>
-<hr>
-<p>抽时间读完了&lt;深入理解java虚拟机&gt;,收获颇丰总结如下：</p>
-<p>1.jvm中共享的数据区为:方法区  堆(heap)<br>  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等<br>      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，<br>      主要垃圾回收机制可以向管理java堆一样管理这部分内存，能够省去专门为方法区编写内存管理<br>      运行时常量池：是方法区的一部分，Class文件除了有类的版本 字段 方法 接口等描述信息外<br>      还有一项信息是常量池<br>  1.2 堆  是jvm中内存最大的一块，是所有的线程共享的存放对象实例（数组）也是垃圾回收的主<br>      要地方，细分为新生代，老年代<br>2.jvm线程中独有的数据区: 虚拟机栈 本地方法区  程序计数器<br>  2.1 栈 线程私有的， 他的生命周期和线程一致 ，每个方法在执行的同时都会创建一个栈帧用于<br>      存储局部变量,操作数栈,动态链接，方法出口，存放着编译期的各种基本数据类型<br>      boolean byte char short int float long double 对象引用reference类型<br>      对于栈，一般饱满后就会报stackOverflowError错误, 但是如果虚拟机容许自由扩展，那么可能报<br>      OutOfMemoryError错误<br>  2.2 本地方法区 同栈他是为java方法服务的，而本地方法区是为使用Native方法服务的<br>  2.3 程序计数器 一块较小的内存空间,他可以看作是执行的字节码的行号指示器各线程之间的计数器互不影响独立存储</p>
-<p>虚拟机生成对象的过程<br>    检测指令的参数是否在常量池中定位到–&gt;类是否被加载 解析 初始化 ——&gt;若没有则执行相应的类加载过程<br>    –&gt;检测通过后将为新生对象分配内存<br>分配内存由2种方法：<br>    指针碰撞：用过的内存放一边,没有使用的放在另外一边,中间放着一个指针作为分界点的指示器, Serial  parNew回收垃圾<br>    空闲表法:内存不是规整的,那么就需要维护一张表,记录哪些内存可以用,哪些不可以用  CMS垃圾回收<br>对象的内存分布：<br>    对象在内存区域中布局分为 对象头 实例数据  对齐填充<br>    对象头分为2部分：第一部分存储对象自身的运行数据 哈希吗 GC分带年龄 锁状态标识 线程持有的锁  偏向线程id<br>    另外一部分是:类型指针 对象指向的类元数据的指针，虚拟机通过这个对象确定对象是哪个类的实例，<br>    实例数据：部分是对象真正存储的有效信息，<br>    对齐填充：无特别意义，占位符的作用<br>虚拟机如何访问引用的对象呢？<br>    对象访问定位有2种方法:句柄  直接指针<br>    使用句柄访问，那么java堆中划分一块内存来作为句柄池，reference中存储的是对象的句柄地址<br>而句柄中包含了对象实例数据与类型数据各自的具体地址信息<br>    直接指针访问： reference中存储的是对象地址<br>    PS： String.intern()是一个本地方法，作用是 如果字符串常量池中已经包含了一个等于此字符串的，则返回池中的对象<br>    否则将String对象添加到常量池中，并且返回引用</p>
-<p>刚开始更新博客,哪里写的不好,请多见谅!!!!  续更</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放异彩，所以作为一名java工程师，我们毕竟学会Linux基本操作，这也是我们职业技能所必须要求的。</p>
+<p>#小知识点#<br>      管理员:#</p>
+<pre><code>普通管理员:$
+
+点开头的文件都是隐藏文件
+
+变量在赋值是不能前面加$的，只有在引用变量的时候才需要加$
+
+FHS 文件层次标准
+    /bin 下存放二进制的文件。管理员和普通管理员都可以使用
+/sbin 只有管理员才可以使用
+sudo 的作用就是把/sbin下的管理员命令权限转接给普通用户
+运行正常的功能程序存放位置:/usr/bin   /usr/sbin
+运行第三方软件的  /usr/local/bin   /usr/local/sbin
+
+linux 根目录   是内核直接引用的
+linux 根目录是所有的文件的起始点，不像win 系统的磁盘
+linux系统都是由挂载 实现的 ，对应的 也有卸载    把一个盘可以挂载为一个文件夹
+算数运算
+1   使用let    let n=n+1;   使用let 不需要$
+2  result=$[n+a]  也可以使用$  result=$[$n+5]
+3 也可以使用(())  但是变量名之前必须使用$    result=$((n+3))
+4 expr  同样可以使用基本算数操作符
+result=`expr 3+4`  result=$(expr $n+5)
+
+linux 3种流   标准输入 stdin ---0  标准输出 stdout-----1 标准错误 stderr ----2
+
+  重定向
+    ls &gt;out.txt
+    我们也可以加上数字把stdout stdin stderr 输出
+ cmd 2&gt;stderr.txt 的意思就是说如果cmd 命令有错误，就返回到stderr.txt中去
+
+cmd 2&gt;stderr.txt 1&gt;stdout.txt 本句指令说cmd如果有错误就输出到stderr中去，如果没有任何错误就把输出的东西定向到stdout.txt
+
+ 》》追加  &gt;覆盖
+一般 都会把stderr 错误的信息定西到/dev/null    /dev/null是一个无底洞，吃了错误就什么都没有了
+  declare  是申明变量的
+-x   声明环境变量
+declare -a  声明数组  -i  int  
+sleep  睡眠
+export -f  function   可以用来声明一个函数
+$? 来读取上个程序的返回值
+当你执行一个命令的时候，他会先去path去查找，如果找到了的话，第二次执行这个命令就不会查找path了，
+而是会保存到一个查找表里，哈希表的结构直接调用  
+  hash 命令就是来查看之前查找到的存储表
+
+
+  which+程序名  来查看程序名的位置  
+  reboot 重启  halt 关机
+  shutdown 操作符  时间
+  -r  重启
+  -h  关机
+  -c 取消时间作业
+  时间  now          +# 分钟
+  文件权限
+  10位
+  owner   group  other  9位权限 +  一个文件类型  共10位
+  没有权限的 用-来表示
+  数字表示法  r  4    w  2   x  1
+  chown  chgrp 修改文件的属主  和 属组
+  chmod 修改文件的所有权限
+  umask  权限过滤
+
+  设置本地变量
+    set a =value;
+    a=value;
+  引用 变量 $a
+  撤销变量 unset a;
+
+  环境变量
+    export a=&quot;&quot;
+    a=&quot;&quot;  export a
+  $0 脚本本身的名字
+  $1-$n 参数
+  $? 上个命令的执行状态  0成功 其余失败
+  $#参数个数
+  set  显示当前系统的所有变量
+  env 显示所有的环境变量
+  wc 字数统计  wc -c 字符统计 wc-w 单词  wc -l 行数
+  tr 转换  替换 tr -d &quot;&quot; 删除出现的字符  tr  &quot;1&quot;  &quot;2&quot;   2替换1
+  cut 切割  -d 指定分割符
+    read -p  交互式的获取值
+
+    cut -d : -f1  的意思就是说吧前面的管道以:分隔，f1  显示第一行
+    test   和 [   ]    逻辑判断式
+    -eq 等于  -ne 不等于   -le小于等于 -ge 大于等于 -lt 小于  -gt 大于
+    禁止用户登陆
+    usermod -s /sbin/nologin 用户名
+
+    service 服务名  start  stop  restart  用来关闭/启动/重启服务
+    开机永久禁用服务 chkconfig 服务名  off /on   开启  关闭 服务
+    /etc/ssh/sshd_config  可以配置一些ssh服务的配置信息
+    sudo   允许普通会员可以使用一些管理员的权限
+    所以我们需要使用su  来给sudo 配置一些权限  这个权限可以精确到木个用户
+    例如
+    user1 是没有权限访问/etc/shadow  文件的我们可以使用su 来给他福权限
+
+    使用su  查看/etc/sudoers 文件  添加 信息
+    user1  ALL= /bin/more /etc/shadow
+    后就可以让user1来访问这个文件了  默认用户还需要输入密码  才可以访问 ，有效期是5分钟
+
+    不需要输入密码的是
+    user1 ALL=NOPASSWD: /etc/init.d/nagios restart
+    让user2有所有的权限，但是不想输入密码
+    user2 ALL=(ALL) NOPASSWD :ALL
+
+    强烈介意 使用sudo  给用户赋予权限 ，可以安全 有效
+    yum install  安装
+    yum update 更新市场
+    yum remove 移除应用
+    yum check-update  检查 和更新应用
+    w  命令 可以查看登陆过这台服务器的所有用户名
+    passwd -l 用户名   就可以锁定该用户
+    ps -ef |grep 用户名 来查找进程
+    kill -9 pid  就可以杀死这个用户，踢出去
+    pifof 服务名  就可以获取该服务的pid
+    rpm -Va  来检查所有的软件 是否被修改
+    netstat -an  来查看开放 的端口
+    /etc/fstab 来配置 分区 信息的
+
+    /etc/inittab  是配置开机启动项的文件
+
+      ifconfig eth0 192.168.1.1  讲第一个网卡ip设置成
+
+      ifconfig eth0 down  关闭网卡1
+      ifconfig eth1 up 开启 网卡2
+
+      ifconfig eth0  查看 网卡一的信息
+
+
+      ping  
+      ping -n 数字 192.168,1,1   发生包次数
+      ping -t ip   一直不听的发送
+
+      ping -l 数字  ip   发送制定大小的包大小
+
+      shutdown -h now 立刻进行关机
+      shutdown -r noew 重启
+      reboot  重启
+
+      logout 注销
+
+
+
+      vi是linux的编译器  可以写c代码 和java  代码
+      vi aa.cpp;
+      然后写c代码
+      写完后 wq  保持退出  q!不保存退出
+      ls -l   ls 是连出文件  -l  就是 显示出文件的详细信息
+      编译gcc c文件名       ./x文件     执行
+      运行c程序
+
+      root 存放root用户相关的文件
+      home 存放普通用户的文件
+      bin 方法普通命令的目录
+      sbin  使用权限才能使用的命令文件
+      mnt 挂载光驱 和软驱的
+      boot  存放引导文件
+      etc 存放配置相关文件
+      var 存在异常文件
+      user 存放用户的程序，文件
+
+      ls 看到当前目录下所有文件
+      ls -l  列出所有文件以及详细信息
+      sudo apt-get install 包名   安装包
+      pwd 现在当前在哪个目录下
+
+
+      用户管理
+      useradd 用户名
+      passwd 用户名  修改该密码
+      userdel 用户名 删除
+      userdel -r 用户名   删除用户已经用户主目录
+      exit 是退出当前用户
+       init[0-6]
+      0 关机   1 单用户  2多用户没有网络  3多用户有网络 4系统未使用保留给用户 5 图形界面 6 系统重启  常用3 5
+
+      如何不进去系统就修改错误配置的方法  ：在开机的时候按下e  在选中 第二行  在输入e   最后输入1【单用户级别】
+
+      ls -a 显示隐藏文件
+      ls -l 显示长列表格方式
+      mkdir 建立文件夹
+      rmdir 删除文件夹
+      touch 建立空文件
+      cp  复制命令
+      mv 移动文件和改文件名
+      rm 删除文件和目录
+      rm -rf *  删除所有的内容  r 递归  f 强制
+      ln 建立符号链接
+      ln -s 源目标
+      tab 键是 自动补全
+      more 显示文件内容 带分页
+      less 显示文件内容带分页
+      grep 在文本中查询内容  grep 查找的文字 文件名
+      | 管道命令 ls -l /home/xxx | more     管道命令就是把上一个命令的结果交给|后面的命令处理
+      man  help帮助
+
+      find  搜索文件以及目录
+
+      find  目录地址  文件名
+      find 地址 -amin -10 10分钟内存取的文件或者目录
+      find         -atime -10 10小时
+                  -cmin -10 10分钟内更改过的文件
+                     -ctime +10  10小时更改过的
+
+      find 地址  -size +10k  查找大小为10k的文件
+
+      重定向
+      ls -l &gt; 文件名    列表的内容写到后面的文件里面
+      ls -al &gt;&gt;aa.txt    列表的内容追加到文件末尾
+      grep -n 关键字 文件 &gt;aa.txt 把结果保存到aa.txt
+
+      用户权限
+      usermod -g 组名  用户名 修改用户的所在组
+      usermod -d 目录  用户名  改变用户登录的初始目录
+
+      添加组
+      groupadd 组名
+      查看所有的用户组信息 ：vi /etc/group   就可以到看信息                vi / cat  vi可以修改编辑  cat 只能查看不能修改的命令
+
+      添加用户并且添加到制定组    useradd -g 组名 用户名
+
+      查看linux所有用户信息 vi /etc/passwd  类型查看组
+
+
+      如何修改文件的访问权限问题：    修改权限 chmod 改变文件权限 755  3组权限 分别用数字来替代
+      chmod    权限码  文件夹目录名
+      who am i   查看自己是哪个用户
+
+      ls -ahl 文件的所在组
+      chgrp  组名  文件名 修改文件的所在组
+
+
+
+      jdk安装
+      mount /mnt/cdrom/  加载光驱
+      umount /mnt/cdrom/卸载光驱
+      安装时把安装文件拷贝到home下在进行安装
+      ./ 文件名   就开始解压缩   是解压缩  然后就可以使用jdk了 但是需要配置环境变量
+      vi /etc/profile  环境配置文件
+      JAVA_HOME=&quot;目录&quot;
+      PATH=$PATH;
+
+
+
+      eclipse 安装
+      拷贝文件到其他地方
+      安装：   tar -zxvf  文件.tar.gz          这种方式可以安装tar.gz文件
+      然后进到解压目录下 然后./eclipse     启动它  前提 是你先进入了 图形界面
+      startx 启动图形界面
+      ./  是 解压  执行的 意思
+      安装 ./xxxxx.bin
+       ./ xxxxx &amp; 加个&amp;意思是后台运行，控制台可以做其他的
+
+
+
+      linux 分区
+      linux会创建一个文件夹体系结构，然后磁盘就会挂载到这个文件夹山
+      mount [-参数[ 【设备名称】 【挂载点】
+      umonut [设备名称】 卸载
+      df [-参数]  查看磁盘使用情况
+      df [目录全路径] 查看目录是在哪个分区的
+      fdisk -l 查看系统分区具体情况
+
+
+      shell  
+      就是命令解释器
+
+      history 5   显示最近使用的5个命令
+
+      网络环境配置
+          ifconfig eth0 XXX.XXX.XXX.XXX
+
+      route add default gw XXX.XXX.XXX.XXX
+
+      echo &quot;nameserver XXX.XXX.XXX.XXX&quot; &gt;&gt; /etc.resolv.conf
+
+
+      ifconfig 网卡名 down  /up  开启或者关闭网卡
+      创建多层目录的  mkdir a/a/a/v -p  价格 参数 -p
+
+      ls &gt; a.txt  把ls 的内容 写到a.txt
+
+      mv  移动文件
+      wc 统计文本行数 字数
+      rmdir 删除空目录
+      pwd 显示当前目录
+      more less  分页显示文件内容
+
+
+      find [file-or-dir] [option]  参数-name  按照文件名查找文件
+      -perm 按照文件权限来查找
+      -user  按照文件属主 查找文件
+
+
+      grep [参数] “搜索的字符串” filename
+      -c 计算找出 搜索字符串的次数
+      -i  忽略大小写的不同
+      -n  输入行号
+      -v 反向
+      ps -ef 查看当前进程
+      |  管道符   就是把前面的结果 作为后面的对象
+
+      who  显示在线用户
+      stat 显示制定文件的详细信息
+      whoami显示用户自己的省份
+      hostname显示主机名称
+      uname显示系统信息
+      dmesg显示系统启动信息
+      top 显示当前系统中耗费资源最多的进程  -d 制定没俩次刷新  
+      ps  显示瞬间的进程
+      kill命令 [-s] -p -a 进程号
+
+      du  显示定制文件已使用的磁盘空间
+      df 显示文件系统空间使用情况
+      free 显示当前内存的和交换空间使用情况
+      netstat 显示网络状态信息
+      man 命令帮助
+      clear 清屏
+
+      gzip 压缩（解压）文件或者目录
+      bzip2 压缩 解压
+      tar 文件的打包 和解压./
+
+      启动 服务 service 服务名 restart(重启） start开启
+      chkconfig 查看当前服务的状态
+      service iptables stop 关闭防火墙
+      reboot 重启
+      halt 关机后关闭电源
+      shutdown 系统关机  -r 立即关机重启  -h 不重启  -now 立即关机
+
+      rpm -qa 显示系统中已安装的软件
+            -qr 显示包的依赖关系
+
+      chgrp 修改档案所属组
+      chown 改变档案拥有则
+      chmod 改变档案权限
+      etc下面有一些 目录 存放 密码  用户 用户组 ............
+      -r 把子文件修改  -f 强制
+      文件类型是l 的 代表快捷方式
+
+      /usr  与软件安装 执行有关
+      /var 系统运作过程有关
+      cd ~ 回到自己的home目录
+      cd - 回到刚才那个目录
+      dir  -p 就可以多层创建目录
+      -f 强制 -r目录下的所有文件  -p多层目录
+      id  +用户名  查看该用户的属性
+        route -n 查看路由状态
+</code></pre><p>##<br>这就是我平时笔记记录下的linux 常用的命令小技巧吧，可能有点乱，等我有时间了，把文章内容进行分篇吧。</p>
 </span>
       
     </div>
@@ -346,7 +681,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
           
         </div>
       
@@ -355,13 +690,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="prev">java虚拟机总结(2)</a>
+              <a href="/2017/01/22/java虚拟机总结(1)/" rel="prev">java虚拟机总结(1)</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/12/linux/" rel="next">Linux自学路（一）</a>
+              <a href="/2016/12/28/app&web/" rel="next">知识产权app&后端web技术总结</a>
             
           </div>
         </div>
@@ -490,7 +825,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
