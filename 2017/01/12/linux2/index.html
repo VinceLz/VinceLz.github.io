@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -42,29 +42,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
+<meta name="description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(2)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/24/java虚拟机总结(2)/index.html">
+<meta property="og:title" content="Linux自学路（一）">
+<meta property="og:url" content="https://vincelz.github.io/2017/01/12/linux2/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/2.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/3.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/4.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/5.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/6.png">
-<meta property="og:updated_time" content="2017-01-25T10:55:36.267Z">
+<meta property="og:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
+<meta property="og:updated_time" content="2017-02-26T10:05:41.940Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(2)">
-<meta name="twitter:description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png">
+<meta name="twitter:title" content="Linux自学路（一）">
+<meta name="twitter:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -74,7 +61,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(2) | 1000 words a Day </title>
+  <title> Linux自学路（一） | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -308,7 +295,7 @@
           
           
             
-              java虚拟机总结(2)
+              Linux自学路（一）
             
           
         </h1>
@@ -317,8 +304,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-01-24T13:33:13+08:00" content="2017-01-24">
-            2017-01-24
+          <time itemprop="dateCreated" datetime="2017-01-12T16:01:23+08:00" content="2017-01-12">
+            2017-01-12
           </time>
         </span>
 
@@ -336,39 +323,356 @@
       
 
       
-        <span itemprop="articleBody"><p> java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来</p>
-<hr>
-<p> 垃圾回收器与内存分配策略：<br>    如何判断对象已死？<br>       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。<br>    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一个问题,就是对象之间相互循环引用的bug,如<br>       objA.instance=objB;  objB.instance=objA;   他们之间互相引用，导致系统永远无法清理这2个对象，也就无法gc</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png" alt=""></p>
-<p>可达性分析算法：<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/2.png" alt=""><br>    从GC root 开心向下搜索  搜索走过的路程叫做引用链，如果遇到对象不可达，则说明这个对象不可用，就可以收回 如上图中的obj5 obj6 obj7 他们之间虽然相互关联，但是无法从GCroot遍历到，所以可以回收。<br>       java中，可以作为GCROOT的对象包括如下几种：<br>                虚拟机栈中引用的对象<br>                方法区中类静态属性引用的对象<br>                方法区中常量引用的对象<br>                本地方法栈中JNI （native方法）引用的对象<br>说起引用,Java有4种引用类型<br>                强引用:类似Object obj=new Object() 只要强引用存在，垃圾回收器就永远不会回收该对象<br>                软引用：有用但并非必需的对象，系统发生内存溢出之前，会把这些对象回收，如果回收后内存依旧不够，就会报错<br>                弱引用：非必需对象，比软引用弱一些，只能生存到下一次垃圾回收发生之前，不论如何都会被回收！<br>                虚引用：基本无作用，最弱的一种，就是为一个对象设置虚引用目的就是能在这个对象被收集器回时收到一个系统通知<br>对象自我拯救？<br>    在可达性分析中，当从GCroot无法达到的对象不一定非死不可，这时候他们处于缓刑阶段，一个对象要死亡，必须经过2次标记，当第一次无法从GCROOT达到时，就会被标记并且筛选，筛选条件是是否必要执行finalize()方法，当对象没有覆盖finzlize方法或者已经被虚拟机调用，此时虚拟机将视为没有必要执行，而对于有必要执行的对象，将会将对象放到F-Queue队列中，并有虚拟机自动建立线程去执行，如果对象要在finalize方法中成功拯救自己，只要重新与引用链上的任何一个对象关联，第二次标记将移除即将回收的集合，如果对象没有逃脱，那么基本就回收了<br>   Hotspot把方法区作为了永久区，<br>永久区的垃圾回收主要分2部分， 废弃的常量和无用的类，回收废弃的常量与对象一样，检测常量是否被引用，如String 对象 ，常量池中有abc 如果没有任何一个字符串引用，那么abc常量就会回收</p>
-<p>想对判断常量比较简单，判断类就比较复杂，需要满足一下条件:<br>该类的所有实例全部回收，也就是java堆中不存在任何该实例<br>加载该类的ClassLoader已经被回收<br>该类对应的Class对象没有任何地方被引用，无法再任何地方通过反射访问该类<br>满足以上3个条件的无用类进行回收，但不象对象那样，不使用了就必须回收<br>ps 方法区也叫永久带，他里面放了一些类，和常量，所以我们上面讨论的是永久区中的类的回收，跟对象的实例回收一样，只是实例和类不一样！</p>
-<p>垃圾回收算法？<br>            标记-清除算法  分标记  清除 2个阶段，首先标记出需要回收对象，在标记后统一回收。缺点：效率问题  会产生大量空间碎片<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/3.png" alt=""></p>
-<pre><code>复制算法
-</code></pre><p>将可用的内存按容量划分大小相等大小的2块，每次只使用1块，当一块使用玩了。就将会活着的对象复制到另外一块，然后再把已使用完的内存空间一次清理，这样每次都是对整个半区进行回收，缺点：内存变为一半<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/4.png" alt=""></p>
-<pre><code>标记-整理法
-</code></pre><p>根据老年代的特点，标记过程仍然与标记-清除 算法一样，但后续步揍不是直接对可回收对象进行清理，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/5.png" alt=""></p>
-<pre><code>分带收集算法
-</code></pre><p>根据对象存活周期的不同将内存化为几块，一般是新生代  老年代   。在新生代中每次垃圾收集有大批对象死去，只有少量存活，就选用复制算法   老年代对象存活率高，没有额外的空间分配，则必须使用标记-清理或者 标记-整理算法</p>
-<p>说说HotSpot的算法实现<br>     枚举根节点 类似GC ROOT 根节点遍历，，，但是有个要求是停顿，确保一致性的快照，整个系统被冻结到某个时间点，不可以出现分析过程中引用关系不断变化，Stop -The -World .并且停顿也不会随便停顿，会有一个安全点才才可以停顿发生GC枚举<br>        如何让线程跑到最近的安全点停顿下来呢? 2种方案<br>                    1 抢占式中断 不需要线程执行代码配合,在GC发生时,首先所有线程全部中断,如果发现有线程中断的地方不安全,就恢复线程,让他跑到安全点. ,目前大部分虚拟机使用这个<br>                    2 主动式中断当GC需要中断线程的时候,不直接对线程操作.只是简单的设置一个标记,各个线程执行时主动去轮询这个标记,发现中断标志为真就自己中断挂起,轮询标记的地方和安全点是重合的.另外在加上创建对象需要分配内存的地方.</p>
-<p>HotSpot 的几种垃圾回收器<br>                <img src="http://ok9vfjkgl.bkt.clouddn.com/6.png" alt=""></p>
-<pre><code>Serial 收集器
-</code></pre><p>单线程收集器。。进行垃圾回收时，必须暂停其他所有的工作线程 直到收集结束。一般使用在  运行在Client模式下的虚拟机 可以与CMS配合使用</p>
-<pre><code>ParNew收集器    
-</code></pre><p>其实就是Serial的多线程版本。运行在Server模式下，对于单cpu的话，性能没有serial器高效 可以与CMS 收集器配合使用（CMS是hotspot正真意义上的并发执行的收集器）</p>
-<pre><code>parallel Scavenge 收集器
-</code></pre><p>新生代收集器。使用复制算法，又是多线程。他与其他收集器不同的是，CMS关注点是缩短垃圾回收用户线程的停顿时间，而Parallel Scavenge 目的是达到一个可控制的吞吐量，所谓吞吐量就是CPU用于运行用户代码的时间与Cpu总消耗时间的比值。吞吐量=运行用户代码/（运行用户代码时间+垃圾收回时间）<br>停顿时间越短越适合需要与用户交互的程序，高吞吐量可以高效的利用cpu时间，适合后台计算而不交互的<br>此收集器最大的特点是 自适应调节策略。会根据当前系统运行情况收集性能信息，动态调整参数保证最合适的停顿时间和最大的吞吐量</p>
-<pre><code>Serial old 收集器
-</code></pre><p>是Serial的老年代版本。单线程。使用标记-整理法也运行在client模式下。</p>
-<pre><code>Parallel old 收集器
-</code></pre><p>是Parallel  的老年代版本，多线程的 标记-整理算法。这个收集器 一般与parallel Scavenge 配合使用，</p>
-<pre><code>CMS收集器
-</code></pre><p>以获取最短停顿时间为目标的收集器。一般集中在B/S架构上，标记-清除算法  分为几个过程，老年代<br>                    初始标记<br>                    并发标记<br>                    重新标记<br>                    并发清除<br>  初始标记和重新标记需要停顿，初始标记仅仅标记一下GC ROOTS能直接关联到的对象。速度快，并发标记就是进行GC ROOTS Tracing（追查检测）过程， 重新标记是为了修正并发阶段因用户程序继续运作导致标记产生变动的那一部分标记记录， 整个过程耗时最长的并发标记和并发清除都可以与用户线程一起工作，所以总体CMS可以与用户现场一起并发执行</p>
-<pre><code>G1 回收器
-</code></pre><p>特点：并行和并发：利用多CPU<br>      分带收集<br>      空间整合： 基本基于标记-整理算法。局部使用复制算法<br>      可预测的停顿：可以设置垃圾收集上不得超过N毫秒<br>G1以前收集器还分老年代 新生代， 但是G1后 将整个堆划分为多个大小相等的独立区域，但新生代和老年代不再用物理隔离了。</p>
-<p>阶段: 初始标记<br>      并发标记<br>      最终标记<br>      筛选标记<br>详细过程：初始标记阶段仅仅只是标记一下GCroot能直接关联到对象，并且修改TAMS值，这个阶段需要停顿线程。耗时很短（这个阶段主要是建立起GC树）。  并发阶段是从GCroot开始对堆进行可达性分析，找出存活对象，耗时长，可与用户线程并发，最终阶段是为了修正并发阶段期间因用户程序运作导致标记产生变动的那部分，虚拟机将这段时间对象变化记录在线程Remembered Set Logs中，最终阶段需要把这个数据合并到Remembered Set 中，这个阶段需要停顿，可以并发执行，最终筛选阶段首先对各个策略回收价值和成本进行排序，来定制期望GC最佳方案</p>
-<p>内存分配与回收策略？<br>对象优先在新生代中的Eden区中分配，当空间不够，则发生Minor GC  ——新生代GC  Minor GC     老年代GC  Major GC /FULL GC 大对象直接进入老年代长期存活的对象直接进入老年代—–虚拟机给每个对象定义一个对象年龄（对象头） 一般超过15岁就是老年人  每一次GC 就会年龄+1 </p>
-<p>介绍几种常用命令</p>
-<p>jps  显示指定系统内所有的hotspot虚拟机进场<br>jstat 收集hotspot 虚拟机各方面的运行数据<br>jinfo 显示虚拟机配置信息<br>jmap 生成虚拟机的内存转储快照<br>jhat 分析文件 ，建立服务器 提供html/http，让用户可以游览器上分析结果<br>jstack 显示虚拟机线程快照<br>java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放异彩，所以作为一名java工程师，我们毕竟学会Linux基本操作，这也是我们职业技能所必须要求的。</p>
+<p>#小知识点#<br>      管理员:#</p>
+<pre><code>普通管理员:$
+
+点开头的文件都是隐藏文件
+
+变量在赋值是不能前面加$的，只有在引用变量的时候才需要加$
+
+FHS 文件层次标准
+    /bin 下存放二进制的文件。管理员和普通管理员都可以使用
+/sbin 只有管理员才可以使用
+sudo 的作用就是把/sbin下的管理员命令权限转接给普通用户
+运行正常的功能程序存放位置:/usr/bin   /usr/sbin
+运行第三方软件的  /usr/local/bin   /usr/local/sbin
+
+linux 根目录   是内核直接引用的
+linux 根目录是所有的文件的起始点，不像win 系统的磁盘
+linux系统都是由挂载 实现的 ，对应的 也有卸载    把一个盘可以挂载为一个文件夹
+算数运算
+1   使用let    let n=n+1;   使用let 不需要$
+2  result=$[n+a]  也可以使用$  result=$[$n+5]
+3 也可以使用(())  但是变量名之前必须使用$    result=$((n+3))
+4 expr  同样可以使用基本算数操作符
+result=`expr 3+4`  result=$(expr $n+5)
+
+linux 3种流   标准输入 stdin ---0  标准输出 stdout-----1 标准错误 stderr ----2
+
+  重定向
+    ls &gt;out.txt
+    我们也可以加上数字把stdout stdin stderr 输出
+ cmd 2&gt;stderr.txt 的意思就是说如果cmd 命令有错误，就返回到stderr.txt中去
+
+cmd 2&gt;stderr.txt 1&gt;stdout.txt 本句指令说cmd如果有错误就输出到stderr中去，如果没有任何错误就把输出的东西定向到stdout.txt
+
+ 》》追加  &gt;覆盖
+一般 都会把stderr 错误的信息定西到/dev/null    /dev/null是一个无底洞，吃了错误就什么都没有了
+  declare  是申明变量的
+-x   声明环境变量
+declare -a  声明数组  -i  int  
+sleep  睡眠
+export -f  function   可以用来声明一个函数
+$? 来读取上个程序的返回值
+当你执行一个命令的时候，他会先去path去查找，如果找到了的话，第二次执行这个命令就不会查找path了，
+而是会保存到一个查找表里，哈希表的结构直接调用  
+  hash 命令就是来查看之前查找到的存储表
+
+
+  which+程序名  来查看程序名的位置  
+  reboot 重启  halt 关机
+  shutdown 操作符  时间
+  -r  重启
+  -h  关机
+  -c 取消时间作业
+  时间  now          +# 分钟
+  文件权限
+  10位
+  owner   group  other  9位权限 +  一个文件类型  共10位
+  没有权限的 用-来表示
+  数字表示法  r  4    w  2   x  1
+  chown  chgrp 修改文件的属主  和 属组
+  chmod 修改文件的所有权限
+  umask  权限过滤
+
+  设置本地变量
+    set a =value;
+    a=value;
+  引用 变量 $a
+  撤销变量 unset a;
+
+  环境变量
+    export a=&quot;&quot;
+    a=&quot;&quot;  export a
+  $0 脚本本身的名字
+  $1-$n 参数
+  $? 上个命令的执行状态  0成功 其余失败
+  $#参数个数
+  set  显示当前系统的所有变量
+  env 显示所有的环境变量
+  wc 字数统计  wc -c 字符统计 wc-w 单词  wc -l 行数
+  tr 转换  替换 tr -d &quot;&quot; 删除出现的字符  tr  &quot;1&quot;  &quot;2&quot;   2替换1
+  cut 切割  -d 指定分割符
+    read -p  交互式的获取值
+
+    cut -d : -f1  的意思就是说吧前面的管道以:分隔，f1  显示第一行
+    test   和 [   ]    逻辑判断式
+    -eq 等于  -ne 不等于   -le小于等于 -ge 大于等于 -lt 小于  -gt 大于
+    禁止用户登陆
+    usermod -s /sbin/nologin 用户名
+
+    service 服务名  start  stop  restart  用来关闭/启动/重启服务
+    开机永久禁用服务 chkconfig 服务名  off /on   开启  关闭 服务
+    /etc/ssh/sshd_config  可以配置一些ssh服务的配置信息
+    sudo   允许普通会员可以使用一些管理员的权限
+    所以我们需要使用su  来给sudo 配置一些权限  这个权限可以精确到木个用户
+    例如
+    user1 是没有权限访问/etc/shadow  文件的我们可以使用su 来给他福权限
+
+    使用su  查看/etc/sudoers 文件  添加 信息
+    user1  ALL= /bin/more /etc/shadow
+    后就可以让user1来访问这个文件了  默认用户还需要输入密码  才可以访问 ，有效期是5分钟
+
+    不需要输入密码的是
+    user1 ALL=NOPASSWD: /etc/init.d/nagios restart
+    让user2有所有的权限，但是不想输入密码
+    user2 ALL=(ALL) NOPASSWD :ALL
+
+    强烈介意 使用sudo  给用户赋予权限 ，可以安全 有效
+    yum install  安装
+    yum update 更新市场
+    yum remove 移除应用
+    yum check-update  检查 和更新应用
+    w  命令 可以查看登陆过这台服务器的所有用户名
+    passwd -l 用户名   就可以锁定该用户
+    ps -ef |grep 用户名 来查找进程
+    kill -9 pid  就可以杀死这个用户，踢出去
+    pifof 服务名  就可以获取该服务的pid
+    rpm -Va  来检查所有的软件 是否被修改
+    netstat -an  来查看开放 的端口
+    /etc/fstab 来配置 分区 信息的
+
+    /etc/inittab  是配置开机启动项的文件
+
+      ifconfig eth0 192.168.1.1  讲第一个网卡ip设置成
+
+      ifconfig eth0 down  关闭网卡1
+      ifconfig eth1 up 开启 网卡2
+
+      ifconfig eth0  查看 网卡一的信息
+
+
+      ping  
+      ping -n 数字 192.168,1,1   发生包次数
+      ping -t ip   一直不听的发送
+
+      ping -l 数字  ip   发送制定大小的包大小
+
+      shutdown -h now 立刻进行关机
+      shutdown -r noew 重启
+      reboot  重启
+
+      logout 注销
+
+
+
+      vi是linux的编译器  可以写c代码 和java  代码
+      vi aa.cpp;
+      然后写c代码
+      写完后 wq  保持退出  q!不保存退出
+      ls -l   ls 是连出文件  -l  就是 显示出文件的详细信息
+      编译gcc c文件名       ./x文件     执行
+      运行c程序
+
+      root 存放root用户相关的文件
+      home 存放普通用户的文件
+      bin 方法普通命令的目录
+      sbin  使用权限才能使用的命令文件
+      mnt 挂载光驱 和软驱的
+      boot  存放引导文件
+      etc 存放配置相关文件
+      var 存在异常文件
+      user 存放用户的程序，文件
+
+      ls 看到当前目录下所有文件
+      ls -l  列出所有文件以及详细信息
+      sudo apt-get install 包名   安装包
+      pwd 现在当前在哪个目录下
+
+
+      用户管理
+      useradd 用户名
+      passwd 用户名  修改该密码
+      userdel 用户名 删除
+      userdel -r 用户名   删除用户已经用户主目录
+      exit 是退出当前用户
+       init[0-6]
+      0 关机   1 单用户  2多用户没有网络  3多用户有网络 4系统未使用保留给用户 5 图形界面 6 系统重启  常用3 5
+
+      如何不进去系统就修改错误配置的方法  ：在开机的时候按下e  在选中 第二行  在输入e   最后输入1【单用户级别】
+
+      ls -a 显示隐藏文件
+      ls -l 显示长列表格方式
+      mkdir 建立文件夹
+      rmdir 删除文件夹
+      touch 建立空文件
+      cp  复制命令
+      mv 移动文件和改文件名
+      rm 删除文件和目录
+      rm -rf *  删除所有的内容  r 递归  f 强制
+      ln 建立符号链接
+      ln -s 源目标
+      tab 键是 自动补全
+      more 显示文件内容 带分页
+      less 显示文件内容带分页
+      grep 在文本中查询内容  grep 查找的文字 文件名
+      | 管道命令 ls -l /home/xxx | more     管道命令就是把上一个命令的结果交给|后面的命令处理
+      man  help帮助
+
+      find  搜索文件以及目录
+
+      find  目录地址  文件名
+      find 地址 -amin -10 10分钟内存取的文件或者目录
+      find         -atime -10 10小时
+                  -cmin -10 10分钟内更改过的文件
+                     -ctime +10  10小时更改过的
+
+      find 地址  -size +10k  查找大小为10k的文件
+
+      重定向
+      ls -l &gt; 文件名    列表的内容写到后面的文件里面
+      ls -al &gt;&gt;aa.txt    列表的内容追加到文件末尾
+      grep -n 关键字 文件 &gt;aa.txt 把结果保存到aa.txt
+
+      用户权限
+      usermod -g 组名  用户名 修改用户的所在组
+      usermod -d 目录  用户名  改变用户登录的初始目录
+
+      添加组
+      groupadd 组名
+      查看所有的用户组信息 ：vi /etc/group   就可以到看信息                vi / cat  vi可以修改编辑  cat 只能查看不能修改的命令
+
+      添加用户并且添加到制定组    useradd -g 组名 用户名
+
+      查看linux所有用户信息 vi /etc/passwd  类型查看组
+
+
+      如何修改文件的访问权限问题：    修改权限 chmod 改变文件权限 755  3组权限 分别用数字来替代
+      chmod    权限码  文件夹目录名
+      who am i   查看自己是哪个用户
+
+      ls -ahl 文件的所在组
+      chgrp  组名  文件名 修改文件的所在组
+
+
+
+      jdk安装
+      mount /mnt/cdrom/  加载光驱
+      umount /mnt/cdrom/卸载光驱
+      安装时把安装文件拷贝到home下在进行安装
+      ./ 文件名   就开始解压缩   是解压缩  然后就可以使用jdk了 但是需要配置环境变量
+      vi /etc/profile  环境配置文件
+      JAVA_HOME=&quot;目录&quot;
+      PATH=$PATH;
+
+
+
+      eclipse 安装
+      拷贝文件到其他地方
+      安装：   tar -zxvf  文件.tar.gz          这种方式可以安装tar.gz文件
+      然后进到解压目录下 然后./eclipse     启动它  前提 是你先进入了 图形界面
+      startx 启动图形界面
+      ./  是 解压  执行的 意思
+      安装 ./xxxxx.bin
+       ./ xxxxx &amp; 加个&amp;意思是后台运行，控制台可以做其他的
+
+
+
+      linux 分区
+      linux会创建一个文件夹体系结构，然后磁盘就会挂载到这个文件夹山
+      mount [-参数[ 【设备名称】 【挂载点】
+      umonut [设备名称】 卸载
+      df [-参数]  查看磁盘使用情况
+      df [目录全路径] 查看目录是在哪个分区的
+      fdisk -l 查看系统分区具体情况
+
+
+      shell  
+      就是命令解释器
+
+      history 5   显示最近使用的5个命令
+
+      网络环境配置
+          ifconfig eth0 XXX.XXX.XXX.XXX
+
+      route add default gw XXX.XXX.XXX.XXX
+
+      echo &quot;nameserver XXX.XXX.XXX.XXX&quot; &gt;&gt; /etc.resolv.conf
+
+
+      ifconfig 网卡名 down  /up  开启或者关闭网卡
+      创建多层目录的  mkdir a/a/a/v -p  价格 参数 -p
+
+      ls &gt; a.txt  把ls 的内容 写到a.txt
+
+      mv  移动文件
+      wc 统计文本行数 字数
+      rmdir 删除空目录
+      pwd 显示当前目录
+      more less  分页显示文件内容
+
+
+      find [file-or-dir] [option]  参数-name  按照文件名查找文件
+      -perm 按照文件权限来查找
+      -user  按照文件属主 查找文件
+
+
+      grep [参数] “搜索的字符串” filename
+      -c 计算找出 搜索字符串的次数
+      -i  忽略大小写的不同
+      -n  输入行号
+      -v 反向
+      ps -ef 查看当前进程
+      |  管道符   就是把前面的结果 作为后面的对象
+
+      who  显示在线用户
+      stat 显示制定文件的详细信息
+      whoami显示用户自己的省份
+      hostname显示主机名称
+      uname显示系统信息
+      dmesg显示系统启动信息
+      top 显示当前系统中耗费资源最多的进程  -d 制定没俩次刷新  
+      ps  显示瞬间的进程
+      kill命令 [-s] -p -a 进程号
+
+      du  显示定制文件已使用的磁盘空间
+      df 显示文件系统空间使用情况
+      free 显示当前内存的和交换空间使用情况
+      netstat 显示网络状态信息
+      man 命令帮助
+      clear 清屏
+
+      gzip 压缩（解压）文件或者目录
+      bzip2 压缩 解压
+      tar 文件的打包 和解压./
+
+      启动 服务 service 服务名 restart(重启） start开启
+      chkconfig 查看当前服务的状态
+      service iptables stop 关闭防火墙
+      reboot 重启
+      halt 关机后关闭电源
+      shutdown 系统关机  -r 立即关机重启  -h 不重启  -now 立即关机
+
+      rpm -qa 显示系统中已安装的软件
+            -qr 显示包的依赖关系
+
+      chgrp 修改档案所属组
+      chown 改变档案拥有则
+      chmod 改变档案权限
+      etc下面有一些 目录 存放 密码  用户 用户组 ............
+      -r 把子文件修改  -f 强制
+      文件类型是l 的 代表快捷方式
+
+      /usr  与软件安装 执行有关
+      /var 系统运作过程有关
+      cd ~ 回到自己的home目录
+      cd - 回到刚才那个目录
+      dir  -p 就可以多层创建目录
+      -f 强制 -r目录下的所有文件  -p多层目录
+      id  +用户名  查看该用户的属性
+        route -n 查看路由状态
+</code></pre><p>##<br>这就是我平时笔记记录下的linux 常用的命令小技巧吧，可能有点乱，等我有时间了，把文章内容进行分篇吧。</p>
 </span>
       
     </div>
@@ -377,7 +681,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
           
         </div>
       
@@ -386,13 +690,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/27/总结java8-新特征/" rel="prev">总结java8 新特性</a>
+              <a href="/2017/01/20/WebService/" rel="prev">WebService</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/22/java虚拟机总结(1)/" rel="next">java虚拟机总结(1)</a>
+              <a href="/2016/12/28/app&web/" rel="next">知识产权app&后端web技术总结</a>
             
           </div>
         </div>
@@ -521,7 +825,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
