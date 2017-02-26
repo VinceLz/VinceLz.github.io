@@ -60,7 +60,7 @@
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/frame.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/dowm.png">
-<meta property="og:updated_time" content="2017-02-26T06:34:01.839Z">
+<meta property="og:updated_time" content="2017-02-26T08:57:01.055Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识产权app&Android技术总结">
 <meta name="twitter:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
@@ -317,7 +317,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on
+          Veröffentlicht am
           <time itemprop="dateCreated" datetime="2016-12-22T16:55:13+08:00" content="2016-12-22">
             2016-12-22
           </time>
@@ -384,14 +384,17 @@
    prefsWriter.apply();
 </code></pre><p>我们把cookie缓存到内存中，并最终实现持久化到本地，这样，我们后端就可以读取cookie，实现业务处理。</p>
 <p>#通信框架#<br>其实我用过很多种通信框架，但是觉得OKHTTP框架是最好用的一款，所以建议大家也学习下okhttp框架的使用，对我们开发一套好的app至关重要。</p>
-<h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><p>在遇到需要实时推送消息的时候，很长一段时间在考虑如何实现消息的推送功能，</p>
-<ol>
+<h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><pre><code>消息推送 
+1 长连接  心跳的骚扰  要求实时性高
+2消息推送  实时要求不高  手机端  跑一个timer 10分钟发送一个数据udp  服务器接收到就推送
+</code></pre><ol>
 <li>购买市面上的推送服务   —-资金问题不考虑</li>
 <li>使用http请求 轮询    —-不够及时推送，并且加大服务器的负载放弃</li>
 <li>DDPush    —-开源，免费 功能实现相对不错，</li>
 </ol>
 <p>因为这种app不会大量推送消息，所以最终我们选择了DDpush这个开源的推送框架，并且在实现后，功能相对比较满意。</p>
 <h1 id="短信功能"><a href="#短信功能" class="headerlink" title="短信功能"></a>短信功能</h1><p>俗话说现在的任务是无法脱离手机的，所以一款好的app必须要集成短信功能，所以最终选择了阿里大鱼短信服务平台，短信在android基本不需要什么实现，只需要加一个图形验证码就可以防止短信攻击，web后端有部分代码实现，我将会在另外一篇文章中介绍</p>
+<p>#APP缓存#<br>        缓存处理<br>            文本处理可以缓存到系统data中，图片等信息一般不要缓存到data中<br>        网络缓存<br>        三级缓存<br>            内存缓存<br>            本地io缓存<br>            网络缓存</p>
 <p>#Frament#<br>Frament不得不说，确实比Activy开发高效的很多，我们也不需要管理那么多Activy，所以建议没有使用过的同学可以试试。</p>
 <p>#安卓线程通信#<br>其实安卓线程通信的方式有很多，首先从系统架构上来说，我们可以使用信号量实现信息的传递，所以安卓框架已经为我们添加 了很多种线程之间的通信</p>
 <ol>
@@ -493,10 +496,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -511,21 +514,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">12</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">categories</span>
+              <span class="site-state-item-name">Kategorien</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
               <span class="site-state-item-count">7</span>
-              <span class="site-state-item-name">tags</span>
+              <span class="site-state-item-name">Tags</span>
               
           </div>
 

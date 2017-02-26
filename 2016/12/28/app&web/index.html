@@ -60,7 +60,7 @@
  controller">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/base.png">
-<meta property="og:updated_time" content="2017-02-26T06:36:09.858Z">
+<meta property="og:updated_time" content="2017-02-26T08:53:55.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识产权app&后端web技术总结">
 <meta name="twitter:description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
@@ -321,7 +321,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on
+          Veröffentlicht am
           <time itemprop="dateCreated" datetime="2016-12-28T16:01:23+08:00" content="2016-12-28">
             2016-12-28
           </time>
@@ -376,7 +376,10 @@ PropertyFilter filter = new PropertyFilter() {
     }
 };
 </code></pre><p>有人问为什么要自己写一个JSON呢，而且内部又使用了JSONObject呢？其实这个是因为我太“懒”，如何不这样，我们就要每一个接口都需要new JSONObject() 对于我这种极度“懒”分子，既然使用了spring 框架，那么我们为什么不让它给我们干活呢？？</p>
-<pre><code>public class JsonArguResolver implements WebArgumentResolver {
+<pre><code>        HandlerMethodArgumentResolver                          WebArgumentResolver
+        这个2个接口是spring mvc提供的，可以自定义参数类型
+
+public class JsonArguResolver implements WebArgumentResolver {
 @Override
 public Object resolveArgument(MethodParameter methodParameter,
         NativeWebRequest webRequest) throws Exception {
@@ -392,15 +395,41 @@ public Object resolveArgument(MethodParameter methodParameter,
         return json;
     }
 </code></pre><p>spring mvc可以对接口参数进行拦截，代码原理就是，检测某个方法有JSON这个参数，那么我们就可以在这里直接new 一个JSON对象，并且把status=1 ，最终把这个new出来的对象返回，这样，我们的接口如下</p>
-<pre><code>Object list(Page&lt;Business&gt; page, JSON json) {}
+<pre><code>Object list(Page&lt;Business&gt; page, JSON json) {
+    return json;
+}
 </code></pre><p>我们只需要在接口方法中定义一个JSON对象，那么spring 框架将会自动给我们赋值，那么在接下来的业务中，我们只需要 json.add(key,value)即可实现传输数据给前端。</p>
+<p>#spring mvc小技巧#<br>前台传递的map，如何绑定参数呢？</p>
+<ol>
+<li>如 xxx[‘key’]=value即可</li>
+<li><p>spring mvc全局异常默认返回的状态码是404，所有游览器就不会解析json数据的，我们必须在全局异常中设置响应码是200</p>
+<pre><code>  response.setStatus(HttpStatus.OK.value()); //设置状态码  
+    response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType  
+    response.setCharacterEncoding(&quot;UTF-8&quot;); //避免乱码  
+    response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache, must-revalidate&quot;);
+这样就可以使响应正常，最后可以返回jison数据了
+</code></pre></li>
+<li><p>spring mvc的过滤器只能对post起作用，那get呢，我们需要在代码中配置response的请求头为utf-8,并且需要对tomcat配置</p>
+<pre><code>URIEncoding=&quot;UTF-8&quot;
+useBodyEncodingForURI=&quot;true&quot;
+</code></pre></li>
+<li><p>@responseBody  乱码解决</p>
+<pre><code> &lt;mvc:annotation-driven&gt;
+
+&lt;mvc:message-converters  register-defaults=&quot;true&quot;&gt;
+    &lt;bean class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;
+        &lt;property name=&quot;supportedMediaTypes&quot; value=&quot;text/plain;charset=UTF-8&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;/mvc:message-converters&gt;
+</code></pre><p> </p>
+</li>
+<li>2 @RequestParam(required = true) 可以实现参数校验，如果不传入参数 就会导致无法访问，也就是方法不响应</li>
+<li><p>validate 验证注解中 notEmply不能对整形进行校验，应该使用notNull</p>
 <h1 id="注解的使用-amp-Spring-mvc"><a href="#注解的使用-amp-Spring-mvc" class="headerlink" title="注解的使用&amp;Spring mvc"></a>注解的使用&amp;Spring mvc</h1><p>java的注解，极大的简化了我们的开发时间，为了实现权限验证，假如我对某个接口，需要做权限验证，如下</p>
-<pre><code>@Role(role = Role.ROLE_ADMIN)
-@JsonMenu(menu = &quot;Business&quot;)
-Object list(Page&lt;Business&gt; page, JSON json) {}
-
-
-                @Retention(RetentionPolicy.RUNTIME)
+<p> @Role(role = Role.ROLE_ADMIN)<br> @JsonMenu(menu = “Business”)<br> Object list(Page<business> page, JSON json) {}</business></p>
+</li>
+</ol>
+<pre><code>                @Retention(RetentionPolicy.RUNTIME)
                 @Documented
                 @Inherited
                 public @interface JsonMenu {
@@ -446,7 +475,12 @@ public int role() default 7;
                     // }
                 }
 </code></pre><p>看懂了没有，我给方法添加一个JSONMenu注解，spring mvc可以在方法上面添加拦截器，那么我们在拦截中通过反射获取到注解类，如果包含这个注解类，那么就获取到注解类的值，假如值为4,表示该接口比较是管理员才可以访问，那么如何检测呢？既然管理员登录后，我们完全可以把管理员对象放到session中，然后只需要检测对应的session中是否有管理员对象存在，即可判断是否有权限。</p>
-<h1 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h1><p>mybatis确实要比hibernate轻量了很多，使用hibernate我们需要配置很多，而且对于sql不是很灵活，而mybatis确实可以很大的程度上灵活了很多，所以建议同学们动手学习下mybatis,对于此次项目，我还是使用了hibernate，那是因为毕竟ssh当时自己比较熟练，所以就选择了他。</p>
+<h1 id="hibernate"><a href="#hibernate" class="headerlink" title="hibernate"></a>hibernate</h1><p>mybatis确实要比hibernate轻量了很多，使用hibernate我们需要配置很多，而且对于sql不是很灵活，而mybatis确实可以很大的程度上灵活了很多，所以建议同学们动手学习下mybatis,对于此次项目，我还是使用了hibernate，那是因为毕竟ssh当时自己比较熟练，所以就选择了他,hibernate我们就需要对它管理的对象bean的声明周期有一定的了解，这里我吃了几次亏，尤其是懒加载，对于性能优化，我们就一定要使用懒加载，但是也需要情况使用，具体使用大家看网上的教材，我在这里了就是想说下，hibernate比较重量级，如果没有什么大项目，其实不需要使用它的。</p>
+<p>#mybitis#<br>MyBatis/Ibatis中#和$的区别</p>
+<ol>
+<li>#将传入的数据都当成一个字符串，会对自动传入的数据加一个双引号。如：order by #user_id#，如果传入的值是111,那么解析成sql时的值为order by “111”, 如果传入的值是id，则解析成的sql为order by “id”.</li>
+<li>$将传入的数据直接显示生成在sql中。如：order by $user_id$，如果传入的值是111,那么解析成sql时的值为order by user_id,  如果传入的值是id，则解析成的sql为order by id.</li>
+<li><p>#方式能够很大程度防止sql注入。<br>4.$方式无法防止Sql注入。<br>5.$方式一般用于传入数据库对象，例如传入表名.<br>6.一般能用#的就别用$.<br>ps:在使用mybatis中还遇到&lt;![CDATA[]]&gt;的用法，在该符号内的语句，将不会被当成字符串来处理，而是直接当成sql语句，比如要执行一个存储过程。<br>mybatis 映射文件中判断字符串是否为””   xxx!=’’      和 xxx!=null  有区别</p>
 <h1 id="POJO-get-set"><a href="#POJO-get-set" class="headerlink" title="POJO get/set"></a>POJO get/set</h1><p>java实体类pojo我们一般都需要提供get/set方法，但是有时候我们也可以把get/set灵活的运用起来，如何用呢？    假如我们有一个值，对应的是数组，我们在数据库字段中要么一个值为一列，要么多个值使用特殊字符隔开，但是mybatis却不会对于的把查询到的值转换为数组的，那么我们就可以在get/set方法上面下功夫，其实框架不都是在Java反射的原理上进行的吗，反射最终访问属性都是通过get/set进行的，那么我们就可以把数据库中查询出来的字符串如 a,b,c,d,f,g,g  在java set方法中进行切分，然后赋值即可，实现如下</p>
 <pre><code>public static String[] stringImage2Array(String img) {
     if (img==null||img.isEmpty()) {
@@ -458,7 +492,9 @@ public int role() default 7;
 public String[] getGimage() {
         return ArrayUtil.stringImage2Array(gimage);
     }
-</code></pre><p>反正通过get/set我们完全可以把实体类的不同状态的数据进行数据转换，以转换成前端希望的样子</p>
+</code></pre></li>
+</ol>
+<p>反正通过get/set我们完全可以把实体类的不同状态的数据进行数据转换，以转换成前端希望的样子</p>
 <h1 id="短信服务"><a href="#短信服务" class="headerlink" title="短信服务"></a>短信服务</h1><p>对于后端来说，短信一般用来注册、找回密码、等功能，那么注册，那么注册如何实现呢？ 代码</p>
 <pre><code>    User user = userService.getUserByUlogin(ulogin);
     if (user != null) {
@@ -541,7 +577,38 @@ public String[] getGimage() {
 </code></pre><p>#代码复用性#<br>项目中，最重要的就是代码的复用性，一个好的程序员写了很少的代码，却可以实现代码很多的功能，代码过多，其实就是成了冗余了，所以我们必须学会如何提高代码复用性，其实就是一直提倡的“面向接口编程” 的概念</p>
 <p><img src="http://ok9vfjkgl.bkt.clouddn.com/base.png" alt=""></p>
 <p>这个类他是一个泛型类，这样我们就可以使这个类的复用性提高很多，任何Dao继承他都可以实现基本的增删改查等功能。泛型是Java一大特性，我们可以利用泛型做出很大使用的工具。</p>
-<h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><p>对于加密，一般有对称算法AES，非对称算法RSA，MD5 ,BASE64 等，对于这个项目中，因为面临交易，所以必须对登录，交易进行加密，最终我们选择了非对称算法RSA ,即在用户请求登录的时候，去请求服务器，服务器返回公钥，服务器拥有私钥。最终，我们自客户端对密码进行加密，服务器最终解密，完成本次登录。其实对于安全问题，还有很大的学问，所以我们还需要学习，研究。</p>
+<p>#spring 异常#<br>@ExceptionHandler 这是spring 提供的在方法上面的异常，如我们检测某个方法如果发生某种特定的异常，才会拦截就需要使用这个注解，ExceptionHandler 注解  是在方法上的异常，当这个类中的任何方法发现异常就会执行注解方法，可以拦截指定的异常，如果不拦截，就会被上层拦截器异常拦截 （全局异常拦截）</p>
+<p>#有序的property#</p>
+<pre><code>写一个类继承properties 
+重写一些方法
+public class OrderedProperties extends Properties {
+private static final long serialVersionUID = -4627607243846121965L;
+
+private final LinkedHashSet&lt;Object&gt; keys = new LinkedHashSet&lt;Object&gt;();
+
+public Enumeration&lt;Object&gt; keys() {
+    return Collections.&lt;Object&gt; enumeration(keys);
+}
+
+public Object put(Object key, Object value) {
+    keys.add(key);
+    return super.put(key, value);
+}
+
+public Set&lt;Object&gt; keySet() {
+    return keys;
+}
+
+public Set&lt;String&gt; stringPropertyNames() {
+    Set&lt;String&gt; set = new LinkedHashSet&lt;String&gt;(); //内部使用LinkedHashSet 就可以实现有序
+
+    for (Object key : this.keys) {
+        set.add((String) key);
+    }
+
+    return set;
+}
+</code></pre><h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><p>对于加密，一般有对称算法AES，非对称算法RSA，MD5 ,BASE64 等，对于这个项目中，因为面临交易，所以必须对登录，交易进行加密，最终我们选择了非对称算法RSA ,即在用户请求登录的时候，去请求服务器，服务器返回公钥，服务器拥有私钥。最终，我们自客户端对密码进行加密，服务器最终解密，完成本次登录。其实对于安全问题，还有很大的学问，所以我们还需要学习，研究。</p>
 <h1 id="项目总结"><a href="#项目总结" class="headerlink" title="项目总结"></a>项目总结</h1><p>至此web后端的基本极大要点技术讲完，如果有想要源码的，可以去<a href="https://github.com/VinceLz/Shop" target="_blank" rel="external">https://github.com/VinceLz/Shop</a> 下载。</p>
 </span>
       
@@ -629,10 +696,10 @@ public String[] getGimage() {
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -647,21 +714,21 @@ public String[] getGimage() {
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">12</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">categories</span>
+              <span class="site-state-item-name">Kategorien</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
               <span class="site-state-item-count">7</span>
-              <span class="site-state-item-name">tags</span>
+              <span class="site-state-item-name">Tags</span>
               
           </div>
 
@@ -695,7 +762,7 @@ public String[] getGimage() {
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义JSON"><span class="nav-number">2.</span> <span class="nav-text">自定义JSON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解的使用-amp-Spring-mvc"><span class="nav-number">3.</span> <span class="nav-text">注解的使用&Spring mvc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mybatis"><span class="nav-number">4.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POJO-get-set"><span class="nav-number">5.</span> <span class="nav-text">POJO get/set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信服务"><span class="nav-number">6.</span> <span class="nav-text">短信服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密"><span class="nav-number">7.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总结"><span class="nav-number">8.</span> <span class="nav-text">项目总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义JSON"><span class="nav-number">2.</span> <span class="nav-text">自定义JSON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解的使用-amp-Spring-mvc"><span class="nav-number">3.</span> <span class="nav-text">注解的使用&Spring mvc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hibernate"><span class="nav-number">4.</span> <span class="nav-text">hibernate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POJO-get-set"><span class="nav-number">5.</span> <span class="nav-text">POJO get/set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信服务"><span class="nav-number">6.</span> <span class="nav-text">短信服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密"><span class="nav-number">7.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总结"><span class="nav-number">8.</span> <span class="nav-text">项目总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
