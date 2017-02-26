@@ -55,12 +55,12 @@
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png">
+<meta property="og:image" content="1http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/frame.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/dowm.png">
-<meta property="og:updated_time" content="2017-02-23T11:14:18.517Z">
+<meta property="og:updated_time" content="2017-02-26T06:34:01.839Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识产权app&Android技术总结">
 <meta name="twitter:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
@@ -339,7 +339,7 @@
       
         <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力</p>
 <p>本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去实现，对于我们只是应届生，其实不管从技术上还是其他方面，都有一定的困难，对于我本人，我是一个技术狂热的人，所以迎难而上是我的作风…QAQ 废话不多说了，我们介绍我们的项目吧！！</p>
-<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h3 id="先来一波截图看看效果吧"><a href="#先来一波截图看看效果吧" class="headerlink" title="先来一波截图看看效果吧"></a>先来一波截图看看效果吧</h3><p><img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png" alt=""> <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png" alt=""></p>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h3 id="先来一波截图看看效果吧"><a href="#先来一波截图看看效果吧" class="headerlink" title="先来一波截图看看效果吧"></a>先来一波截图看看效果吧</h3><p><img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png" alt=""> <img src="1http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png" alt=""></p>
 <hr>
 <p>我们先来看看项目代码架构：</p>
 <p><img src="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png" alt="首页"></p>
@@ -383,6 +383,7 @@
    prefsWriter.putString(name, encodeCookie(new SerializableOkHttpCookies(cookie)));
    prefsWriter.apply();
 </code></pre><p>我们把cookie缓存到内存中，并最终实现持久化到本地，这样，我们后端就可以读取cookie，实现业务处理。</p>
+<p>#通信框架#<br>其实我用过很多种通信框架，但是觉得OKHTTP框架是最好用的一款，所以建议大家也学习下okhttp框架的使用，对我们开发一套好的app至关重要。</p>
 <h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><p>在遇到需要实时推送消息的时候，很长一段时间在考虑如何实现消息的推送功能，</p>
 <ol>
 <li>购买市面上的推送服务   —-资金问题不考虑</li>
@@ -391,6 +392,17 @@
 </ol>
 <p>因为这种app不会大量推送消息，所以最终我们选择了DDpush这个开源的推送框架，并且在实现后，功能相对比较满意。</p>
 <h1 id="短信功能"><a href="#短信功能" class="headerlink" title="短信功能"></a>短信功能</h1><p>俗话说现在的任务是无法脱离手机的，所以一款好的app必须要集成短信功能，所以最终选择了阿里大鱼短信服务平台，短信在android基本不需要什么实现，只需要加一个图形验证码就可以防止短信攻击，web后端有部分代码实现，我将会在另外一篇文章中介绍</p>
+<p>#Frament#<br>Frament不得不说，确实比Activy开发高效的很多，我们也不需要管理那么多Activy，所以建议没有使用过的同学可以试试。</p>
+<p>#安卓线程通信#<br>其实安卓线程通信的方式有很多，首先从系统架构上来说，我们可以使用信号量实现信息的传递，所以安卓框架已经为我们添加 了很多种线程之间的通信</p>
+<ol>
+<li>Hander 通信 一般采用的较多</li>
+<li>文件通信   共享一个文件达到信息的交流</li>
+<li>MessageHander 这种通信比Hander难，但是同时他可以传递信息，</li>
+<li>ContentProvider 这种大家都应该用过吧</li>
+<li>Socket  这种一般用的很少</li>
+</ol>
+<p>以上3种我自己使用过，其实实现通信的方法还有很多，大家可以google下</p>
+<p>#UI 触摸滑动#<br>对于安卓的滑动触摸，其实里面的坑也有很多，尤其是比较复杂的程序，他需要对滑动检测的特别详细，一定要避免滑动冲突导致的问题，也需要对滑动事件的传播方式有所了解。</p>
 <h1 id="其他模块"><a href="#其他模块" class="headerlink" title="其他模块"></a>其他模块</h1><p>做到后期，我们需要对app进行优化的地址太多，省电，智能化，体积小，稳定。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实要想做好一款好的app真的不简单，所以当我们遇到技术难题时，不管如何都要迎面而上，路就在前方！！！！</p>
 <p>废话不多说了，大家有想要源码的，可以去 <a href="https://github.com/VinceLz/ShopByAndroid" target="_blank" rel="external">https://github.com/VinceLz/ShopByAndroid</a> 下载   </p>
@@ -498,7 +510,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -512,7 +524,7 @@
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">tags</span>
               
           </div>

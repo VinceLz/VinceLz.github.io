@@ -3,6 +3,8 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
+    
+
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -31,7 +33,7 @@
 
 
 
-  <meta name="keywords" content="后端," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -42,34 +44,39 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
-代码架构:
-
-项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
-此次项目是依赖于spring mvc +hibernate框架的，采用经典的MVC模式
- controller">
+<meta name="description" content="#前言#本来这个系统是给实验室做的，并且任务也不属于的，是由一位学长开发的，但是由于学长实习去了，没有时间完成所以临时把项目源码给我了，但是由于学长电脑问题,sql数据库丢失，导致我基本没办法继续开发，所以当时决定重新开发一套小型web网盘系统，在此记录下自己的项目经历
+#项目预览#
+首页：
+文件列表 
+新建文件夹
+下载
+项目部分截图就是这些，还有很多具体的功能，没有一一截图，有兴趣的同学可以去我">
 <meta property="og:type" content="article">
-<meta property="og:title" content="知识产权app&后端web技术总结">
-<meta property="og:url" content="https://vincelz.github.io/2016/12/28/app&web/index.html">
+<meta property="og:title" content="java版在线网盘系统">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/18/web&disk/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
-代码架构:
-
-项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
-此次项目是依赖于spring mvc +hibernate框架的，采用经典的MVC模式
- controller">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/base.png">
-<meta property="og:updated_time" content="2017-02-26T06:36:09.858Z">
+<meta property="og:description" content="#前言#本来这个系统是给实验室做的，并且任务也不属于的，是由一位学长开发的，但是由于学长实习去了，没有时间完成所以临时把项目源码给我了，但是由于学长电脑问题,sql数据库丢失，导致我基本没办法继续开发，所以当时决定重新开发一套小型web网盘系统，在此记录下自己的项目经历
+#项目预览#
+首页：
+文件列表 
+新建文件夹
+下载
+项目部分截图就是这些，还有很多具体的功能，没有一一截图，有兴趣的同学可以去我">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/HOME.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/DISK.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/disk2.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/disk3.png">
+<meta property="og:updated_time" content="2017-02-24T07:38:22.479Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知识产权app&后端web技术总结">
-<meta name="twitter:description" content="项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
-代码架构:
-
-项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
-此次项目是依赖于spring mvc +hibernate框架的，采用经典的MVC模式
- controller">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png">
+<meta name="twitter:title" content="java版在线网盘系统">
+<meta name="twitter:description" content="#前言#本来这个系统是给实验室做的，并且任务也不属于的，是由一位学长开发的，但是由于学长实习去了，没有时间完成所以临时把项目源码给我了，但是由于学长电脑问题,sql数据库丢失，导致我基本没办法继续开发，所以当时决定重新开发一套小型web网盘系统，在此记录下自己的项目经历
+#项目预览#
+首页：
+文件列表 
+新建文件夹
+下载
+项目部分截图就是这些，还有很多具体的功能，没有一一截图，有兴趣的同学可以去我">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/HOME.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -79,7 +86,7 @@
   };
 </script>
 
-  <title> 知识产权app&后端web技术总结 | 1000 words a Day </title>
+  <title> java版在线网盘系统 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -313,7 +320,7 @@
           
           
             
-              知识产权app&后端web技术总结
+              java版在线网盘系统
             
           
         </h1>
@@ -322,8 +329,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2016-12-28T16:01:23+08:00" content="2016-12-28">
-            2016-12-28
+          <time itemprop="dateCreated" datetime="2017-04-18T19:11:58+08:00" content="2017-04-18">
+            2017-04-18
           </time>
         </span>
 
@@ -341,208 +348,31 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现</p>
-<p>代码架构:</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/webzhu.png" alt=""></p>
-<p>项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！</p>
-<p>此次项目是依赖于spring mvc +hibernate框架的，采用经典的MVC模式</p>
-<p> controller  —-控制器</p>
-<p> dao     —-dao数据层</p>
-<p> service   —–服务层</p>
-<p>因为本次项目大部分接口都是与客户端进行通信的，所以基本上全部采用了JSON 进行前后端传输，对于我自己，从大一开始就用jsp/servlet/进行开发网站的人来说，一下子全部要进行json通信，多少有点不适应，但也没办法，毕竟这是一种趋势嘛，那么下面开始介绍下几方面的技术</p>
-<h1 id="自定义JSON"><a href="#自定义JSON" class="headerlink" title="自定义JSON"></a>自定义JSON</h1><pre><code>public class JSON implements Serializable {
-
-private static final long serialVersionUID = 1L;
-private JSONObject json;
-
-public JSON(JSONObject jsonObject) {
-    jsonConfig.setJsonPropertyFilter(filter);
-    this.json = jsonObject;
-}
-
-public void add(String key, Object value) {
-    json.element(key, value, jsonConfig);
-}
-
-@Override
-public String toString() {
-    return json.toString();
-}
-
-JsonConfig jsonConfig = new JsonConfig();
-PropertyFilter filter = new PropertyFilter() {
-    public boolean apply(Object object, String fieldName, Object fieldValue) {
-        return null == fieldValue || &quot;&quot;.equals(fieldValue);
-    }
-};
-</code></pre><p>有人问为什么要自己写一个JSON呢，而且内部又使用了JSONObject呢？其实这个是因为我太“懒”，如何不这样，我们就要每一个接口都需要new JSONObject() 对于我这种极度“懒”分子，既然使用了spring 框架，那么我们为什么不让它给我们干活呢？？</p>
-<pre><code>public class JsonArguResolver implements WebArgumentResolver {
-@Override
-public Object resolveArgument(MethodParameter methodParameter,
-        NativeWebRequest webRequest) throws Exception {
-    HttpServletRequest request = webRequest
-            .getNativeRequest(HttpServletRequest.class);
-
-    if (methodParameter.getParameterType().equals(JSON.class)
-            &amp;&amp; methodParameter.getParameterType() != null) {
-        JSONObJect obj=new JSONObJect(1);
-        JSONObject currentJson = (JSONObject) request
-                .getAttribute(ResourceUtil.CURRENT_JSON);
-        JSON json = new JSON(currentJson);
-        return json;
-    }
-</code></pre><p>spring mvc可以对接口参数进行拦截，代码原理就是，检测某个方法有JSON这个参数，那么我们就可以在这里直接new 一个JSON对象，并且把status=1 ，最终把这个new出来的对象返回，这样，我们的接口如下</p>
-<pre><code>Object list(Page&lt;Business&gt; page, JSON json) {}
-</code></pre><p>我们只需要在接口方法中定义一个JSON对象，那么spring 框架将会自动给我们赋值，那么在接下来的业务中，我们只需要 json.add(key,value)即可实现传输数据给前端。</p>
-<h1 id="注解的使用-amp-Spring-mvc"><a href="#注解的使用-amp-Spring-mvc" class="headerlink" title="注解的使用&amp;Spring mvc"></a>注解的使用&amp;Spring mvc</h1><p>java的注解，极大的简化了我们的开发时间，为了实现权限验证，假如我对某个接口，需要做权限验证，如下</p>
-<pre><code>@Role(role = Role.ROLE_ADMIN)
-@JsonMenu(menu = &quot;Business&quot;)
-Object list(Page&lt;Business&gt; page, JSON json) {}
-
-
-                @Retention(RetentionPolicy.RUNTIME)
-                @Documented
-                @Inherited
-                public @interface JsonMenu {
-
-                    public String menu() default &quot;&quot;;
-                    public String url() default &quot;/menu/&quot;;
-                }
-
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-public @interface Role {
-public static int ROLE_BUSINESS = 2; // 只有商家
-public static int ROLE_USER = 1; // 只有普通用户
-public static int ROLE_ADMIN = 4; // 只有管理员
-public static int ROLE_USER_BUSINESS = 3; // 用户 和商家
-public static int ROLE_USER_ADMIN = 5; // 用户和 管理员
-public static int ROLE_BUSINESS_ADMIN = 6; // 商家和管理员
-public static int ALL = 7; // 所有的 但是必须登录过
-public static String Msg = &quot;权限不足&quot;;
-
-public int role() default 7;
-
-
-            JsonMenu annotation = method.getAnnotation(JsonMenu.class);
-            if (annotation != null) {
-                // 先检测当前用户是谁 从session中查 只给管理员返回
-                Object attribute = request.getSession().getAttribute(
-                        ResourceUtil.CURRENT_ADMIN);
-
-                // if (attribute != null) {
-                // 说明当前用户是admin
-                String menu = annotation.menu();
-                String url = annotation.url();
-                if (!menu.isEmpty()) {
-                    OrderedProperties properties = new OrderedProperties();
-                    url = url + menu + &quot;.properties&quot;;
-                    InputStream resourceAsStream = this.getClass().getClassLoader()
-                            .getResourceAsStream(url);
-                    properties.load(resourceAsStream);
-                    Object[][] order = MapUtil.propertsToArray(properties);
-                    jsonObjec.element(&quot;order&quot;, order);
-                    // }
-                }
-</code></pre><p>看懂了没有，我给方法添加一个JSONMenu注解，spring mvc可以在方法上面添加拦截器，那么我们在拦截中通过反射获取到注解类，如果包含这个注解类，那么就获取到注解类的值，假如值为4,表示该接口比较是管理员才可以访问，那么如何检测呢？既然管理员登录后，我们完全可以把管理员对象放到session中，然后只需要检测对应的session中是否有管理员对象存在，即可判断是否有权限。</p>
-<h1 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h1><p>mybatis确实要比hibernate轻量了很多，使用hibernate我们需要配置很多，而且对于sql不是很灵活，而mybatis确实可以很大的程度上灵活了很多，所以建议同学们动手学习下mybatis,对于此次项目，我还是使用了hibernate，那是因为毕竟ssh当时自己比较熟练，所以就选择了他。</p>
-<h1 id="POJO-get-set"><a href="#POJO-get-set" class="headerlink" title="POJO get/set"></a>POJO get/set</h1><p>java实体类pojo我们一般都需要提供get/set方法，但是有时候我们也可以把get/set灵活的运用起来，如何用呢？    假如我们有一个值，对应的是数组，我们在数据库字段中要么一个值为一列，要么多个值使用特殊字符隔开，但是mybatis却不会对于的把查询到的值转换为数组的，那么我们就可以在get/set方法上面下功夫，其实框架不都是在Java反射的原理上进行的吗，反射最终访问属性都是通过get/set进行的，那么我们就可以把数据库中查询出来的字符串如 a,b,c,d,f,g,g  在java set方法中进行切分，然后赋值即可，实现如下</p>
-<pre><code>public static String[] stringImage2Array(String img) {
-    if (img==null||img.isEmpty()) {
-        return null;
-    }
-    String[] split = img.split(&quot;,&quot;);
-    return split;
-
-public String[] getGimage() {
-        return ArrayUtil.stringImage2Array(gimage);
-    }
-</code></pre><p>反正通过get/set我们完全可以把实体类的不同状态的数据进行数据转换，以转换成前端希望的样子</p>
-<h1 id="短信服务"><a href="#短信服务" class="headerlink" title="短信服务"></a>短信服务</h1><p>对于后端来说，短信一般用来注册、找回密码、等功能，那么注册，那么注册如何实现呢？ 代码</p>
-<pre><code>    User user = userService.getUserByUlogin(ulogin);
-    if (user != null) {
-        // 说明注册过了
-        json.add(&quot;status&quot;, 0);
-        return json + &quot;&quot;;
-    }
-
-    String isOk = (String) request.getSession().getAttribute(&quot;isSMS&quot;);
-    if (isOk == null || &quot;no&quot;.equals(isOk)) {
-        // 不能发送短信
-        json.add(&quot;status&quot;, -1);
-        return json + &quot;&quot;;
-    }
-    String accountSid = proper.getProperty(&quot;accountSid&quot;);
-    String token = proper.getProperty(&quot;token&quot;);
-    String appId = proper.getProperty(&quot;appId&quot;);
-    String templateId = proper.getProperty(&quot;templateId&quot;);
-    String para = SMSUtil.getRandNum(6);
-    SMSUtil.testTemplateSMS(true, accountSid, token, appId, templateId,
-            ulogin, para);
-    String encode = UUID.randomUUID().toString();
-    SMS sms = new SMS();
-    sms.setPhone(ulogin);
-    sms.setReturnCode(para);
-    sms.setSendTime(DateUtil.getSqlDate());
-    sms.setType(1);
-    sms.setEncode(encode);
-    json.add(&quot;ulogin&quot;, ulogin);
-    json.add(&quot;code&quot;, para);
-    json.add(&quot;encode&quot;, encode);
-    request.getSession().setAttribute(&quot;VirCode&quot;, sms);
-    return json.toString();
-}
-</code></pre><p>代码中的主要功能就是先进行检测是否注册过，若没有注册过，那么调用第三方短信服务进行发送短信，调用前我们需要给服务商传递验证码这个值的，最后切记我们需要把这个验证码保存到session中，不然下次请求后，我们无法判断验证码是否正确了</p>
-<pre><code>Object regist2(@RequestParam() String ulogin,
-        @RequestParam() String upassword, JSON json,
-        HttpServletRequest request) throws ParseException {
-
-    // 进行有效期的校验
-    // SMS sms = smsSerice.getSMS(ulogin); //
-    SMS sms = (SMS) request.getSession().getAttribute(&quot;VirCode&quot;);
-    if (sms == null) {
-        json.add(&quot;status&quot;, keyUtil.SERVICE_FAIL);
-        return json + &quot;&quot;;
-    }
-    String sendTime = sms.getSendTime();
-    // 比较时间
-    if (!DateUtil.compTo(sendTime, 10)) {
-        // 超过10分钟了
-        json.add(&quot;status&quot;, keyUtil.SERVICE_FAIL);
-        return json + &quot;&quot;;
-    }
-    User user = new User();
-    user.setUlogin(ulogin);
-    user.setUphone(ulogin);
-    user.setUdate(DateUtil.getSqlDate());
-    user.setUpassword(CyptoUtils.decode(sms.getEncode(), upassword));
-    userService.insertregist(user);
-    // 删除验证码
-    // smsSerice.deletedrop();
-    request.getSession().removeAttribute(&quot;VirCode&quot;);
-    return json + &quot;&quot;;
-}
-</code></pre><p>进行检测验证码是否正确，并且对时间进行判断，是否超过10分钟。</p>
-<pre><code>public static boolean compTo(String currentTime, int number)
-        throws ParseException {
-    SimpleDateFormat myFmt1 = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);
-
-    Date current = new java.util.Date();
-    Date parse = myFmt1.parse(currentTime);
-    long time = parse.getTime();
-    long time2 = current.getTime();
-    if ((time2 - time) / 60000 &lt;= number) {
-        return true;
-    } else {
-        return false;
-    }
-}
-</code></pre><p>#代码复用性#<br>项目中，最重要的就是代码的复用性，一个好的程序员写了很少的代码，却可以实现代码很多的功能，代码过多，其实就是成了冗余了，所以我们必须学会如何提高代码复用性，其实就是一直提倡的“面向接口编程” 的概念</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/base.png" alt=""></p>
-<p>这个类他是一个泛型类，这样我们就可以使这个类的复用性提高很多，任何Dao继承他都可以实现基本的增删改查等功能。泛型是Java一大特性，我们可以利用泛型做出很大使用的工具。</p>
-<h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><p>对于加密，一般有对称算法AES，非对称算法RSA，MD5 ,BASE64 等，对于这个项目中，因为面临交易，所以必须对登录，交易进行加密，最终我们选择了非对称算法RSA ,即在用户请求登录的时候，去请求服务器，服务器返回公钥，服务器拥有私钥。最终，我们自客户端对密码进行加密，服务器最终解密，完成本次登录。其实对于安全问题，还有很大的学问，所以我们还需要学习，研究。</p>
-<h1 id="项目总结"><a href="#项目总结" class="headerlink" title="项目总结"></a>项目总结</h1><p>至此web后端的基本极大要点技术讲完，如果有想要源码的，可以去<a href="https://github.com/VinceLz/Shop" target="_blank" rel="external">https://github.com/VinceLz/Shop</a> 下载。</p>
+        <span itemprop="articleBody"><p>#前言#<br>本来这个系统是给实验室做的，并且任务也不属于的，是由一位学长开发的，但是由于学长实习去了，没有时间完成所以临时把项目源码给我了，但是由于学长电脑问题,sql数据库丢失，导致我基本没办法继续开发，所以当时决定重新开发一套小型web网盘系统，在此记录下自己的项目经历</p>
+<p>#项目预览#</p>
+<p>首页：<img src="http://ok9vfjkgl.bkt.clouddn.com/HOME.png" alt=""></p>
+<p>文件列表 <img src="http://ok9vfjkgl.bkt.clouddn.com/DISK.png" alt=""></p>
+<p>新建文件夹<img src="http://ok9vfjkgl.bkt.clouddn.com/disk2.png" alt=""></p>
+<p>下载<img src="http://ok9vfjkgl.bkt.clouddn.com/disk3.png" alt=""></p>
+<p>项目部分截图就是这些，还有很多具体的功能，没有一一截图，有兴趣的同学可以去我的git下载，整体网站是前端是使用bootstarp框架做的，模仿百度网盘的风格，在这里不得不提下，bootstarp确实很好用，对于我们这些搞后端的，对于前端简单的实现可以，稍微复杂的就有难度了，毕竟术业有专攻吧，所以，后端学学bootstarp框架也是很不错的，当你再缺少前端的时候，可以用他做一套很不错的界面。</p>
+<h1 id="数据库的设计"><a href="#数据库的设计" class="headerlink" title="数据库的设计"></a>数据库的设计</h1><p>当时做这个系统的时候，自己还是一个不折不扣的菜鸟，对于设计数据库，确实很头疼，尤其是文件是以树的形式展现的，当时对 一对多  一对一  多对多的设计理念还是不太懂，所以就查阅各种设计文档，最终才凑合的设计完了数据库这一关，所以对于数据库，我们必须要掌握如下</p>
+<ol>
+<li>一 对 一   举个例子，公民和身份证</li>
+<li>多 对一    如 学生和某课程的老师</li>
+<li>多 对 多    学生和所有的老师</li>
+</ol>
+<p>#Linux文件管理#<br>文件管理，就是打开web网页，可以实现像本地文件管理一样的功能，当时设计采用的是linux 文件目录结构</p>
+<pre><code>/
+ --bin
+ --etc
+ --sbin
+</code></pre><p>例如像这种，当用户注册后，我们系统就会在数据库中为其添加一个根目录的id,数据库设计如下</p>
+<pre><code>cid,pid,cName,cDate,cF,isShare
+</code></pre><p>我们每一个用户都有一个cid属性，表示用户的根目录，当用户登录后，后台根据cid来抓取他的树状目录，其中pid和cid是一一对应的，表示当前列的父级。</p>
+<p>#Progress java #<br>当时有这样一个需求，需要把后端上传的目录进度实时显示到前端，其实设计起来很简单，但是实现起来却又点费力，之前自己动手写了一个定时器，每1/s 通过ajax向后端请求进度，完成后，效果不是很好，最终采用了java为我们提供的ProgressListener 这个监听器，他可以实现实时监听后台文件上传进度，效果比较满意。所以有兴趣的同学可以百度下 这个监听器，他是上传的fileupload jar中的。</p>
+<p>#其他功能#<br>分享功能，例如百度网盘可以分享文件，文件夹等，具体实现起来其实也很简单，毕竟没有做到百度网盘那种高度，实现原理就是分享的如果是文件夹那么就把文件夹id作为参数，如果是文件也同理，百度网盘有密码功能，其实实现这个功能也很简单，只要在数据库中加加一张分享表，表中全是分享链接，附带密码功能即可</p>
+<p>#总结#<br>其实今天看来，乃至在其他人眼里，这个网盘项目其实很简单，确实很简单，但是对于当时自己刚入门，要想实现这样的功能，确实有点难度，好在自己挺过来了，虽然不敢说现在的自己有多厉害，但是毕竟努力过…..</p>
+<p>附上github地址  <a href="https://github.com/VinceLz/disk" target="_blank" rel="external">https://github.com/VinceLz/disk</a></p>
 </span>
       
     </div>
@@ -551,7 +381,7 @@ public String[] getGimage() {
       
         <div class="post-tags">
           
-            <a href="/tags/后端/" rel="tag">#后端</a>
+            <a href="/tags/java/" rel="tag">#java</a>
           
         </div>
       
@@ -560,13 +390,11 @@ public String[] getGimage() {
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/22/java虚拟机总结(1)/" rel="prev">java虚拟机总结(1)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/22/app&Android/" rel="next">知识产权app&Android技术总结</a>
+              <a href="/2017/02/22/Linux-crontab定时器/" rel="next">Linux crontab定时器和一次小负载均衡实践</a>
             
           </div>
         </div>
@@ -695,7 +523,7 @@ public String[] getGimage() {
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义JSON"><span class="nav-number">2.</span> <span class="nav-text">自定义JSON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解的使用-amp-Spring-mvc"><span class="nav-number">3.</span> <span class="nav-text">注解的使用&Spring mvc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mybatis"><span class="nav-number">4.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POJO-get-set"><span class="nav-number">5.</span> <span class="nav-text">POJO get/set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信服务"><span class="nav-number">6.</span> <span class="nav-text">短信服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密"><span class="nav-number">7.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总结"><span class="nav-number">8.</span> <span class="nav-text">项目总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库的设计"><span class="nav-number">1.</span> <span class="nav-text">数据库的设计</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

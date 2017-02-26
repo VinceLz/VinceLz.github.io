@@ -1,0 +1,1110 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="后端," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="#前言#对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。
+这个项目是给西安的一家做汽车营销公司的，其实本次项目没有什么特别大的亮点，但是还是抽时间把项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行吧云购后端开发有感">
+<meta property="og:url" content="https://vincelz.github.io/2017/02/15/app&xingba wen/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="#前言#对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。
+这个项目是给西安的一家做汽车营销公司的，其实本次项目没有什么特别大的亮点，但是还是抽时间把项目">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/123.png">
+<meta property="og:image" content="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=886019c7af345982d187edc06d9d5ac8/ac6eddc451da81cb26660e7e5066d01608243184.jpg">
+<meta property="og:updated_time" content="2017-02-26T08:26:11.700Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="行吧云购后端开发有感">
+<meta name="twitter:description" content="#前言#对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。
+这个项目是给西安的一家做汽车营销公司的，其实本次项目没有什么特别大的亮点，但是还是抽时间把项目">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/123.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 行吧云购后端开发有感 | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              行吧云购后端开发有感
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-02-15T16:01:23+08:00" content="2017-02-15">
+            2017-02-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>#前言#<br>对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。</p>
+<p>这个项目是给西安的一家做汽车营销公司的，其实本次项目没有什么特别大的亮点，但是还是抽时间把项目的小经验记录下来，对自己也是一种提升，希望也可以帮助到别人吧。</p>
+<p>#项目概述–MVC模式＃<br>如图<img src="http://ok9vfjkgl.bkt.clouddn.com/123.png" alt=""></p>
+<p>本次项目依旧采用MVC结构，期初自己一直跟别人学习MVC，到最后也不知道MVC结构是什么鬼东西，有什么优势，直到自己做过几个不大不小的项目后，才初次体验到MVC给我们带来便利，在这里分享下自己对MVC的认识吧。</p>
+<p>来自百度百科的引言：<strong>MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。MVC被独特的发展起来用于映射传统的输入、处理和输出功能在一个逻辑的图形化用户界面的结构中</strong>   我们抽取其中有用的信息：模型（Model)–视图(View)—-控制器(controller) 这不就是MVC的首字母拼写嘛，事实就是这样的，在软件方面，制约我们最大的困难不是技术有多难，而是我们代码的规范，模式，当我们需要修改一个功能模块时，可能就要付出上百倍的苦力，这对于一个公司/团队是一个巨大的问题，所以软件编码一直在追求一种方法，让我们的代码可以改小部分，就可以实现不同的功能，不要把所有的东西全部放在一起，那么日后我们自己都不知道自己写的是什么了，所以MVC模式的作用就是把模型-视图-业务控制 分层隔离，当我们需要修改视图的时候，就可以值针对视图层进行修改，而不需要干扰其他层。</p>
+<p><img src="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=886019c7af345982d187edc06d9d5ac8/ac6eddc451da81cb26660e7e5066d01608243184.jpg" alt=""><br>这张图因为说的很清楚了吧，这3层互不干扰，但是又相互调用。层次分明。</p>
+<p>#c3p0连接池，连接断开问题#<br>大家应该都使用过类似于c3p0等连接池吧，它的作用就是帮我们管理jdbc的连接，有些人问为什么要管理它？那是因为连接池，一个请求发生后，后端Dao层会去请求数据库，如果验证通过，那么就会返回一个jdbc连接对象，这个对象包含了如何调用数据库的一些封装，如果我们不进行连接池的管理，那么每一个请求，他都会在后台生成一个新的连接对象，这对于内存，性能来说是一个巨大的损耗，所以我们引入连接池概念，把已经使用过的连接管理起来，下次请求，我们不必去申请一个新的连接，而是从连接池中直接获取一个即可。那么说这么多，不知道大家使用c3p0连接池后，有没有发现当我们的网站8小时内没有人访问，8小时后访问，后端检测到就会有一个错误生成，那是为什么呢？那是因为对于mysql来说，他默认的连接断开时间为8小时，就是mysql数据库8小时后就会单方面断开这个连接，但是c3p0却不知道，他返回使用，这就是他为什么会报错，所以下面介绍一种我自己的解决方案<br>在c3p0的配置文件中添加如下代码:</p>
+<pre><code>c3p0.maxIdleTime=3600
+c3p0.testConnectionOnCheckout=false
+c3p0.tesrConnectionOnCheckin=true
+c3p0.idleConnectionTestPeriod=3600
+preferredTestQuery =select 1
+</code></pre><p>加上这些属性，基本就可以解决，原理其实就是告诉c3p0，你每到一定的时间就去检测这个连接，是否可用，不可用就给我消灭掉。</p>
+<p>#Https协议#<br>之前的项目都是基于http的协议的，但是当今互联网的趋势是https,所以我们做为后端开发，必须对https协议有足够的认识，才可以顺应当今时代的，这是我收集的资料：</p>
+<pre><code>Https是在http的基础上，使用了TLS/SSL协议的加密协议，他不仅是一套加密传输的协议，更是一件艺术家设计的艺术品，TLS/SSL 使用了非对称加密，对称加密以及HASH算法，具体原理如下：
+    1.游览器将自己支持的一套加密规则发送给服务器
+    2.服务器从中选择一组加密算法和HASH算法，并将自己的身份信息以证书的形式发回给游览器，证书中包含着网站的地址，加密公钥，以及证书的颁发机构。
+    3游览器拿到证书后，会进行检验证书的合法性，如果是信任的，就会出现一把锁的标识，否则不是不是信任的，之后游览器随机生成一组随机数的密码，并用证书中提高的公钥进行加密，并使用随机数对进行加密，最后将信息全部发送给服务器，
+    4 服务器拿到后，检测握手信息，然后使用秘钥对密码解密，拿到随机生成的密码，对信息就行解密，如果成功，那么服务器就会对握手信息继续加密，发送给游览器，
+    5 游览器拿到信息，并计算握手信息的HASH ，如果与之前的一直，那么握手完毕，之后的所有信息传输，都使用这套密码进行通信。
+</code></pre><p>如上https传输的过程，其实无非是在http协议上，使用了加密非对称，使我们的信息更加安全，旁人计算拦截到，也看不懂其中的内容。对于后端开发而言，我们其实不需要关心这些，我们的重点是HTTPs导致性能速度的下降，如何弥补，这就涉及到了TOMCAT,网络，CDN的优化，并且会配置TOMCAT 等容器的协议。</p>
+<pre><code>1 使用相关的证书提供商申请一份证书
+2 在tomcat conf下的server.xml配置节点中，配置如下
+        keystoreFile=&quot;证书硬盘地址&quot;  keystorePass=&quot;证书密码，申请的时候回设置&quot; sslProtocol=&quot;TLS&quot;协议种类   即可，这是基本配置，如果需要对tomcat优化，还需要配置很多信息如；  &lt;Connector 
+ port=&quot;443&quot; 
+ protocol=&quot;org.apache.coyote.http11.Http11Nio2Protocol&quot; 
+ connectionTimeout=&quot;20000&quot; 
+ redirectPort=&quot;8443&quot; 
+ enableLookups=&quot;false&quot; 
+ acceptCount=&quot;100&quot; 
+ maxThreads=&quot;200&quot; 
+ minSpareThreads=&quot;10&quot; 
+ compression=&quot;on&quot; 
+ compressionMinSize=&quot;2048&quot; 
+ compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/javascript,application/javascript&quot; 
+ URIEncoding=&quot;utf-8&quot;
+</code></pre><p>#poi序列化#<br>poi，相信大家应该都使用过吧，一款可以操作world,excel,pdf等文档的框架，之前在项目中也使用过，但是本次项目中有一个难点就是，一些车详细配置有240项，对于数据库的设计就是难点，总不能240列的数据库吧，这对数据库是一个性能损失的问题，最后使用的方案是 JSON 序列化，就是我们在数据库中不保存240项配置，只保存1项，其中的内容是java bean序列化后的json字符串，当时问题又来了，让后台工作人员进行240项数据录入，这也是一个不小的苦力劳动吧，最后我们使用的方案是：excel表的序列化，只需要工作人员对excel表的写入一些配置信息，上传到后台，他就会循环遍历整个excel表，生成一个JSON 字符串，然后写入数据库中。具体代码不在这里展示，我只是提供一种解决方案。，其实并没有多大难点</p>
+<p>#上线后测试bug#<br>上线后，一直面临个问题，就是想看发生了什么错误，都需要跑到linux 下，查看容器日志，而且日志很多干扰项，所以，最终我选择了在spring mvc提供的全局异常类中，对发生的错误进行拦截，并且记录到数据库中，这样，我们周期的去数据库中查看，就可以排查错误。</p>
+<p>#mybatis分页小助手#<br>mybatis极大的灵活了我们的开发，在遇到app&amp;后台需要分页的时候，这个问题很好解决，但是如果是搜索呢，而且搜索条件不是固定的，那么如何解决呢？这里我们使用了一种方案是，自己封装一个分页小插件，当然了，大家如果想实现更多功能，我建议大家去github搜索一下mybatis 分页插件，它比我们的功能多了很多。</p>
+<p>Page:</p>
+<pre><code>public class Page&lt;T&gt; {
+private int pageNo = 1; // 页码，默认是第一页
+private int pageSize = 10; // 每页显示的记录数，默认是10
+private int totalRecord; // 总记录数
+private int totalPage; // 总页数
+private List&lt;T&gt; results; // 对应的当前页记录
+private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
+// //其他的参数我们把它分装成一个Map对象
+</code></pre><p>PageInterceptor</p>
+<pre><code>package com.xawl.car.pagination;
+
+    import java.lang.reflect.Field;
+    import java.sql.Connection;
+    import java.sql.PreparedStatement;
+    import java.sql.ResultSet;
+    import java.sql.SQLException;
+    import java.util.List;
+    import java.util.Properties;
+
+    import org.apache.ibatis.executor.parameter.ParameterHandler;
+    import org.apache.ibatis.executor.statement.RoutingStatementHandler;
+    import org.apache.ibatis.executor.statement.StatementHandler;
+    import org.apache.ibatis.mapping.BoundSql;
+    import org.apache.ibatis.mapping.MappedStatement;
+    import org.apache.ibatis.mapping.ParameterMapping;
+    import org.apache.ibatis.plugin.Interceptor;
+    import org.apache.ibatis.plugin.Intercepts;
+    import org.apache.ibatis.plugin.Invocation;
+    import org.apache.ibatis.plugin.Plugin;
+    import org.apache.ibatis.plugin.Signature;
+    import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
+
+    /**
+     * 
+     * 分页拦截器，用于拦截需要进行分页查询的操作，然后对其进行分页处理。 利用拦截器实现Mybatis分页的原理：
+     * 要利用JDBC对数据库进行操作就必须要有一个对应的Statement对象
+     * ，Mybatis在执行Sql语句前就会产生一个包含Sql语句的Statement对象，而且对应的Sql语句
+     * 是在Statement之前产生的，所以我们就可以在它生成Statement之前对用来生成Statement的Sql语句下手。
+     * 在Mybatis中Statement语句是通过RoutingStatementHandler对象的prepare方法生成的。
+     * 
+     * 所以利用拦截器实现Mybatis分页的一个思路就是拦截StatementHandler接口的prepare方法，
+     * 然后在拦截器方法中把Sql语句改成对应的分页查询Sql语句， 之后再调用
+     * StatementHandler对象的prepare方法，即调用invocation.proceed()。
+     * 
+     * 对于分页而言，在拦截器里面我们还需要做的一个操作就是统计满足当前条件的记录一共有多少，
+     * 这是通过获取到了原始的Sql语句后，把它改为对应的统计语句，再利用Mybatis封装好的参数和设置参数的功能把Sql语句中的参数进行替换，
+     * 之后再执行查询记录数的Sql语句进行总记录数的统计。
+     * 
+     */
+    @Intercepts({ @Signature(method = &quot;prepare&quot;, type = StatementHandler.class, args = { Connection.class }) })
+    public class PageInterceptor implements Interceptor {
+        private String databaseType; // 数据库类型，不同的数据库有不同的分页方法
+
+        // 拦截后要执行的方法
+        public Object intercept(Invocation invocation) throws Throwable {
+            // 对于StatementHandler其实只有两个实现类，一个是RoutingStatementHandler，另一个是抽象类BaseStatementHandler，
+            // BaseStatementHandler有三个子类，分别是SimpleStatementHandler，PreparedStatementHandler和CallableStatementHandler，
+            // SimpleStatementHandler是用于处理Statement的，PreparedStatementHandler是处理PreparedStatement的，而CallableStatementHandler是处理CallableStatement的。
+            // Mybatis在进行Sql语句处理的时候都是建立的RoutingStatementHandler，而在RoutingStatementHandler里面拥有一个StatementHandler类型的delegate属性，
+            // RoutingStatementHandler会依据Statement的不同建立对应的BaseStatementHandler，即SimpleStatementHandler、
+            // PreparedStatementHandler或CallableStatementHandler，在RoutingStatementHandler里面所有StatementHandler接口方法的实现都是调用的delegate对应的方法。
+
+            // 我们在PageInterceptor类上已经用@Signature标记了该Interceptor只拦截StatementHandler接口的prepare方法，
+            // 又因为Mybatis只有在建立RoutingStatementHandler的时候是通过Interceptor的plugin方法进行包裹的，所以我们这里拦截到的目标对象肯定是RoutingStatementHandler对象。
+
+            RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
+            // 通过反射获取到当前RoutingStatementHandler对象的delegate属性
+            StatementHandler delegate = (StatementHandler) ReflectUtil.getFieldValue(handler, &quot;delegate&quot;);
+            // 获取到当前StatementHandler的
+            // boundSql，这里不管是调用handler.getBoundSql()还是直接调用delegate.getBoundSql()结果是一样的，因为之前已经说过了
+            // RoutingStatementHandler实现的所有StatementHandler接口方法里面都是调用的delegate对应的方法。
+            BoundSql boundSql = delegate.getBoundSql();
+            // 拿到当前绑定Sql的参数对象，就是我们在调用对应的Mapper映射语句时所传入的参数对象
+            Object obj = boundSql.getParameterObject();
+            // 这里我们简单的通过传入的是Page对象就认定它是需要进行分页操作的。
+    //        if(obj instanceof Map){
+    //            Map map = (Map)obj;
+    //            Page&lt;?&gt; page = (Page&lt;?&gt;) map.get(&quot;page&quot;);
+    //        }
+            if (obj instanceof Page&lt;?&gt;) {                //拦截参数为Page对象的，其他放过
+                Page&lt;?&gt; page = (Page&lt;?&gt;) obj;
+                // 通过反射获取delegate父类BaseStatementHandler的mappedStatement属性
+                MappedStatement mappedStatement = (MappedStatement) ReflectUtil
+                        .getFieldValue(delegate, &quot;mappedStatement&quot;);
+                // 拦截到的prepare方法参数是一个Connection对象
+                Connection connection = (Connection) invocation.getArgs()[0];
+                // 获取当前要执行的Sql语句，也就是我们直接在Mapper映射语句中写的Sql语句
+                String sql = boundSql.getSql();
+                // 给当前的page参数对象设置总记录数
+                this.setTotalRecord(page, mappedStatement, connection);
+                // 获取分页Sql语句
+                String pageSql = this.getPageSql(page, sql);
+                // 利用反射设置当前BoundSql对应的sql属性为我们建立好的分页Sql语句
+                ReflectUtil.setFieldValue(boundSql, &quot;sql&quot;, pageSql);
+            }
+            return invocation.proceed();
+        }
+
+        /**
+         * 拦截器对应的封装原始对象的方法
+         */
+        public Object plugin(Object target) {
+            return Plugin.wrap(target, this);
+        }
+
+        /**
+         * 设置注册拦截器时设定的属性
+         */
+        public void setProperties(Properties properties) {
+            this.databaseType = properties.getProperty(&quot;databaseType&quot;);
+        }
+
+        /**
+         * 根据page对象获取对应的分页查询Sql语句，这里只做了两种数据库类型，Mysql和Oracle 其它的数据库都 没有进行分页
+         * 
+         * @param page 分页对象
+         * @param sql 原sql语句
+         * @return
+         */
+        private String getPageSql(Page&lt;?&gt; page, String sql) {
+            StringBuffer sqlBuffer = new StringBuffer(sql);
+            if (&quot;mysql&quot;.equalsIgnoreCase(databaseType)) {
+                return getMysqlPageSql(page, sqlBuffer);
+            } else if (&quot;oracle&quot;.equalsIgnoreCase(databaseType)) {
+                return getOraclePageSql(page, sqlBuffer);
+            }
+            return sqlBuffer.toString();
+        }
+
+        /**
+         * 获取Mysql数据库的分页查询语句
+         * 
+         * @param page
+         *            分页对象
+         * @param sqlBuffer
+         *            包含原sql语句的StringBuffer对象
+         * @return Mysql数据库分页语句
+         */
+        private String getMysqlPageSql(Page&lt;?&gt; page, StringBuffer sqlBuffer) {
+            // 计算第一条记录的位置，Mysql中记录的位置是从0开始的。
+            int offset = (page.getPageNo() - 1) * page.getPageSize();
+            sqlBuffer.append(&quot; LIMIT &quot;).append(offset).append(&quot;,&quot;).append(page.getPageSize());
+            return sqlBuffer.toString();
+        }
+
+        /**
+         * 获取Oracle数据库的分页查询语句
+         * 
+         * @param page
+         *            分页对象
+         * @param sqlBuffer
+         *            包含原sql语句的StringBuffer对象
+         * @return Oracle数据库的分页查询语句
+         */
+        private String getOraclePageSql(Page&lt;?&gt; page, StringBuffer sqlBuffer) {
+            // 计算第一条记录的位置，Oracle分页是通过rownum进行的，而rownum是从1开始的
+            int offset = (page.getPageNo() - 1) * page.getPageSize() + 1;
+            sqlBuffer.insert(0, &quot;select u.*, rownum r from (&quot;).append(&quot;) u where rownum &lt; &quot;).append(offset + page.getPageSize());
+            sqlBuffer.insert(0, &quot;select * from (&quot;).append(&quot;) where r &gt;= &quot;).append(offset);
+            // 上面的Sql语句拼接之后大概是这个样子：
+            // select * from (select u.*, rownum r from (select * from t_user) u
+            // where rownum &lt; 31) where r &gt;= 10
+            return sqlBuffer.toString();
+        }
+
+        /**
+         * 给当前的参数对象page设置总记录数
+         * 
+         * @param page Mapper映射语句对应的参数对象
+         * @param mappedStatement Mapper映射语句
+         * @param connection 当前的数据库连接
+         */
+        private void setTotalRecord(Page&lt;?&gt; page, MappedStatement mappedStatement,
+                Connection connection) {
+            // 获取对应的BoundSql，这个BoundSql其实跟我们利用StatementHandler获取到的BoundSql是同一个对象。
+            // delegate里面的boundSql也是通过mappedStatement.getBoundSql(paramObj)方法获取到的。
+            BoundSql boundSql = mappedStatement.getBoundSql(page);
+            // 获取到我们自己写在Mapper映射语句中对应的Sql语句
+            String sql = boundSql.getSql();
+            // 通过查询Sql语句获取到对应的计算总记录数的sql语句
+            String countSql = this.getCountSql(sql);
+            // 通过BoundSql获取对应的参数映射
+            List&lt;ParameterMapping&gt; parameterMappings = boundSql .getParameterMappings();
+            // 利用Configuration、查询记录数的Sql语句countSql、参数映射关系parameterMappings和参数对象page建立查询记录数对应的BoundSql对象。
+            BoundSql countBoundSql = new BoundSql(
+                    mappedStatement.getConfiguration(), countSql,
+                    parameterMappings, page);
+            // 通过mappedStatement、参数对象page和BoundSql对象countBoundSql建立一个用于设定参数的ParameterHandler对象
+            ParameterHandler parameterHandler = new DefaultParameterHandler(
+                    mappedStatement, page, countBoundSql);
+            // 通过connection建立一个countSql对应的PreparedStatement对象。
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            try {
+                pstmt = connection.prepareStatement(countSql);
+                // 通过parameterHandler给PreparedStatement对象设置参数
+                parameterHandler.setParameters(pstmt);
+                // 之后就是执行获取总记录数的Sql语句和获取结果了。
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    int totalRecord = rs.getInt(1);
+                    // 给当前的参数page对象设置总记录数
+                    page.setTotalRecord(totalRecord);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (rs != null)
+                        rs.close();
+                    if (pstmt != null)
+                        pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        /**
+         * 根据原Sql语句获取对应的查询总记录数的Sql语句
+         * 
+         * @param sql
+         * @return
+         */
+        private String getCountSql(String sql) {
+            int index=sql.toUpperCase().indexOf(&quot;FROM&quot;);
+            return &quot;SELECT  COUNT(*) &quot; + sql.substring(index);
+        }
+
+        /**
+         * 利用反射进行操作的一个工具类
+         * 
+         */
+        private static class ReflectUtil {
+            /**
+             * 利用反射获取指定对象的指定属性
+             * 
+             * @param obj
+             *            目标对象
+             * @param fieldName
+             *            目标属性
+             * @return 目标属性的值
+             */
+            public static Object getFieldValue(Object obj, String fieldName) {
+                Object result = null;
+                Field field = ReflectUtil.getField(obj, fieldName);
+                if (field != null) {
+                    field.setAccessible(true);
+                    try {
+                        result = field.get(obj);
+                    } catch (IllegalArgumentException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                return result;
+            }
+
+            /**
+             * 利用反射获取指定对象里面的指定属性
+             * 
+             * @param obj
+             *            目标对象
+             * @param fieldName
+             *            目标属性
+             * @return 目标字段
+             */
+            private static Field getField(Object obj, String fieldName) {
+                Field field = null;
+                for (Class&lt;?&gt; clazz = obj.getClass(); clazz != Object.class; clazz = clazz
+                        .getSuperclass()) {
+                    try {
+                        field = clazz.getDeclaredField(fieldName);
+                        break;
+                    } catch (NoSuchFieldException e) {
+                        // 这里不用做处理，子类没有该字段可能对应的父类有，都没有就返回null。
+                    }
+                }
+                return field;
+            }
+
+            /**
+             * 利用反射设置指定对象的指定属性为指定的值
+             * 
+             * @param obj
+             *            目标对象
+             * @param fieldName
+             *            目标属性
+             * @param fieldValue
+             *            目标值
+             */
+            public static void setFieldValue(Object obj, String fieldName,
+                    String fieldValue) {
+                Field field = ReflectUtil.getField(obj, fieldName);
+                if (field != null) {
+                    try {
+                        field.setAccessible(true);
+                        field.set(obj, fieldValue);
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+</code></pre><p>Page类的作用其实就是对参数的封装，并对返回的页数信息的封装，而Intercept听名字应该是拦截器，不错他是mybatis的拦截器，他的作用就是每次检测是否发生select 的查询语句，如果是select 那么就会先拼接一句select count(*) xxxxxx  去执行，执行返回的参数进行page属性的赋值，之后才会真正去执行我们的原本的语句，在数据sql语句方面，我们还需要对条件查询的配置，就使用if 来判断条件属性是否为空，不为空就拼接查询属性的语句，为空就不拼接，这样，就可以极大的节约了我们进行分页所要耗费的时间，但是这也有一个缺点，就是更加智能化的功能，肯定会对性能造成一定的损耗。所以请大家自己考虑。</p>
+<p>#其他功能#<br>本次项目还在开发中，所有还有很多坑没踩，所以目测就更到这里吧，等项目彻底结束，我在进行更加项目的分析介绍。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端/" rel="tag">#后端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/JNA-java调用本地接口/" rel="prev">JNA java调用本地接口</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/13/常用的排序算法总结/" rel="next">几种经常用的排序算法总结</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
