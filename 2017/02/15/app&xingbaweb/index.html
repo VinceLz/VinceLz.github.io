@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="后端," />
+  <meta name="keywords" content="项目," />
 
 
 
@@ -51,8 +51,8 @@
 <meta property="og:description" content="#前言#对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。
 这个项目是给西安的一家做汽车营销公司的，其实本次项目没有什么特别大的亮点，但是还是抽时间把项目">
 <meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/123.png">
-<meta property="og:image" content="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=886019c7af345982d187edc06d9d5ac8/ac6eddc451da81cb26660e7e5066d01608243184.jpg">
-<meta property="og:updated_time" content="2017-02-26T08:26:11.700Z">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/ac6eddc451da81cb26660e7e5066d01608243184.jpg">
+<meta property="og:updated_time" content="2017-02-27T09:30:27.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行吧云购后端开发有感">
 <meta name="twitter:description" content="#前言#对于项目的成功可能我比谁都渴望，也不过是最自己的能力一种体验吧，但是一直都是望尘莫及,太在意的得不到，相反也丢失了很多东西，把自己搞的成了一个追求技术的狂热份子，但是也把自己弄的邋遢不堪，所以其实就是想说有些事情还是要随缘的，希望以后的自己能多关注下自己，身边的人，不要把自己弄的太累，得不偿失。
@@ -309,7 +309,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
+          отправлено
           <time itemprop="dateCreated" datetime="2017-02-15T16:01:23+08:00" content="2017-02-15">
             2017-02-15
           </time>
@@ -334,7 +334,8 @@
 <p>#项目概述–MVC模式＃<br>如图<img src="http://ok9vfjkgl.bkt.clouddn.com/123.png" alt=""></p>
 <p>本次项目依旧采用MVC结构，期初自己一直跟别人学习MVC，到最后也不知道MVC结构是什么鬼东西，有什么优势，直到自己做过几个不大不小的项目后，才初次体验到MVC给我们带来便利，在这里分享下自己对MVC的认识吧。</p>
 <p>来自百度百科的引言：<strong>MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。MVC被独特的发展起来用于映射传统的输入、处理和输出功能在一个逻辑的图形化用户界面的结构中</strong>   我们抽取其中有用的信息：模型（Model)–视图(View)—-控制器(controller) 这不就是MVC的首字母拼写嘛，事实就是这样的，在软件方面，制约我们最大的困难不是技术有多难，而是我们代码的规范，模式，当我们需要修改一个功能模块时，可能就要付出上百倍的苦力，这对于一个公司/团队是一个巨大的问题，所以软件编码一直在追求一种方法，让我们的代码可以改小部分，就可以实现不同的功能，不要把所有的东西全部放在一起，那么日后我们自己都不知道自己写的是什么了，所以MVC模式的作用就是把模型-视图-业务控制 分层隔离，当我们需要修改视图的时候，就可以值针对视图层进行修改，而不需要干扰其他层。</p>
-<p><img src="https://imgsa.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=886019c7af345982d187edc06d9d5ac8/ac6eddc451da81cb26660e7e5066d01608243184.jpg" alt=""><br>这张图因为说的很清楚了吧，这3层互不干扰，但是又相互调用。层次分明。</p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/ac6eddc451da81cb26660e7e5066d01608243184.jpg" alt=""></p>
+<p>这张图因为说的很清楚了吧，这3层互不干扰，但是又相互调用。层次分明。</p>
 <p>#c3p0连接池，连接断开问题#<br>大家应该都使用过类似于c3p0等连接池吧，它的作用就是帮我们管理jdbc的连接，有些人问为什么要管理它？那是因为连接池，一个请求发生后，后端Dao层会去请求数据库，如果验证通过，那么就会返回一个jdbc连接对象，这个对象包含了如何调用数据库的一些封装，如果我们不进行连接池的管理，那么每一个请求，他都会在后台生成一个新的连接对象，这对于内存，性能来说是一个巨大的损耗，所以我们引入连接池概念，把已经使用过的连接管理起来，下次请求，我们不必去申请一个新的连接，而是从连接池中直接获取一个即可。那么说这么多，不知道大家使用c3p0连接池后，有没有发现当我们的网站8小时内没有人访问，8小时后访问，后端检测到就会有一个错误生成，那是为什么呢？那是因为对于mysql来说，他默认的连接断开时间为8小时，就是mysql数据库8小时后就会单方面断开这个连接，但是c3p0却不知道，他返回使用，这就是他为什么会报错，所以下面介绍一种我自己的解决方案<br>在c3p0的配置文件中添加如下代码:</p>
 <pre><code>c3p0.maxIdleTime=3600
 c3p0.testConnectionOnCheckout=false
@@ -352,18 +353,18 @@ preferredTestQuery =select 1
 </code></pre><p>如上https传输的过程，其实无非是在http协议上，使用了加密非对称，使我们的信息更加安全，旁人计算拦截到，也看不懂其中的内容。对于后端开发而言，我们其实不需要关心这些，我们的重点是HTTPs导致性能速度的下降，如何弥补，这就涉及到了TOMCAT,网络，CDN的优化，并且会配置TOMCAT 等容器的协议。</p>
 <pre><code>1 使用相关的证书提供商申请一份证书
 2 在tomcat conf下的server.xml配置节点中，配置如下
-        keystoreFile=&quot;证书硬盘地址&quot;  keystorePass=&quot;证书密码，申请的时候回设置&quot; sslProtocol=&quot;TLS&quot;协议种类   即可，这是基本配置，如果需要对tomcat优化，还需要配置很多信息如；  &lt;Connector 
- port=&quot;443&quot; 
- protocol=&quot;org.apache.coyote.http11.Http11Nio2Protocol&quot; 
- connectionTimeout=&quot;20000&quot; 
- redirectPort=&quot;8443&quot; 
- enableLookups=&quot;false&quot; 
- acceptCount=&quot;100&quot; 
- maxThreads=&quot;200&quot; 
- minSpareThreads=&quot;10&quot; 
- compression=&quot;on&quot; 
- compressionMinSize=&quot;2048&quot; 
- compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/javascript,application/javascript&quot; 
+        keystoreFile=&quot;证书硬盘地址&quot;  keystorePass=&quot;证书密码，申请的时候回设置&quot; sslProtocol=&quot;TLS&quot;协议种类   即可，这是基本配置，如果需要对tomcat优化，还需要配置很多信息如；  &lt;Connector
+ port=&quot;443&quot;
+ protocol=&quot;org.apache.coyote.http11.Http11Nio2Protocol&quot;
+ connectionTimeout=&quot;20000&quot;
+ redirectPort=&quot;8443&quot;
+ enableLookups=&quot;false&quot;
+ acceptCount=&quot;100&quot;
+ maxThreads=&quot;200&quot;
+ minSpareThreads=&quot;10&quot;
+ compression=&quot;on&quot;
+ compressionMinSize=&quot;2048&quot;
+ compressableMimeType=&quot;text/html,text/xml,text/plain,text/css,text/javascript,application/javascript&quot;
  URIEncoding=&quot;utf-8&quot;
 </code></pre><p>#poi序列化#<br>poi，相信大家应该都使用过吧，一款可以操作world,excel,pdf等文档的框架，之前在项目中也使用过，但是本次项目中有一个难点就是，一些车详细配置有240项，对于数据库的设计就是难点，总不能240列的数据库吧，这对数据库是一个性能损失的问题，最后使用的方案是 JSON 序列化，就是我们在数据库中不保存240项配置，只保存1项，其中的内容是java bean序列化后的json字符串，当时问题又来了，让后台工作人员进行240项数据录入，这也是一个不小的苦力劳动吧，最后我们使用的方案是：excel表的序列化，只需要工作人员对excel表的写入一些配置信息，上传到后台，他就会循环遍历整个excel表，生成一个JSON 字符串，然后写入数据库中。具体代码不在这里展示，我只是提供一种解决方案。，其实并没有多大难点</p>
 <p>#上线后测试bug#<br>上线后，一直面临个问题，就是想看发生了什么错误，都需要跑到linux 下，查看容器日志，而且日志很多干扰项，所以，最终我选择了在spring mvc提供的全局异常类中，对发生的错误进行拦截，并且记录到数据库中，这样，我们周期的去数据库中查看，就可以排查错误。</p>
@@ -402,21 +403,21 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
     import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 
     /**
-     * 
+     *
      * 分页拦截器，用于拦截需要进行分页查询的操作，然后对其进行分页处理。 利用拦截器实现Mybatis分页的原理：
      * 要利用JDBC对数据库进行操作就必须要有一个对应的Statement对象
      * ，Mybatis在执行Sql语句前就会产生一个包含Sql语句的Statement对象，而且对应的Sql语句
      * 是在Statement之前产生的，所以我们就可以在它生成Statement之前对用来生成Statement的Sql语句下手。
      * 在Mybatis中Statement语句是通过RoutingStatementHandler对象的prepare方法生成的。
-     * 
+     *
      * 所以利用拦截器实现Mybatis分页的一个思路就是拦截StatementHandler接口的prepare方法，
      * 然后在拦截器方法中把Sql语句改成对应的分页查询Sql语句， 之后再调用
      * StatementHandler对象的prepare方法，即调用invocation.proceed()。
-     * 
+     *
      * 对于分页而言，在拦截器里面我们还需要做的一个操作就是统计满足当前条件的记录一共有多少，
      * 这是通过获取到了原始的Sql语句后，把它改为对应的统计语句，再利用Mybatis封装好的参数和设置参数的功能把Sql语句中的参数进行替换，
      * 之后再执行查询记录数的Sql语句进行总记录数的统计。
-     * 
+     *
      */
     @Intercepts({ @Signature(method = &quot;prepare&quot;, type = StatementHandler.class, args = { Connection.class }) })
     public class PageInterceptor implements Interceptor {
@@ -483,7 +484,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 根据page对象获取对应的分页查询Sql语句，这里只做了两种数据库类型，Mysql和Oracle 其它的数据库都 没有进行分页
-         * 
+         *
          * @param page 分页对象
          * @param sql 原sql语句
          * @return
@@ -500,7 +501,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 获取Mysql数据库的分页查询语句
-         * 
+         *
          * @param page
          *            分页对象
          * @param sqlBuffer
@@ -516,7 +517,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 获取Oracle数据库的分页查询语句
-         * 
+         *
          * @param page
          *            分页对象
          * @param sqlBuffer
@@ -536,7 +537,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 给当前的参数对象page设置总记录数
-         * 
+         *
          * @param page Mapper映射语句对应的参数对象
          * @param mappedStatement Mapper映射语句
          * @param connection 当前的数据库连接
@@ -589,7 +590,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 根据原Sql语句获取对应的查询总记录数的Sql语句
-         * 
+         *
          * @param sql
          * @return
          */
@@ -600,12 +601,12 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
         /**
          * 利用反射进行操作的一个工具类
-         * 
+         *
          */
         private static class ReflectUtil {
             /**
              * 利用反射获取指定对象的指定属性
-             * 
+             *
              * @param obj
              *            目标对象
              * @param fieldName
@@ -632,7 +633,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
             /**
              * 利用反射获取指定对象里面的指定属性
-             * 
+             *
              * @param obj
              *            目标对象
              * @param fieldName
@@ -655,7 +656,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
 
             /**
              * 利用反射设置指定对象的指定属性为指定的值
-             * 
+             *
              * @param obj
              *            目标对象
              * @param fieldName
@@ -690,7 +691,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
       
         <div class="post-tags">
           
-            <a href="/tags/后端/" rel="tag">#后端</a>
+            <a href="/tags/项目/" rel="tag">#项目</a>
           
         </div>
       
@@ -768,10 +769,10 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Содержание
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Обзор
           </li>
         </ul>
       
@@ -785,22 +786,22 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">15</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">записи</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">Kategorien</span>
+              <span class="site-state-item-name">категории</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">Tags</span>
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">тэги</span>
               
           </div>
 
@@ -834,7 +835,7 @@ private Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <p class="post-toc-empty">Этот пост не имеет оглавления</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
