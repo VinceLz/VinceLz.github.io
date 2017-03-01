@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java新特性," />
+  <meta name="keywords" content="web," />
 
 
 
@@ -42,19 +42,27 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
+<meta name="description" content="#前言#WebService ?
+Service听过，但是WebService是什么鬼东西呢？难道说时web端的服务吗？web的服务一般不是都会请求后端接口吗？
+Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的应用程序。[1]Web S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="总结java8 新特性">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/27/总结java8-新特征/index.html">
+<meta property="og:title" content="WebService">
+<meta property="og:url" content="https://vincelz.github.io/2016/12/20/WebService/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
-<meta property="og:updated_time" content="2017-01-27T13:28:39.694Z">
+<meta property="og:description" content="#前言#WebService ?
+Service听过，但是WebService是什么鬼东西呢？难道说时web端的服务吗？web的服务一般不是都会请求后端接口吗？
+Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的应用程序。[1]Web S">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/gg.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/gg2.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring1.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring2.png">
+<meta property="og:updated_time" content="2017-03-01T02:24:32.754Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="总结java8 新特性">
-<meta name="twitter:description" content="Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。
-1.Lambda表达式和函数式接口        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开">
+<meta name="twitter:title" content="WebService">
+<meta name="twitter:description" content="#前言#WebService ?
+Service听过，但是WebService是什么鬼东西呢？难道说时web端的服务吗？web的服务一般不是都会请求后端接口吗？
+Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的应用程序。[1]Web S">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/gg.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -64,7 +72,7 @@
   };
 </script>
 
-  <title> 总结java8 新特性 | 1000 words a Day </title>
+  <title> WebService | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -298,7 +306,7 @@
           
           
             
-              总结java8 新特性
+              WebService
             
           
         </h1>
@@ -306,9 +314,9 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-01-27T19:55:52+08:00" content="2017-01-27">
-            2017-01-27
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-12-20T16:01:23+08:00" content="2016-12-20">
+            2016-12-20
           </time>
         </span>
 
@@ -326,173 +334,86 @@
       
 
       
-        <span itemprop="articleBody"><p>Java 8是Java的一个重大版本，有人认为，虽然这些新特性领Java开发人员十分期待，但同时也需要花不少精力去学习。在这一小中，我们将介绍Java 8的大部分新特性。</p>
-<p>1.Lambda表达式和函数式接口<br>        Lambda表达式(闭包 js中也有闭包的概念) 是java 8的最令人期待的新特性，它允许我们将函数<br>        当成参数传递给某个方法中，或者把代码本身当做数据处理:函数开发者,对于java8以前，我们只<br>        能匿名函数来实现这一功能，Lambda现在帮我们轻松实现这一个功能。<br>        demo:<br>         Arrays.asList(“a”,”b”,”c”,”d”).forEach(e -&gt; System.out.print(e));<br>        另外一种写法<br>         Arrays.asList(“a”,”b”,”c”,”d”).forEach((String e) -&gt; System.out.print(e)); </p>
-<pre><code>输出结果:   abcd 
-如果我们不声明参数的类型，那么编译器会自动推测出来的
-有时候我们需要在方法里写入复杂的逻辑时可以使用
-Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;).forEach((String e) -&gt; {
-   System.out.print(e)
-   System.out.print(e)
-});   后面使用一个大的{}包起来，写入其他逻辑代码
-Lambda可以引用类的成员变量与局部变量（如果这些变量不是final的话，它们会被隐含的转为final
-这样效率更高）。例如，下面两个代码片段是等价的
-1 String separator = &quot;,&quot;;
-2 Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).forEach( 
-3 ( String e ) -&gt; System.out.print( e + separator ) );
+        <span itemprop="articleBody"><p>#前言#<br>WebService ?</p>
+<p>Service听过，但是WebService是什么鬼东西呢？难道说时web端的服务吗？web的服务一般不是都会<br>请求后端接口吗？</p>
+<p><strong>Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的应用程序。[1]<br>Web Service技术， 能使得运行在不同机器上的不同应用无须借助附加的、专门的第三方软件或硬件， 就可相互交换数据或集成。依据Web Service规范实施的应用之间， 无论它们所使用的语言、 平台或内部协议是什么， 都可以相互交换数据。Web Service是自描述、 自包含的可用网络模块， 可以执行具体的业务功能。Web Service也很容易部署， 因为它们基于一些常规的产业标准以及已有的一些技术，诸如标准通用标记语言下的子集XML、HTTP。Web Service减少了应用接口的花费。Web Service为整个企业甚至多个组织之间的业务流程的集成提供了一个通用机制</strong></p>
+<p>这是我从百度抓取的一些文字，根据文字的内容，我们得知他是基于Socket技术的，是低耦合，用户分布式的应用程序，它可以使<br>通用的机制。 根据这些内容，我们大概就是知道，这货写的东西其他语言，平台都可以使用，没有障碍，独立的一种服务技术。</p>
+<p>#Socket#<br>Socket 大家应该都知道吧<br><img src="http://ok9vfjkgl.bkt.clouddn.com/gg.png" alt=""><br>Socket 分为客户端/服务端，基于这种通信一次就会断开，所以我们服务端就必须跑一个while循环一直来监听对应端口来实现服务。<br>那么socket有什么特点呢？ 需要开启端口，长连接通信，也容易被防火墙拦截，所以导致有时候我们的连接会被防火墙杀掉，导致我们没有接受到<br>任何消息，所以一般的趋势就是采用  “心跳检测” 每过一定的时间，客户端/服务器就会发生一个数据包，以此来保持连接不被断开。</p>
+<p>#http#<br>http  这是基于web服务的协议，这种协议的底层还是Socket ，只不过它对socket进行了二次封装<br>http特点：跨平台比较好，传输数据比较麻烦。get/post</p>
+<p>#WebService#<br>比较http /socket 我们发现都不是很友好，我们需要寻找一种替代方案，那就是我们今天要讲的WebService,他能使的运行在不同<br>机器上的不同应用无须借助附加的软件、硬件，就可以很好的数据交互。</p>
+<p>#Java wsImport#<br>wsImport 是Java为我们提供的一款引入WebService命令软件</p>
+<p>使用如下：</p>
+<pre><code>wsImport [option] &lt;url&gt;
 
-1 final String separator = &quot;,&quot;;
-2 Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).forEach( 
-3  ( String e ) -&gt; System.out.print( e + separator ) );
+-d 指定要输出的目录  
 
+-s表示要解析java代码，默认解析的是class字节码
 
-Lambda可能会返回一个值。返回值的类型也是由编译器推测出来的。如果lambda的函数体只有一行的话，
-那么没有必要显式使用return语句。下面两个代码片段是等价的
+-p 指定要输出的包
+</code></pre><p>其实就是这么简单，我们去找别人发布的WebService的地址，然后我们使用wsImport就可以生成一个jar包，jar包里面就包含了别人的服务，那就有<br>人要问了，这不就是java 的一个jar包吗，我可以自己写完发布呀!,说是这样的，但是你的jar包可以给c# 用吗？不可以吧，你还需要为其他语言写一套<br>代码去，但是如果你采用了WebService的话，只需要一套代码，天下任你行。</p>
+<p>#如何发布#<br>java发布其实很简单，</p>
+<pre><code>@WebService   // 声明该业务类对外提供WebService服务
+public class demoService{
 
-  Arrays.asList( &quot;a&quot;, &quot;b&quot;, &quot;d&quot; ).sort( ( e1, e2 ) -&gt; e1.compareTo( e2 ) );
-</code></pre><p>2.java8增加了一种特殊的注解 @FunctionalInterface（Java 8中所有类库的已有接口都添加了</p>
-<pre><code>@FunctionalInterface
-public interface Functional {
-        void method();
-}
-</code></pre><p>3 接口的默认方法与静态方法<br>        Java 8用默认方法与静态方法这两个新概念来扩展接口的声明。默认方法使接口有点像Traits（<br>        Scala中特征(trait)类似于Java中的Interface，但它可以包含实现代码，也就是目前Java8新增的功能）<br>        但与传统的接口又有些不一样，它允许在已有的接口中添加新方法，而同时又保持了与旧版本代码的兼容性。<br>        private interface Defaulable {<br>                // Interfaces now allow default methods, the implementer may or<br>                // may not implement (override) them.<br>                default String notRequired() {<br>            return “Default implementation”;<br>                }<br>            }</p>
-<pre><code>private static class DefaultableImpl implements Defaulable {
-}
+        public String getPhone(String os){
 
-private static class OverridableImpl implements Defaulable {
-@Override
-public String notRequired() {
-    return &quot;Overridden implementation&quot;;
-}
-}
-上述代码中Defaulable接口使用了default声明了默认方法，他的实现者之一DefaultableImpl,并使用了默认的
-方法实现，OverridableImpl 则用自己的方法覆盖了默认的方法
-</code></pre><p>4 方法引用<br>            方法引用提供了非常有用的语法，可以直接引用已有Java类或对象（实例）的方法或构造器。<br>            与lambda联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</p>
-<pre><code>第一种方法引用是构造器引用，它的语法是Class::new，或者更一般的Class&lt; T &gt;::new。
-    final Car car = Car.create( Car::new );
-    final List&lt; Car &gt; cars = Arrays.asList( car );
-第二种方法引用是静态方法引用，它的语法是Class::static_method。请注意这个方法接受一个Car类型的参数。
-    cars.forEach( Car::collide );
-第三种方法引用是特定类的任意对象的方法引用，它的语法是Class::method。请注意，这个方法没有参数
-    cars.forEach( Car::repair );
-第四种方法引用是特定对象的方法引用，它的语法是instance::method。请注意，这个方法接受一个Car类型的参数
-    final Car police = Car.create( Car::new );
-    cars.forEach( police::follow );
-</code></pre><p>5 重复注解<br>        自从Java 5引入了注解机制，这一特性就变得非常流行并且广为使用。然而，使用注解的一个限制是相同的注解在<br>        同一位置只能声明一次，不能声明多次。Java 8打破了这条规则，引入了重复注解机制，这样相同的注解可以在同一<br>        地方声明多次。重复注解机制本身必须用@Repeatable注解。事实上，这并不是语言层面上的改变，更多的是编译器<br>        的技巧，底层的原理保持不变<br>6 更好的类型推测机制<br>           Java 8在类型推测方面有了很大的提高。在很多情况下，编译器可以推测出确定的参数类型，这样就能使代码更整洁</p>
-<pre><code>1 package com.javacodegeeks.java8.type.inference;
-2  public class Value&lt; T &gt; {
-3     public static&lt; T &gt; T defaultValue() { 
-4              return null; 
-5           }
-6      public T getOrDefault( T value, T defaultValue ) {
-7         return ( value != null ) ? value : defaultValue;
-8       }
-9   }
-
-这里是Value&lt; String &gt;类型的用法。
-
-
-    package com.javacodegeeks.java8.type.inference;
-
-    public class TypeInference {
-    public static void main(String[] args) {
-        final Value&lt; String &gt; value = new Value&lt;&gt;();
-        value.getOrDefault( &quot;22&quot;, Value.defaultValue() );
+          if(os.equal(&quot;ios&quot;))
+          return &quot;iPhone8&quot;
+          else if(os.equal(&quot;android&quot;))
+          return &quot;android手机&quot;
         }
-    }
-Value.defaultValue()的参数类型可以被推测出，所以就不必明确给出。在Java 7中，相同的例子将不会通过编译，
-正确的书写方式是 Value.&lt; String &gt;defaultValue()。
-</code></pre><p>7 扩展注解的支持<br>            Java 8扩展了注解的上下文。现在几乎可以为任何东西添加注解：局部变量、泛型类、父类与接口的实现，<br>            就连方法的异常也能添加注解。下面演示几个例子：</p>
-<pre><code>package com.javacodegeeks.java8.annotations;
+      public static void main(String []args){
 
-    import java.lang.annotation.ElementType;
-    import java.lang.annotation.Retention;
-    import java.lang.annotation.RetentionPolicy;
-    import java.lang.annotation.Target;
-    import java.util.ArrayList;
-    import java.util.Collection;
+        String addr=&quot;http://127.0.0.1:8080/ws/phoneService&quot;
+        Endpoint.publish(address,new demoService())
+      }
 
-public class Annotations {
-    @Retention( RetentionPolicy.RUNTIME )
-    @Target( { ElementType.TYPE_USE, ElementType.TYPE_PARAMETER } )
-    public @interface NonEmpty {        
-    }
-
-    public static class Holder&lt; @NonEmpty T &gt; extends @NonEmpty Object {
-        public void method() throws @NonEmpty Exception {           
-        }
-    }
-
-    @SuppressWarnings( &quot;unused&quot; )
-    public static void main(String[] args) {
-        final Holder&lt; String &gt; holder = new @NonEmpty Holder&lt; String &gt;();       
-        @NonEmpty Collection&lt; @NonEmpty String &gt; strings = new ArrayList&lt;&gt;();       
-    }
 }
-</code></pre><p>8 Java编译器的新特性</p>
-<pre><code>1. 参数名字
-     很长一段时间里Java程序员一直在发明不同的方式使得方法参数的名字能保留在Java字节码中，并且能够在运行时获取它们
-        最终，在Java 8中把这个强烈要求的功能添加到语言层面（通过反射API与Parameter.getName()方法）与字节码文件
-          package com.javacodegeeks.java8.parameter.names;
+</code></pre><p>就这样，我们就向外部发布了一个服务了，别人只要拿着<a href="http://127.0.0.1../.....这个url就可以使用我们的服务了，是不是很简单，而且我们服务器的一个端口就" target="_blank" rel="external">http://127.0.0.1../.....这个url就可以使用我们的服务了，是不是很简单，而且我们服务器的一个端口就</a><br>可以发布多个服务，只要保持服务名字不相同即可</p>
+<p>其实当我们游览器输入<a href="http://127.0.0.1:8080/ws/phoneService呢？他会显示出一些xml文档，没错，WebService服务的发布就是基于xml文档结构说明的，" target="_blank" rel="external">http://127.0.0.1:8080/ws/phoneService呢？他会显示出一些xml文档，没错，WebService服务的发布就是基于xml文档结构说明的，</a><br><img src="http://ok9vfjkgl.bkt.clouddn.com/gg2.png" alt=""></p>
+<p>看见没在xml文档中详细说明了我们服务的结构特征，他详细描述了我们方法的返回值。参数，内容等信息，并且这些信息我们可以定制</p>
+<p>@WebMethod()</p>
+<p>@WebResult()</p>
+<p>@WebParam()</p>
+<p>使用这3个注解，就可以指定我们想要的名字。</p>
+<p>#WebService优势何在#</p>
+<p>可以作为接口的3种方式</p>
+<ol>
+<li>socket</li>
+<li>http</li>
+<li>WebService</li>
+</ol>
+<p>但是前2种只能进行简单的字符串传递，对于一个对象呢？没错，WebService可以很少的解决这个问题，他实现了夸语言，夸平台的优势</p>
+<p>#四个概念#</p>
+<ol>
+<li>SOAP 简单的对象访问协议(http+xml)</li>
+<li>SOA  面向服务的架构，他是一种思想,IBM大力倡导</li>
+<li>WSDL  WebService描述语言</li>
+<li>uddi  目标服务，统一描述，发现，继承</li>
+</ol>
+<p>以上都是我们基于jdk为我们提供的工具，但是我们想和Tomcat服务器结合起来，WebService会随着spring 同时启动，如何做呢，这就需要<br>我们使用框架来继承了</p>
+<p>#框架#</p>
+<pre><code>CXF介绍：
+    cxf是 celtrix和xfire合并而成的，并且捐赠给apache
+    CXF的核心是org.apache.cxf.Bus
+    CXF默认是依赖于spring 的
 
-          import java.lang.reflect.Method;
-          import java.lang.reflect.Parameter;
-
-          public class ParameterNames {
-              public static void main(String[] args) throws Exception {
-                  Method method = ParameterNames.class.getMethod( &quot;main&quot;, String[].class );
-                  for( final Parameter parameter: method.getParameters() ) {
-                      System.out.println( &quot;Parameter: &quot; + parameter.getName() );
-                  }
-              }
-          }
-   需要使用javac -parameters 来进行编译
-</code></pre><p>9 Java 类库的新特性</p>
-<pre><code> 1. Optional 
-     Optional实际上是个容器：它可以保存类型T的值，或者仅仅保存null。Optional提供很多有用的方法，这样我们就不用显式进行空值检测
-     我们下面用两个小例子来演示如何使用Optional类：一个允许为空值，一个不允许为空值
-       Optional&lt; String &gt; fullName = Optional.ofNullable( null );
-       System.out.println( &quot;Full Name is set? &quot; + fullName.isPresent() );        
-       System.out.println( &quot;Full Name: &quot; + fullName.orElseGet( () -&gt; &quot;[none]&quot; ) ); 
-       System.out.println( fullName.map( s -&gt; &quot;Hey &quot; + s + &quot;!&quot; ).orElse( &quot;Hey Stranger!&quot; ) );
-         如果Optional类的实例为非空值的话，isPresent()返回true，否从返回false。为了防止Optional为空值，orElseGet()方法通过
-       回调函数来产生一个默认值。map()函数对当前Optional的值进行转化，然后返回一个新的Optional实例。orElse()方法和orElseGet()方法类似，
-       但是orElse接受一个默认值而不是一个回调函数
- 2. Stream
-     最新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。这是目前为止对Java类库最好的补充，
-     因为Stream API可以极大提供Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。
- 3. 3 Date/Time API (JSR 310)
-     这种情况直接导致了Joda-Time——一个可替换标准日期/时间处理且功能非常强大的Java API的诞生。Java 8新的Date-Time API (JSR 310)
-     在很大程度上受到Joda-Time的影响，并且吸取了其精髓。新的java.time包涵盖了所有处理日期，时间，日期/时间，时区，时刻（instants），
-     过程（during）与时钟（clock）的操作。在设计新版API时，十分注重与旧版API的兼容性：不允许有任何的改变（从java.util.Calendar中得到的深刻教训）。
-     如果需要修改，会返回这个类的一个新实例
- 4. JavaScript引擎Nashorn
-     不得不承认，近几年的js发展速度可怕, Nashorn就是支持了在jvm上运行一些js代码 实例：
-       ScriptEngineManager manager = new ScriptEngineManager();
-       ScriptEngine engine = manager.getEngineByName( &quot;JavaScript&quot; );     
-       System.out.println( engine.getClass().getName() );
-       System.out.println( &quot;Result:&quot; + engine.eval( &quot;function f() { return 1; }; f() + 1;&quot; ) );
- 5  Base64
-     曾几何时，为了实现加密到处找base64的实现，这倒好 java8集成了base 64，使用就方便多了
- 6 并行（parallel）数组
-    Java 8增加了大量的新方法来对数组进行并行处理。可以说，最重要的是parallelSort()方法，因为它可以在多核机器上极大提高数组排序的速度
- 7 并发（Concurrency）
-   新增Stream机制与lambda的基础之上，在java.util.concurrent.ConcurrentHashMap中加入了一些新方法来支持聚集操作。
-   同时也在java.util.concurrent.ForkJoinPool类中加入了一些新方法来支持共有资源池（common pool）
-   新增的java.util.concurrent.locks.StampedLock类提供一直基于容量的锁，这种锁有三个模型来控制读写操作（它被认为是不太有名的java.util.concurrent.locks.ReadWriteLock类的替代者）。
-
-   在java.util.concurrent.atomic包中还增加了下面这些类：
-
-   DoubleAccumulator
-   DoubleAdder
-   LongAccumulator
-   LongAdder
-
-8 Java虚拟机（JVM）的新特性
-
-   PermGen空间被移除了，取而代之的是Metaspace（JEP 122）。JVM选项-XX:PermSize与
-   -XX:MaxPermSize分别被-XX:MetaSpaceSize与-XX:MaxMetaspaceSize所代替。
-</code></pre><p>总结:有想了解jvm虚拟机的话，可以看我之前的帖子，听所java 9将在2017年7月发布，将又会有一些新的特性等待我们学习呢!!!!!</p>
+CXF特点：
+    于spring servlet 做到了无缝连接，
+    支持注解形式来发服务
+    能够显示一个WebService服务列表
+    能够添加拦截器，输出、输入、日志、用户权限等
+</code></pre><p>#如何使用#<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  <span class="meta">@WebService</span></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">phoneService</span></span>&#123;</div><div class="line">      <span class="function">String <span class="title">getPhone</span><span class="params">(String os)</span></span>;</div><div class="line"></div><div class="line"> &#125;</div><div class="line"> <span class="meta">@WebService</span></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">phoneServiceImpl</span> <span class="keyword">implements</span> <span class="title">phoneService</span></span>&#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> String <span class="title">getPhone</span><span class="params">(String os)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(os.equal(<span class="string">"ios"</span>))</div><div class="line">        <span class="keyword">return</span> <span class="string">"iPhone8"</span></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(os.equal(<span class="string">"android"</span>))</div><div class="line">        <span class="keyword">return</span> <span class="string">"android手机"</span></div><div class="line">      &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</div><div class="line">   phoneService service=<span class="keyword">new</span> phoneServiceImpl();</div><div class="line">   ServiceFactoryBean bean=<span class="keyword">new</span> ServiceFactoryBean();</div><div class="line">   bean.setAddress(url);</div><div class="line">   bean.setServiceClass(phoneService.class);</div><div class="line">   bean.setServiceBean(service); 发布</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//切记接口和 实现类都必须有@WebService注解</span></div></pre></td></tr></table></figure></p>
+<hr>
+<p>第二种方式为JaxWsServerFactoryBean 来发布服务</p>
+<ol>
+<li>是ServiceFactoryBean的子类，也是功能上的扩展</li>
+<li>此类，必须在服务类上假如@WebService注解，如果不加，不会报错，但是也不会暴露接口</li>
+<li>可以通过拦截器对请求进拦截</li>
+</ol>
+<h1 id="Spring-CXF"><a href="#Spring-CXF" class="headerlink" title="Spring + CXF"></a>Spring + CXF</h1><p><img src="http://ok9vfjkgl.bkt.clouddn.com/spring1.png" alt=""></p>
+<p><img src="http://ok9vfjkgl.bkt.clouddn.com/spring2.png" alt=""></p>
+<p>#总结#<br>到此我们说完了WebService的作用，如何使用 以及与spring 的整合，以及CXF框架的使用，现在很多服务都是基于这种服务进行的，所有我们很有必要了解和学习</p>
 </span>
       
     </div>
@@ -501,7 +422,7 @@ public class Annotations {
       
         <div class="post-tags">
           
-            <a href="/tags/java新特性/" rel="tag">#java新特性</a>
+            <a href="/tags/web/" rel="tag">#web</a>
           
         </div>
       
@@ -510,13 +431,13 @@ public class Annotations {
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/10/论kmp算法/" rel="prev">论kmp算法</a>
+              <a href="/2016/12/22/app&Android/" rel="prev">知识产权app&Android技术总结</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="next">java虚拟机总结(2)</a>
+              <a href="/2016/11/12/linux2/" rel="next">Linux自学路（一）</a>
             
           </div>
         </div>
@@ -579,10 +500,10 @@ public class Annotations {
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -597,21 +518,21 @@ public class Annotations {
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">18</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">0</span>
-              <span class="site-state-item-name">Kategorien</span>
+              <span class="site-state-item-name">categories</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             
               <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">Tags</span>
+              <span class="site-state-item-name">tags</span>
               
           </div>
 
@@ -645,7 +566,7 @@ public class Annotations {
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-CXF"><span class="nav-number">1.</span> <span class="nav-text">Spring + CXF</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
