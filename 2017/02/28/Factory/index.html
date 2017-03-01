@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="Java模式," />
 
 
 
@@ -42,25 +42,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(1)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/22/java虚拟机总结(1)/index.html">
+<meta property="og:title" content="设计模式（三）工厂模式 VS 简单工厂模式">
+<meta property="og:url" content="https://vincelz.github.io/2017/02/28/Factory/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
-<meta property="og:updated_time" content="2017-01-24T06:35:42.682Z">
+<meta property="og:description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
+<meta property="og:updated_time" content="2017-02-28T11:08:27.322Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(1)">
-<meta name="twitter:description" content="回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&amp;lt;深入理解java虚拟机&amp;gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，      主要垃圾回收机制可以向管理j">
+<meta name="twitter:title" content="设计模式（三）工厂模式 VS 简单工厂模式">
+<meta name="twitter:description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +61,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(1) | 1000 words a Day </title>
+  <title> 设计模式（三）工厂模式 VS 简单工厂模式 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +295,7 @@
           
           
             
-              java虚拟机总结(1)
+              设计模式（三）工厂模式 VS 简单工厂模式
             
           
         </h1>
@@ -313,8 +304,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-01-22T10:49:52+08:00" content="2017-01-22">
-            2017-01-22
+          <time itemprop="dateCreated" datetime="2017-02-28T22:01:23+08:00" content="2017-02-28">
+            2017-02-28
           </time>
         </span>
 
@@ -332,12 +323,12 @@
       
 
       
-        <span itemprop="articleBody"><p>回到了家，终于有时间可以更新下自己的博客了,长话短说</p>
-<hr>
-<p>抽时间读完了&lt;深入理解java虚拟机&gt;,收获颇丰总结如下：</p>
-<p>1.jvm中共享的数据区为:方法区  堆(heap)<br>  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等<br>      在hotspot上方法区也叫永久带，那是因为hotspot使用永久带实现了方法区，<br>      主要垃圾回收机制可以向管理java堆一样管理这部分内存，能够省去专门为方法区编写内存管理<br>      运行时常量池：是方法区的一部分，Class文件除了有类的版本 字段 方法 接口等描述信息外<br>      还有一项信息是常量池<br>  1.2 堆  是jvm中内存最大的一块，是所有的线程共享的存放对象实例（数组）也是垃圾回收的主<br>      要地方，细分为新生代，老年代<br>2.jvm线程中独有的数据区: 虚拟机栈 本地方法区  程序计数器<br>  2.1 栈 线程私有的， 他的生命周期和线程一致 ，每个方法在执行的同时都会创建一个栈帧用于<br>      存储局部变量,操作数栈,动态链接，方法出口，存放着编译期的各种基本数据类型<br>      boolean byte char short int float long double 对象引用reference类型<br>      对于栈，一般饱满后就会报stackOverflowError错误, 但是如果虚拟机容许自由扩展，那么可能报<br>      OutOfMemoryError错误<br>  2.2 本地方法区 同栈他是为java方法服务的，而本地方法区是为使用Native方法服务的<br>  2.3 程序计数器 一块较小的内存空间,他可以看作是执行的字节码的行号指示器各线程之间的计数器互不影响独立存储</p>
-<p>虚拟机生成对象的过程<br>    检测指令的参数是否在常量池中定位到–&gt;类是否被加载 解析 初始化 ——&gt;若没有则执行相应的类加载过程<br>    –&gt;检测通过后将为新生对象分配内存<br>分配内存由2种方法：<br>    指针碰撞：用过的内存放一边,没有使用的放在另外一边,中间放着一个指针作为分界点的指示器, Serial  parNew回收垃圾<br>    空闲表法:内存不是规整的,那么就需要维护一张表,记录哪些内存可以用,哪些不可以用  CMS垃圾回收<br>对象的内存分布：<br>    对象在内存区域中布局分为 对象头 实例数据  对齐填充<br>    对象头分为2部分：第一部分存储对象自身的运行数据 哈希吗 GC分带年龄 锁状态标识 线程持有的锁  偏向线程id<br>    另外一部分是:类型指针 对象指向的类元数据的指针，虚拟机通过这个对象确定对象是哪个类的实例，<br>    实例数据：部分是对象真正存储的有效信息，<br>    对齐填充：无特别意义，占位符的作用<br>虚拟机如何访问引用的对象呢？<br>    对象访问定位有2种方法:句柄  直接指针<br>    使用句柄访问，那么java堆中划分一块内存来作为句柄池，reference中存储的是对象的句柄地址<br>而句柄中包含了对象实例数据与类型数据各自的具体地址信息<br>    直接指针访问： reference中存储的是对象地址<br>    PS： String.intern()是一个本地方法，作用是 如果字符串常量池中已经包含了一个等于此字符串的，则返回池中的对象<br>    否则将String对象添加到常量池中，并且返回引用</p>
-<p>刚开始更新博客,哪里写的不好,请多见谅!!!!  续更</p>
+        <span itemprop="articleBody"><h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><p>简单工厂模式，先上代码：<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Operation <span class="title">createOperate</span><span class="params">(String operate)</span></span>&#123;</div><div class="line">      Operation oper=<span class="keyword">null</span>;</div><div class="line">      <span class="keyword">switch</span>(operate)&#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"+"</span>:</div><div class="line">        oper=<span class="keyword">new</span> OperationAdd();</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"-"</span>:</div><div class="line">        oper=<span class="keyword">new</span> OperationSub();</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperationAdd</span> <span class="keyword">implements</span> <span class="title">Operation</span></span>&#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a1,<span class="keyword">int</span> b1)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> a1+b1;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperationSub</span> <span class="keyword">implements</span> <span class="title">Operation</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a1,<span class="keyword">int</span> b1)</span></span>&#123;</div><div class="line">      <span class="keyword">return</span> a1*b1;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Operation</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</div><div class="line">  Operation operation=Factory.createOperate(<span class="string">"+"</span>);</div><div class="line">  <span class="keyword">int</span> result=operation.getResult(<span class="number">11</span>,<span class="number">12</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过代码我们知道，简单工厂模式其实就是一个工厂，通过传入的值，进行case判断，然后返回对应的符合<br>需求的类进行运算的，但是有一个问题，如何我突然需要增加乘法，如何做呢？最简单的办法就是直接在工厂<br>中增加case分支，然后新增一个乘法类，返回即可。<br>是可以解决，但是大家没有发现吗，这样做就等于破坏了我们不开放修改的原则，就是我们写的代码宁可新增<br>，也不要在原本的基础上修改，这对系统是很不好友的，也不建议大家这么做。那么开始介绍我们的工厂模式。</p>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式虽然跟简单工厂模式自由俩字之差，但是他们在设计方面能力却大大不同，贴代码<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span></span>&#123;</div><div class="line">   <span class="function">Operation <span class="title">createOperate</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Operation <span class="title">createOperate</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OperationAdd();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Operation <span class="title">createOperate</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OperationSub();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</div><div class="line">   Factory  fact=<span class="keyword">new</span> AddFactory();</div><div class="line">   Operation oper= fact.createOperate();</div><div class="line">   oper.getResult(<span class="number">1</span>,<span class="number">2</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>细看一下，好像没有什么区别吧！！！！</p>
+<h1 id="简单工厂VS-工厂"><a href="#简单工厂VS-工厂" class="headerlink" title="简单工厂VS 工厂"></a>简单工厂VS 工厂</h1><p>细看代码他们没什么区别，但是就从上面说过的一个问题，如果新添加一种运算方法的话，简单工厂是需要修改原来的类，但是工厂模式不需要，只要我重新写一个乘法工厂，继续写一个乘法类，即可完成上述功能，我们只在原来代码的基础上新增了2个类，就扩展了新的功能，没有对代码进行修改，这就符合了对代码修改关闭<br>的原则，是不是很有趣呢？</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实工厂模式、简单工厂模式它们的原理基本一样，无非是利用了接口、继承等实现了对代码扩展，具体有什么各自的作用，我需要我们平时多加练习。<br>最近一直在复习Java设计模式，所以推荐大家看看《大话模式》吧。</p>
 </span>
       
     </div>
@@ -346,7 +337,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/Java模式/" rel="tag">#Java模式</a>
           
         </div>
       
@@ -355,13 +346,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="prev">java虚拟机总结(2)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/20/WebService/" rel="next">WebService</a>
+              <a href="/2017/02/28/Decorator/" rel="next">设计模式（二）装饰者模式</a>
             
           </div>
         </div>
@@ -490,7 +479,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式"><span class="nav-number">2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂VS-工厂"><span class="nav-number">3.</span> <span class="nav-text">简单工厂VS 工厂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
