@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="java虚拟机," />
+  <meta name="keywords" content="Java模式," />
 
 
 
@@ -42,29 +42,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
+<meta name="description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java虚拟机总结(2)">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/24/java虚拟机总结(2)/index.html">
+<meta property="og:title" content="设计模式（三）工厂模式 VS 简单工厂模式">
+<meta property="og:url" content="https://vincelz.github.io/2016/12/10/Factory/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/2.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/3.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/4.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/5.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/6.png">
-<meta property="og:updated_time" content="2017-01-25T10:55:36.267Z">
+<meta property="og:description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
+<meta property="og:updated_time" content="2017-03-05T02:49:17.443Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java虚拟机总结(2)">
-<meta name="twitter:description" content="java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来
-
- 垃圾回收器与内存分配策略：    如何判断对象已死？       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png">
+<meta name="twitter:title" content="设计模式（三）工厂模式 VS 简单工厂模式">
+<meta name="twitter:description" content="简单工厂模式简单工厂模式，先上代码： 123456789101112131415161718192021222324252627282930313233343536  public class Factory &amp;#123;    public static Operation createOperate(String operate)&amp;#123;      Operation oper=null;">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -74,7 +61,7 @@
   };
 </script>
 
-  <title> java虚拟机总结(2) | 1000 words a Day </title>
+  <title> 设计模式（三）工厂模式 VS 简单工厂模式 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -308,7 +295,7 @@
           
           
             
-              java虚拟机总结(2)
+              设计模式（三）工厂模式 VS 简单工厂模式
             
           
         </h1>
@@ -317,8 +304,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-01-24T13:33:13+08:00" content="2017-01-24">
-            2017-01-24
+          <time itemprop="dateCreated" datetime="2016-12-10T22:01:23+08:00" content="2016-12-10">
+            2016-12-10
           </time>
         </span>
 
@@ -336,39 +323,12 @@
       
 
       
-        <span itemprop="articleBody"><p> java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来</p>
-<hr>
-<p> 垃圾回收器与内存分配策略：<br>    如何判断对象已死？<br>       引用计数算法：给对象添加一个引用计数器,每到一个地方引用就让计数器+1,引用失效就计数器-1,当对象的计数器为0时,就可以认为对象已经死亡。<br>    但是主流的虚拟机并不会采用这种算法, 其原因是这种算法虽然简单 高效，但是有一个问题,就是对象之间相互循环引用的bug,如<br>       objA.instance=objB;  objB.instance=objA;   他们之间互相引用，导致系统永远无法清理这2个对象，也就无法gc</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/clipboard.png" alt=""></p>
-<p>可达性分析算法：<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/2.png" alt=""><br>    从GC root 开心向下搜索  搜索走过的路程叫做引用链，如果遇到对象不可达，则说明这个对象不可用，就可以收回 如上图中的obj5 obj6 obj7 他们之间虽然相互关联，但是无法从GCroot遍历到，所以可以回收。<br>       java中，可以作为GCROOT的对象包括如下几种：<br>                虚拟机栈中引用的对象<br>                方法区中类静态属性引用的对象<br>                方法区中常量引用的对象<br>                本地方法栈中JNI （native方法）引用的对象<br>说起引用,Java有4种引用类型<br>                强引用:类似Object obj=new Object() 只要强引用存在，垃圾回收器就永远不会回收该对象<br>                软引用：有用但并非必需的对象，系统发生内存溢出之前，会把这些对象回收，如果回收后内存依旧不够，就会报错<br>                弱引用：非必需对象，比软引用弱一些，只能生存到下一次垃圾回收发生之前，不论如何都会被回收！<br>                虚引用：基本无作用，最弱的一种，就是为一个对象设置虚引用目的就是能在这个对象被收集器回时收到一个系统通知<br>对象自我拯救？<br>    在可达性分析中，当从GCroot无法达到的对象不一定非死不可，这时候他们处于缓刑阶段，一个对象要死亡，必须经过2次标记，当第一次无法从GCROOT达到时，就会被标记并且筛选，筛选条件是是否必要执行finalize()方法，当对象没有覆盖finzlize方法或者已经被虚拟机调用，此时虚拟机将视为没有必要执行，而对于有必要执行的对象，将会将对象放到F-Queue队列中，并有虚拟机自动建立线程去执行，如果对象要在finalize方法中成功拯救自己，只要重新与引用链上的任何一个对象关联，第二次标记将移除即将回收的集合，如果对象没有逃脱，那么基本就回收了<br>   Hotspot把方法区作为了永久区，<br>永久区的垃圾回收主要分2部分， 废弃的常量和无用的类，回收废弃的常量与对象一样，检测常量是否被引用，如String 对象 ，常量池中有abc 如果没有任何一个字符串引用，那么abc常量就会回收</p>
-<p>想对判断常量比较简单，判断类就比较复杂，需要满足一下条件:<br>该类的所有实例全部回收，也就是java堆中不存在任何该实例<br>加载该类的ClassLoader已经被回收<br>该类对应的Class对象没有任何地方被引用，无法再任何地方通过反射访问该类<br>满足以上3个条件的无用类进行回收，但不象对象那样，不使用了就必须回收<br>ps 方法区也叫永久带，他里面放了一些类，和常量，所以我们上面讨论的是永久区中的类的回收，跟对象的实例回收一样，只是实例和类不一样！</p>
-<p>垃圾回收算法？<br>            标记-清除算法  分标记  清除 2个阶段，首先标记出需要回收对象，在标记后统一回收。缺点：效率问题  会产生大量空间碎片<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/3.png" alt=""></p>
-<pre><code>复制算法
-</code></pre><p>将可用的内存按容量划分大小相等大小的2块，每次只使用1块，当一块使用玩了。就将会活着的对象复制到另外一块，然后再把已使用完的内存空间一次清理，这样每次都是对整个半区进行回收，缺点：内存变为一半<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/4.png" alt=""></p>
-<pre><code>标记-整理法
-</code></pre><p>根据老年代的特点，标记过程仍然与标记-清除 算法一样，但后续步揍不是直接对可回收对象进行清理，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存<br>    <img src="http://ok9vfjkgl.bkt.clouddn.com/5.png" alt=""></p>
-<pre><code>分带收集算法
-</code></pre><p>根据对象存活周期的不同将内存化为几块，一般是新生代  老年代   。在新生代中每次垃圾收集有大批对象死去，只有少量存活，就选用复制算法   老年代对象存活率高，没有额外的空间分配，则必须使用标记-清理或者 标记-整理算法</p>
-<p>说说HotSpot的算法实现<br>     枚举根节点 类似GC ROOT 根节点遍历，，，但是有个要求是停顿，确保一致性的快照，整个系统被冻结到某个时间点，不可以出现分析过程中引用关系不断变化，Stop -The -World .并且停顿也不会随便停顿，会有一个安全点才才可以停顿发生GC枚举<br>        如何让线程跑到最近的安全点停顿下来呢? 2种方案<br>                    1 抢占式中断 不需要线程执行代码配合,在GC发生时,首先所有线程全部中断,如果发现有线程中断的地方不安全,就恢复线程,让他跑到安全点. ,目前大部分虚拟机使用这个<br>                    2 主动式中断当GC需要中断线程的时候,不直接对线程操作.只是简单的设置一个标记,各个线程执行时主动去轮询这个标记,发现中断标志为真就自己中断挂起,轮询标记的地方和安全点是重合的.另外在加上创建对象需要分配内存的地方.</p>
-<p>HotSpot 的几种垃圾回收器<br>                <img src="http://ok9vfjkgl.bkt.clouddn.com/6.png" alt=""></p>
-<pre><code>Serial 收集器
-</code></pre><p>单线程收集器。。进行垃圾回收时，必须暂停其他所有的工作线程 直到收集结束。一般使用在  运行在Client模式下的虚拟机 可以与CMS配合使用</p>
-<pre><code>ParNew收集器    
-</code></pre><p>其实就是Serial的多线程版本。运行在Server模式下，对于单cpu的话，性能没有serial器高效 可以与CMS 收集器配合使用（CMS是hotspot正真意义上的并发执行的收集器）</p>
-<pre><code>parallel Scavenge 收集器
-</code></pre><p>新生代收集器。使用复制算法，又是多线程。他与其他收集器不同的是，CMS关注点是缩短垃圾回收用户线程的停顿时间，而Parallel Scavenge 目的是达到一个可控制的吞吐量，所谓吞吐量就是CPU用于运行用户代码的时间与Cpu总消耗时间的比值。吞吐量=运行用户代码/（运行用户代码时间+垃圾收回时间）<br>停顿时间越短越适合需要与用户交互的程序，高吞吐量可以高效的利用cpu时间，适合后台计算而不交互的<br>此收集器最大的特点是 自适应调节策略。会根据当前系统运行情况收集性能信息，动态调整参数保证最合适的停顿时间和最大的吞吐量</p>
-<pre><code>Serial old 收集器
-</code></pre><p>是Serial的老年代版本。单线程。使用标记-整理法也运行在client模式下。</p>
-<pre><code>Parallel old 收集器
-</code></pre><p>是Parallel  的老年代版本，多线程的 标记-整理算法。这个收集器 一般与parallel Scavenge 配合使用，</p>
-<pre><code>CMS收集器
-</code></pre><p>以获取最短停顿时间为目标的收集器。一般集中在B/S架构上，标记-清除算法  分为几个过程，老年代<br>                    初始标记<br>                    并发标记<br>                    重新标记<br>                    并发清除<br>  初始标记和重新标记需要停顿，初始标记仅仅标记一下GC ROOTS能直接关联到的对象。速度快，并发标记就是进行GC ROOTS Tracing（追查检测）过程， 重新标记是为了修正并发阶段因用户程序继续运作导致标记产生变动的那一部分标记记录， 整个过程耗时最长的并发标记和并发清除都可以与用户线程一起工作，所以总体CMS可以与用户现场一起并发执行</p>
-<pre><code>G1 回收器
-</code></pre><p>特点：并行和并发：利用多CPU<br>      分带收集<br>      空间整合： 基本基于标记-整理算法。局部使用复制算法<br>      可预测的停顿：可以设置垃圾收集上不得超过N毫秒<br>G1以前收集器还分老年代 新生代， 但是G1后 将整个堆划分为多个大小相等的独立区域，但新生代和老年代不再用物理隔离了。</p>
-<p>阶段: 初始标记<br>      并发标记<br>      最终标记<br>      筛选标记<br>详细过程：初始标记阶段仅仅只是标记一下GCroot能直接关联到对象，并且修改TAMS值，这个阶段需要停顿线程。耗时很短（这个阶段主要是建立起GC树）。  并发阶段是从GCroot开始对堆进行可达性分析，找出存活对象，耗时长，可与用户线程并发，最终阶段是为了修正并发阶段期间因用户程序运作导致标记产生变动的那部分，虚拟机将这段时间对象变化记录在线程Remembered Set Logs中，最终阶段需要把这个数据合并到Remembered Set 中，这个阶段需要停顿，可以并发执行，最终筛选阶段首先对各个策略回收价值和成本进行排序，来定制期望GC最佳方案</p>
-<p>内存分配与回收策略？<br>对象优先在新生代中的Eden区中分配，当空间不够，则发生Minor GC  ——新生代GC  Minor GC     老年代GC  Major GC /FULL GC 大对象直接进入老年代长期存活的对象直接进入老年代—–虚拟机给每个对象定义一个对象年龄（对象头） 一般超过15岁就是老年人  每一次GC 就会年龄+1 </p>
-<p>介绍几种常用命令</p>
-<p>jps  显示指定系统内所有的hotspot虚拟机进场<br>jstat 收集hotspot 虚拟机各方面的运行数据<br>jinfo 显示虚拟机配置信息<br>jmap 生成虚拟机的内存转储快照<br>jhat 分析文件 ，建立服务器 提供html/http，让用户可以游览器上分析结果<br>jstack 显示虚拟机线程快照<br>java与c++之间有一睹由内存分配和垃圾回收技术所围成的高墙，墙外面的人想进去，墙里面的人却想出来</p>
+        <span itemprop="articleBody"><h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><p>简单工厂模式，先上代码：<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Operation <span class="title">createOperate</span><span class="params">(String operate)</span></span>&#123;</div><div class="line">      Operation oper=<span class="keyword">null</span>;</div><div class="line">      <span class="keyword">switch</span>(operate)&#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">"+"</span>:</div><div class="line">        oper=<span class="keyword">new</span> OperationAdd();</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">"-"</span>:</div><div class="line">        oper=<span class="keyword">new</span> OperationSub();</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperationAdd</span> <span class="keyword">implements</span> <span class="title">Operation</span></span>&#123;</div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a1,<span class="keyword">int</span> b1)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> a1+b1;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperationSub</span> <span class="keyword">implements</span> <span class="title">Operation</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a1,<span class="keyword">int</span> b1)</span></span>&#123;</div><div class="line">      <span class="keyword">return</span> a1*b1;</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Operation</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</div><div class="line">  Operation operation=Factory.createOperate(<span class="string">"+"</span>);</div><div class="line">  <span class="keyword">int</span> result=operation.getResult(<span class="number">11</span>,<span class="number">12</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过代码我们知道，简单工厂模式其实就是一个工厂，通过传入的值，进行case判断，然后返回对应的符合<br>需求的类进行运算的，但是有一个问题，如何我突然需要增加乘法，如何做呢？最简单的办法就是直接在工厂<br>中增加case分支，然后新增一个乘法类，返回即可。<br>是可以解决，但是大家没有发现吗，这样做就等于破坏了我们不开放修改的原则，就是我们写的代码宁可新增<br>，也不要在原本的基础上修改，这对系统是很不好友的，也不建议大家这么做。那么开始介绍我们的工厂模式。</p>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>工厂模式虽然跟简单工厂模式自由俩字之差，但是他们在设计方面能力却大大不同，贴代码<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span></span>&#123;</div><div class="line">   <span class="function">Operation <span class="title">createOperate</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Operation <span class="title">createOperate</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OperationAdd();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Operation <span class="title">createOperate</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> OperationSub();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</div><div class="line">   Factory  fact=<span class="keyword">new</span> AddFactory();</div><div class="line">   Operation oper= fact.createOperate();</div><div class="line">   oper.getResult(<span class="number">1</span>,<span class="number">2</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>细看一下，好像没有什么区别吧！！！！</p>
+<h1 id="简单工厂VS-工厂"><a href="#简单工厂VS-工厂" class="headerlink" title="简单工厂VS 工厂"></a>简单工厂VS 工厂</h1><p>细看代码他们没什么区别，但是就从上面说过的一个问题，如果新添加一种运算方法的话，简单工厂是需要修改原来的类，但是工厂模式不需要，只要我重新写一个乘法工厂，继续写一个乘法类，即可完成上述功能，我们只在原来代码的基础上新增了2个类，就扩展了新的功能，没有对代码进行修改，这就符合了对代码修改关闭<br>的原则，是不是很有趣呢？</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实工厂模式、简单工厂模式它们的原理基本一样，无非是利用了接口、继承等实现了对代码扩展，具体有什么各自的作用，我需要我们平时多加练习。<br>最近一直在复习Java设计模式，所以推荐大家看看《大话模式》吧。</p>
 </span>
       
     </div>
@@ -377,7 +337,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/Java模式/" rel="tag">#Java模式</a>
           
         </div>
       
@@ -386,13 +346,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/10/论kmp算法/" rel="prev">论kmp算法</a>
+              <a href="/2016/12/11/clone/" rel="prev">Java设计模式(四) 原型模式&模板模式</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/22/Rquest/" rel="next">Java设计模式（八）职责链模式</a>
+              <a href="/2016/11/12/linux2/" rel="next">Linux自学路（一）</a>
             
           </div>
         </div>
@@ -521,7 +481,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式"><span class="nav-number">2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单工厂VS-工厂"><span class="nav-number">3.</span> <span class="nav-text">简单工厂VS 工厂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
