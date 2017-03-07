@@ -3,6 +3,8 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
+    
+
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -31,7 +33,7 @@
 
 
 
-  <meta name="keywords" content="Linux," />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -42,16 +44,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
+<meta name="description" content="前言最近抽时间在看《数据结构与算法描述-Java语言》这本书，如果你的主语言是Java的建议大家看，这本书看的比较轻松，没有《算法导论》这本书难啃………..表示自己都一年了，这本书还是没有啃完，实在惭愧，所以也告诉自己一定要抽时间把这本书看完，即使难啃也要坚持下去。那我们开始介绍今天学的二叉查找树记录一下，也分享给大家自己的心得。
+查找学过一些算法的同学，一定对于排序，查找不陌生吧，查找在我们的生">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux自学路（一）">
-<meta property="og:url" content="https://vincelz.github.io/2016/11/12/linux2/index.html">
+<meta property="og:title" content="二叉查找树">
+<meta property="og:url" content="https://vincelz.github.io/2017/03/07/Tree/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
-<meta property="og:updated_time" content="2017-03-01T02:24:13.426Z">
+<meta property="og:description" content="前言最近抽时间在看《数据结构与算法描述-Java语言》这本书，如果你的主语言是Java的建议大家看，这本书看的比较轻松，没有《算法导论》这本书难啃………..表示自己都一年了，这本书还是没有啃完，实在惭愧，所以也告诉自己一定要抽时间把这本书看完，即使难啃也要坚持下去。那我们开始介绍今天学的二叉查找树记录一下，也分享给大家自己的心得。
+查找学过一些算法的同学，一定对于排序，查找不陌生吧，查找在我们的生">
+<meta property="og:updated_time" content="2017-03-07T13:36:40.693Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux自学路（一）">
-<meta name="twitter:description" content="前言Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放">
+<meta name="twitter:title" content="二叉查找树">
+<meta name="twitter:description" content="前言最近抽时间在看《数据结构与算法描述-Java语言》这本书，如果你的主语言是Java的建议大家看，这本书看的比较轻松，没有《算法导论》这本书难啃………..表示自己都一年了，这本书还是没有啃完，实在惭愧，所以也告诉自己一定要抽时间把这本书看完，即使难啃也要坚持下去。那我们开始介绍今天学的二叉查找树记录一下，也分享给大家自己的心得。
+查找学过一些算法的同学，一定对于排序，查找不陌生吧，查找在我们的生">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -61,7 +66,7 @@
   };
 </script>
 
-  <title> Linux自学路（一） | 1000 words a Day </title>
+  <title> 二叉查找树 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -295,7 +300,7 @@
           
           
             
-              Linux自学路（一）
+              二叉查找树
             
           
         </h1>
@@ -304,8 +309,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2016-11-12T16:01:23+08:00" content="2016-11-12">
-            2016-11-12
+          <time itemprop="dateCreated" datetime="2017-03-07T16:01:23+08:00" content="2017-03-07">
+            2017-03-07
           </time>
         </span>
 
@@ -323,356 +328,40 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Linux,对于普通用户其实很陌生，在她们的眼里大概也只有window窗口化操作系统了吧，这也是情有可原的，毕竟linux 强势的点不在图形界面，而是它强大的内核与稳定的管理了，俗话说，window作为服务器，可能3个月就需要重启一次电脑，而linux作为服务器可能一年都不需要重启。当然这不是在黑window,毕竟各有所长，linux虽然在普通用户群体里没有它的身影，但是在服务器方面，它却大放异彩，所以作为一名java工程师，我们毕竟学会Linux基本操作，这也是我们职业技能所必须要求的。</p>
-<p>#小知识点#<br>      管理员:#</p>
-<pre><code>普通管理员:$
-
-点开头的文件都是隐藏文件
-
-变量在赋值是不能前面加$的，只有在引用变量的时候才需要加$
-
-FHS 文件层次标准
-    /bin 下存放二进制的文件。管理员和普通管理员都可以使用
-/sbin 只有管理员才可以使用
-sudo 的作用就是把/sbin下的管理员命令权限转接给普通用户
-运行正常的功能程序存放位置:/usr/bin   /usr/sbin
-运行第三方软件的  /usr/local/bin   /usr/local/sbin
-
-linux 根目录   是内核直接引用的
-linux 根目录是所有的文件的起始点，不像win 系统的磁盘
-linux系统都是由挂载 实现的 ，对应的 也有卸载    把一个盘可以挂载为一个文件夹
-算数运算
-1   使用let    let n=n+1;   使用let 不需要$
-2  result=$[n+a]  也可以使用$  result=$[$n+5]
-3 也可以使用(())  但是变量名之前必须使用$    result=$((n+3))
-4 expr  同样可以使用基本算数操作符
-result=`expr 3+4`  result=$(expr $n+5)
-
-linux 3种流   标准输入 stdin ---0  标准输出 stdout-----1 标准错误 stderr ----2
-
-  重定向
-    ls &gt;out.txt
-    我们也可以加上数字把stdout stdin stderr 输出
- cmd 2&gt;stderr.txt 的意思就是说如果cmd 命令有错误，就返回到stderr.txt中去
-
-cmd 2&gt;stderr.txt 1&gt;stdout.txt 本句指令说cmd如果有错误就输出到stderr中去，如果没有任何错误就把输出的东西定向到stdout.txt
-
- 》》追加  &gt;覆盖
-一般 都会把stderr 错误的信息定西到/dev/null    /dev/null是一个无底洞，吃了错误就什么都没有了
-  declare  是申明变量的
--x   声明环境变量
-declare -a  声明数组  -i  int  
-sleep  睡眠
-export -f  function   可以用来声明一个函数
-$? 来读取上个程序的返回值
-当你执行一个命令的时候，他会先去path去查找，如果找到了的话，第二次执行这个命令就不会查找path了，
-而是会保存到一个查找表里，哈希表的结构直接调用  
-  hash 命令就是来查看之前查找到的存储表
-
-
-  which+程序名  来查看程序名的位置  
-  reboot 重启  halt 关机
-  shutdown 操作符  时间
-  -r  重启
-  -h  关机
-  -c 取消时间作业
-  时间  now          +# 分钟
-  文件权限
-  10位
-  owner   group  other  9位权限 +  一个文件类型  共10位
-  没有权限的 用-来表示
-  数字表示法  r  4    w  2   x  1
-  chown  chgrp 修改文件的属主  和 属组
-  chmod 修改文件的所有权限
-  umask  权限过滤
-
-  设置本地变量
-    set a =value;
-    a=value;
-  引用 变量 $a
-  撤销变量 unset a;
-
-  环境变量
-    export a=&quot;&quot;
-    a=&quot;&quot;  export a
-  $0 脚本本身的名字
-  $1-$n 参数
-  $? 上个命令的执行状态  0成功 其余失败
-  $#参数个数
-  set  显示当前系统的所有变量
-  env 显示所有的环境变量
-  wc 字数统计  wc -c 字符统计 wc-w 单词  wc -l 行数
-  tr 转换  替换 tr -d &quot;&quot; 删除出现的字符  tr  &quot;1&quot;  &quot;2&quot;   2替换1
-  cut 切割  -d 指定分割符
-    read -p  交互式的获取值
-
-    cut -d : -f1  的意思就是说吧前面的管道以:分隔，f1  显示第一行
-    test   和 [   ]    逻辑判断式
-    -eq 等于  -ne 不等于   -le小于等于 -ge 大于等于 -lt 小于  -gt 大于
-    禁止用户登陆
-    usermod -s /sbin/nologin 用户名
-
-    service 服务名  start  stop  restart  用来关闭/启动/重启服务
-    开机永久禁用服务 chkconfig 服务名  off /on   开启  关闭 服务
-    /etc/ssh/sshd_config  可以配置一些ssh服务的配置信息
-    sudo   允许普通会员可以使用一些管理员的权限
-    所以我们需要使用su  来给sudo 配置一些权限  这个权限可以精确到木个用户
-    例如
-    user1 是没有权限访问/etc/shadow  文件的我们可以使用su 来给他福权限
-
-    使用su  查看/etc/sudoers 文件  添加 信息
-    user1  ALL= /bin/more /etc/shadow
-    后就可以让user1来访问这个文件了  默认用户还需要输入密码  才可以访问 ，有效期是5分钟
-
-    不需要输入密码的是
-    user1 ALL=NOPASSWD: /etc/init.d/nagios restart
-    让user2有所有的权限，但是不想输入密码
-    user2 ALL=(ALL) NOPASSWD :ALL
-
-    强烈介意 使用sudo  给用户赋予权限 ，可以安全 有效
-    yum install  安装
-    yum update 更新市场
-    yum remove 移除应用
-    yum check-update  检查 和更新应用
-    w  命令 可以查看登陆过这台服务器的所有用户名
-    passwd -l 用户名   就可以锁定该用户
-    ps -ef |grep 用户名 来查找进程
-    kill -9 pid  就可以杀死这个用户，踢出去
-    pifof 服务名  就可以获取该服务的pid
-    rpm -Va  来检查所有的软件 是否被修改
-    netstat -an  来查看开放 的端口
-    /etc/fstab 来配置 分区 信息的
-
-    /etc/inittab  是配置开机启动项的文件
-
-      ifconfig eth0 192.168.1.1  讲第一个网卡ip设置成
-
-      ifconfig eth0 down  关闭网卡1
-      ifconfig eth1 up 开启 网卡2
-
-      ifconfig eth0  查看 网卡一的信息
-
-
-      ping  
-      ping -n 数字 192.168,1,1   发生包次数
-      ping -t ip   一直不听的发送
-
-      ping -l 数字  ip   发送制定大小的包大小
-
-      shutdown -h now 立刻进行关机
-      shutdown -r noew 重启
-      reboot  重启
-
-      logout 注销
-
-
-
-      vi是linux的编译器  可以写c代码 和java  代码
-      vi aa.cpp;
-      然后写c代码
-      写完后 wq  保持退出  q!不保存退出
-      ls -l   ls 是连出文件  -l  就是 显示出文件的详细信息
-      编译gcc c文件名       ./x文件     执行
-      运行c程序
-
-      root 存放root用户相关的文件
-      home 存放普通用户的文件
-      bin 方法普通命令的目录
-      sbin  使用权限才能使用的命令文件
-      mnt 挂载光驱 和软驱的
-      boot  存放引导文件
-      etc 存放配置相关文件
-      var 存在异常文件
-      user 存放用户的程序，文件
-
-      ls 看到当前目录下所有文件
-      ls -l  列出所有文件以及详细信息
-      sudo apt-get install 包名   安装包
-      pwd 现在当前在哪个目录下
-
-
-      用户管理
-      useradd 用户名
-      passwd 用户名  修改该密码
-      userdel 用户名 删除
-      userdel -r 用户名   删除用户已经用户主目录
-      exit 是退出当前用户
-       init[0-6]
-      0 关机   1 单用户  2多用户没有网络  3多用户有网络 4系统未使用保留给用户 5 图形界面 6 系统重启  常用3 5
-
-      如何不进去系统就修改错误配置的方法  ：在开机的时候按下e  在选中 第二行  在输入e   最后输入1【单用户级别】
-
-      ls -a 显示隐藏文件
-      ls -l 显示长列表格方式
-      mkdir 建立文件夹
-      rmdir 删除文件夹
-      touch 建立空文件
-      cp  复制命令
-      mv 移动文件和改文件名
-      rm 删除文件和目录
-      rm -rf *  删除所有的内容  r 递归  f 强制
-      ln 建立符号链接
-      ln -s 源目标
-      tab 键是 自动补全
-      more 显示文件内容 带分页
-      less 显示文件内容带分页
-      grep 在文本中查询内容  grep 查找的文字 文件名
-      | 管道命令 ls -l /home/xxx | more     管道命令就是把上一个命令的结果交给|后面的命令处理
-      man  help帮助
-
-      find  搜索文件以及目录
-
-      find  目录地址  文件名
-      find 地址 -amin -10 10分钟内存取的文件或者目录
-      find         -atime -10 10小时
-                  -cmin -10 10分钟内更改过的文件
-                     -ctime +10  10小时更改过的
-
-      find 地址  -size +10k  查找大小为10k的文件
-
-      重定向
-      ls -l &gt; 文件名    列表的内容写到后面的文件里面
-      ls -al &gt;&gt;aa.txt    列表的内容追加到文件末尾
-      grep -n 关键字 文件 &gt;aa.txt 把结果保存到aa.txt
-
-      用户权限
-      usermod -g 组名  用户名 修改用户的所在组
-      usermod -d 目录  用户名  改变用户登录的初始目录
-
-      添加组
-      groupadd 组名
-      查看所有的用户组信息 ：vi /etc/group   就可以到看信息                vi / cat  vi可以修改编辑  cat 只能查看不能修改的命令
-
-      添加用户并且添加到制定组    useradd -g 组名 用户名
-
-      查看linux所有用户信息 vi /etc/passwd  类型查看组
-
-
-      如何修改文件的访问权限问题：    修改权限 chmod 改变文件权限 755  3组权限 分别用数字来替代
-      chmod    权限码  文件夹目录名
-      who am i   查看自己是哪个用户
-
-      ls -ahl 文件的所在组
-      chgrp  组名  文件名 修改文件的所在组
-
-
-
-      jdk安装
-      mount /mnt/cdrom/  加载光驱
-      umount /mnt/cdrom/卸载光驱
-      安装时把安装文件拷贝到home下在进行安装
-      ./ 文件名   就开始解压缩   是解压缩  然后就可以使用jdk了 但是需要配置环境变量
-      vi /etc/profile  环境配置文件
-      JAVA_HOME=&quot;目录&quot;
-      PATH=$PATH;
-
-
-
-      eclipse 安装
-      拷贝文件到其他地方
-      安装：   tar -zxvf  文件.tar.gz          这种方式可以安装tar.gz文件
-      然后进到解压目录下 然后./eclipse     启动它  前提 是你先进入了 图形界面
-      startx 启动图形界面
-      ./  是 解压  执行的 意思
-      安装 ./xxxxx.bin
-       ./ xxxxx &amp; 加个&amp;意思是后台运行，控制台可以做其他的
-
-
-
-      linux 分区
-      linux会创建一个文件夹体系结构，然后磁盘就会挂载到这个文件夹山
-      mount [-参数[ 【设备名称】 【挂载点】
-      umonut [设备名称】 卸载
-      df [-参数]  查看磁盘使用情况
-      df [目录全路径] 查看目录是在哪个分区的
-      fdisk -l 查看系统分区具体情况
-
-
-      shell  
-      就是命令解释器
-
-      history 5   显示最近使用的5个命令
-
-      网络环境配置
-          ifconfig eth0 XXX.XXX.XXX.XXX
-
-      route add default gw XXX.XXX.XXX.XXX
-
-      echo &quot;nameserver XXX.XXX.XXX.XXX&quot; &gt;&gt; /etc.resolv.conf
-
-
-      ifconfig 网卡名 down  /up  开启或者关闭网卡
-      创建多层目录的  mkdir a/a/a/v -p  价格 参数 -p
-
-      ls &gt; a.txt  把ls 的内容 写到a.txt
-
-      mv  移动文件
-      wc 统计文本行数 字数
-      rmdir 删除空目录
-      pwd 显示当前目录
-      more less  分页显示文件内容
-
-
-      find [file-or-dir] [option]  参数-name  按照文件名查找文件
-      -perm 按照文件权限来查找
-      -user  按照文件属主 查找文件
-
-
-      grep [参数] “搜索的字符串” filename
-      -c 计算找出 搜索字符串的次数
-      -i  忽略大小写的不同
-      -n  输入行号
-      -v 反向
-      ps -ef 查看当前进程
-      |  管道符   就是把前面的结果 作为后面的对象
-
-      who  显示在线用户
-      stat 显示制定文件的详细信息
-      whoami显示用户自己的省份
-      hostname显示主机名称
-      uname显示系统信息
-      dmesg显示系统启动信息
-      top 显示当前系统中耗费资源最多的进程  -d 制定没俩次刷新  
-      ps  显示瞬间的进程
-      kill命令 [-s] -p -a 进程号
-
-      du  显示定制文件已使用的磁盘空间
-      df 显示文件系统空间使用情况
-      free 显示当前内存的和交换空间使用情况
-      netstat 显示网络状态信息
-      man 命令帮助
-      clear 清屏
-
-      gzip 压缩（解压）文件或者目录
-      bzip2 压缩 解压
-      tar 文件的打包 和解压./
-
-      启动 服务 service 服务名 restart(重启） start开启
-      chkconfig 查看当前服务的状态
-      service iptables stop 关闭防火墙
-      reboot 重启
-      halt 关机后关闭电源
-      shutdown 系统关机  -r 立即关机重启  -h 不重启  -now 立即关机
-
-      rpm -qa 显示系统中已安装的软件
-            -qr 显示包的依赖关系
-
-      chgrp 修改档案所属组
-      chown 改变档案拥有则
-      chmod 改变档案权限
-      etc下面有一些 目录 存放 密码  用户 用户组 ............
-      -r 把子文件修改  -f 强制
-      文件类型是l 的 代表快捷方式
-
-      /usr  与软件安装 执行有关
-      /var 系统运作过程有关
-      cd ~ 回到自己的home目录
-      cd - 回到刚才那个目录
-      dir  -p 就可以多层创建目录
-      -f 强制 -r目录下的所有文件  -p多层目录
-      id  +用户名  查看该用户的属性
-        route -n 查看路由状态
-</code></pre><p>##<br>这就是我平时笔记记录下的linux 常用的命令小技巧吧，可能有点乱，等我有时间了，把文章内容进行分篇吧。</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近抽时间在看《数据结构与算法描述-Java语言》这本书，如果你的主语言是Java的建议大家看，这本书<br>看的比较轻松，没有《算法导论》这本书难啃………..表示自己都一年了，这本书还是没有啃完，实在<br>惭愧，所以也告诉自己一定要抽时间把这本书看完，即使难啃也要坚持下去。那我们开始介绍今天学的二叉查找树记录一下，也分享给大家自己的心得。</p>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><p>学过一些算法的同学，一定对于排序，查找不陌生吧，查找在我们的生活，程序中到处都在用，对于算法<br>我们研究的是如何查找才能保证效率最高呢？</p>
+<pre><code>1.线性查找法：说白了，其实就是挨个的一个一个的查找，大家一看对于算法这肯定是笨办法，但是它比较稳定。
+2.二分查找法：二分查找法应该是比较快的了吧，但是它需要事先有序才可以使用。
+3.增强版二分查找法：增强版的二分查找法也叫插值法，其实就在mid=(low+height)/2;进行改进：
+  mid=low+(height-low) * (key-a[low])/a[height]-a[low]     其中key表示待查找元素
+4.二叉查找树  今天我们要将的就是它
+</code></pre><h1 id="什么是二叉查找树"><a href="#什么是二叉查找树" class="headerlink" title="什么是二叉查找树"></a>什么是二叉查找树</h1><p>二叉树，我们应该都明白，就是在树的基础上限制每个结点的度最多为2，也就是说每个结点最多有2个<br>子结点，那么什么是二叉查找树呢？其实二叉查找树是在二叉树的基础上，对 父结点，左结点，右结点<br>进行条件限制:结点的左子树必须比该结点的值小，结点的右子树必须比该结点的值大。 在这里我需要<br>刻意强调一下 是子树，不是子元素，也就是说子树，表示多个，只要是它的左子树中的任何一个，那么都<br>必须要满足该条件。例如：</p>
+<pre><code>              6
+            3   8
+
+        1   7  5  10
+大家看这个二叉树，这里我就不做图，很明显6是头结点，3 8 分别是左右子结点，1 7 5 10又
+分别是子结点，那么上述中是不是二叉查找树呢？答案不是的，为什么呢？大家看，6的左子树包
+括3 1 7 那么7比6大了，所以已经不满足条件了，同理6的右子树是8 5 10 其中5比6小，也不
+满足条件了，所有该树不是二叉查找树，只能说它是一颗二叉树，不知道大家有没有懂！
+</code></pre><h1 id="关于二叉查找树的一些操作"><a href="#关于二叉查找树的一些操作" class="headerlink" title="关于二叉查找树的一些操作"></a>关于二叉查找树的一些操作</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryNode</span>&lt;<span class="title">T</span>&gt;</span>&#123;</div><div class="line">   T element;</div><div class="line">   BinaryNode left;</div><div class="line">   BinaryNode right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述定义了二叉结点元素类，那么我们就写写看看分析下关于二叉查找树的一些基本操作</p>
+<ul>
+<li><p>contains</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(T element,BinaryNode&lt;T&gt; root)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">//树root都为null.表示树不存在，直接返回false</span></div><div class="line">    <span class="keyword">int</span> result=element.compareTo(roo.element);<span class="comment">//利用java compareTo接口进行与root根结点比较</span></div><div class="line">    <span class="keyword">if</span>(result&gt;<span class="number">0</span>)&#123;   <span class="comment">//利用递归进行遍历查找  其中&lt;0 &gt;0 是根据二叉查找树的性质：左子树小于该结点，右子树大于该结点</span></div><div class="line">      <span class="keyword">return</span> contains(element,root.right);</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result &lt;<span class="number">0</span>)&#123;</div><div class="line">      <span class="keyword">return</span> contains(element,root.left);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;  <span class="comment">//表示element的元素与root结点一致，查找到了</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>findMin &amp;&amp; findMax  查找最大值&amp;&amp;最小值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//根据性质我们知道，左结点比该结点小，所有我们要查找最小值，那么只需要关注左子树即可</span></div><div class="line"><span class="comment">//首先判断如果该结点左子树为空，那么表示该元素就是最小值了，如果不为空，递归调用即可</span></div><div class="line"> <span class="function"><span class="keyword">public</span> BinaryNode <span class="title">findMin</span><span class="params">(BinaryNode&lt;T&gt; root)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(t.left==<span class="keyword">null</span>)&#123;</div><div class="line">      <span class="keyword">return</span> t;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">return</span> findMin(root.left)</div><div class="line">    &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="comment">//为了体现迭代，所有最大值我使用迭代</span></div><div class="line"> <span class="function"><span class="keyword">public</span> BinaryNode <span class="title">findMax</span><span class="params">(BinaryNode&lt;T&gt; root)</span></span>&#123;</div><div class="line">   <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">   <span class="keyword">while</span>(t.right!=<span class="keyword">null</span>)&#123;</div><div class="line">      t=t.right;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> t;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>insert  插如操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//我们进行插入操作，那么一般都会插入到最后的树叶中</span></div><div class="line"><span class="function"><span class="keyword">public</span> BinaryNode <span class="title">insert</span><span class="params">(BinaryNode b,BinaryNode root)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</div><div class="line">    root=<span class="keyword">new</span> BinaryNode(b,<span class="keyword">null</span>,<span class="keyword">null</span>);<span class="comment">//表示树还没有建立起来，直接赋值根结点</span></div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> result=b.element.compareTo(root.element);</div><div class="line">  <span class="keyword">if</span>(result&lt;<span class="number">0</span>)&#123;</div><div class="line">    root.left=insert(b,root.left);</div><div class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result&gt;<span class="number">0</span>)&#123;</div><div class="line">    root.rihjt=insert(b,root.right);</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>delete 删除操作</p>
+<p>删除操作比较复杂，因为它有多种情况，如果我们要删除的结点恰好为树叶结点，那么狠简单，只要把该<br>结点直接删除即可，另外一种情况是有一个子结点，这种只需要让子结点替代自己的位置即可，最后一种情况最复杂，就是2个子结点，那么需要做的就是 <strong>查找右子树中最小的元素来替代该元素位置，并递归删除该结点</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BinaryNode <span class="title">delete</span><span class="params">(BinaryNode root ,T element)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> result=element.compareTo(root.element);</div><div class="line">  <span class="keyword">if</span>(result&lt;<span class="number">0</span>)&#123;</div><div class="line">    root.left=delete(root.left,element);</div><div class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result&gt;<span class="number">0</span>)&#123;</div><div class="line">    root.right=delete(root.right,element);</div><div class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>&amp;&amp;root.right=!=<span class="keyword">null</span>)&#123;</div><div class="line">    root.element=findMin(root.right);</div><div class="line">    root.right=delete(root.right,root.element);</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    root=(root.left!=<span class="keyword">null</span>)?root.left:root.right;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> root;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="comment">//主要是思想其实就是先通过compareTo这个接口的方法比较当前节点和待删除的元素，查找到后，就判断它的子结点个数，进行选择对于的方法； 其中主要是有2个结点话，就需要先查找右子树中最小值，然后复制给该结点，然后需要将该结点的右子树进行拼接等</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>二叉查找树在进行一些基本操作，时间复杂度基本是logN,但是当我们一直将数据进行删除，插入，将会出现不平衡现象，最终导致的结果就是二叉树的时间复杂度到最差情况，所以我们还需要学习平衡二叉树(AVL)以及它的变种：红黑树进行平衡操作。</p>
 </span>
       
     </div>
@@ -681,7 +370,7 @@ $? 来读取上个程序的返回值
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag">#Linux</a>
+            <a href="/tags/算法/" rel="tag">#算法</a>
           
         </div>
       
@@ -690,13 +379,11 @@ $? 来读取上个程序的返回值
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/10/Factory/" rel="prev">设计模式（三）工厂模式 VS 简单工厂模式</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/10/Decorator/" rel="next">设计模式（二）装饰者模式</a>
+              <a href="/2017/02/25/yxjy/" rel="next">阳县家园养殖基地门户网站开发</a>
             
           </div>
         </div>
@@ -825,7 +512,7 @@ $? 来读取上个程序的返回值
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">2.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是二叉查找树"><span class="nav-number">3.</span> <span class="nav-text">什么是二叉查找树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于二叉查找树的一些操作"><span class="nav-number">4.</span> <span class="nav-text">关于二叉查找树的一些操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
