@@ -3,8 +3,6 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
-    
-
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -44,19 +42,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前言昨天看完了树&amp;amp;二叉树的一些基本操作，那么今天我们要说的是堆。首先得强调下，其实堆也是树，只不过就像查找二叉树一样，它只是在树的基础上限制了一些条件，那么Heap堆也是一样的，只不过在树的基础上又做了一些限制条件，那么限制条件是: 任一节点的子孙类节点都不能比它大或者小,就叫堆，只不过对于子孙节点大于父结点，说明它是最小堆，反之叫做最大堆。概念我就介绍这么多吧。我们看关于他的一些操作
-基">
+<meta name="description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
+拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="堆">
+<meta property="og:title" content="图">
 <meta property="og:url" content="https://vincelz.github.io/2017/03/08/heap/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="前言昨天看完了树&amp;amp;二叉树的一些基本操作，那么今天我们要说的是堆。首先得强调下，其实堆也是树，只不过就像查找二叉树一样，它只是在树的基础上限制了一些条件，那么Heap堆也是一样的，只不过在树的基础上又做了一些限制条件，那么限制条件是: 任一节点的子孙类节点都不能比它大或者小,就叫堆，只不过对于子孙节点大于父结点，说明它是最小堆，反之叫做最大堆。概念我就介绍这么多吧。我们看关于他的一些操作
-基">
-<meta property="og:updated_time" content="2017-03-08T09:30:44.817Z">
+<meta property="og:description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
+拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu2.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu1.png">
+<meta property="og:updated_time" content="2017-03-14T06:22:07.222Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="堆">
-<meta name="twitter:description" content="前言昨天看完了树&amp;amp;二叉树的一些基本操作，那么今天我们要说的是堆。首先得强调下，其实堆也是树，只不过就像查找二叉树一样，它只是在树的基础上限制了一些条件，那么Heap堆也是一样的，只不过在树的基础上又做了一些限制条件，那么限制条件是: 任一节点的子孙类节点都不能比它大或者小,就叫堆，只不过对于子孙节点大于父结点，说明它是最小堆，反之叫做最大堆。概念我就介绍这么多吧。我们看关于他的一些操作
-基">
+<meta name="twitter:title" content="图">
+<meta name="twitter:description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
+拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu2.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +67,7 @@
   };
 </script>
 
-  <title> 堆 | 1000 words a Day </title>
+  <title> 图 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -300,7 +301,7 @@
           
           
             
-              堆
+              图
             
           
         </h1>
@@ -328,17 +329,12 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>昨天看完了树&amp;二叉树的一些基本操作，那么今天我们要说的是堆。首先得强调下，其实堆也是树，只不过<br>就像查找二叉树一样，它只是在树的基础上限制了一些条件，那么Heap堆也是一样的，只不过在树的基础上又<br>做了一些限制条件，那么限制条件是: <strong>任一节点的子孙类节点都不能比它大或者小,就叫堆</strong>，只不过对于<br>子孙节点大于父结点，说明它是最小堆，反之叫做最大堆。概念我就介绍这么多吧。我们看关于他的一些操作</p>
-<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><ul>
-<li>insert /增加，<br>对于insert，我们是把一个已知结点插入到堆中，那么我们就需要掌握一个规律，先在已知堆的最后一个结点插入一个空穴，然后将此结点放入，检测是否违背堆的性质，如没有违背，则结束。若违背，则将该空穴结点上移动，也就是把它与空穴的父结点对调，然后重复操作，判断是否适合，重复以上操作。</li>
-</ul>
-<p> 强调一些，我们的堆是使用数组来实现，不是说链表实现不了，而是数组相比性能好点。所以我们就需要<br> 知道 对于第I个元素，它的父节点为 i/2 ,它的左孩子为2i ，右孩子为2i+1</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//最小堆</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(T element)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(currentSize==array.lenght-<span class="number">1</span>)&#123;</div><div class="line">    <span class="comment">//数组满了，需要扩容</span></div><div class="line">    enlarge(array.lenght*<span class="number">2</span>+<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> hole=++currentSize; <span class="comment">//hole其实就是我们上面说的空穴</span></div><div class="line">  <span class="keyword">for</span>(;hole&gt;<span class="number">1</span>&amp;&amp;element.compareTo(array[hole/<span class="number">2</span>])&lt;<span class="number">0</span>;hole/=<span class="number">2</span>)&#123;</div><div class="line">    <span class="comment">//判断条件是：我们比较当前插入的元素与它的父节点比较，如果小于父节点，那么就不满足堆的性质，我们就需要把hole/2 就是该结点的父节点对调，实现的上移</span></div><div class="line">    <span class="comment">//这里有hle&gt;1 条件，并不是不调换根结点，而是根结点已经在i=2的时候就被运算过了，也就是说</span></div><div class="line">    <span class="comment">//i=1的时候，它没有父节点，所有运算是会出错的</span></div><div class="line">    array[hole]=array[hol2/<span class="number">2</span>];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//满足条件，确认</span></div><div class="line">  array[hole]=element;</div><div class="line">&#125;</div><div class="line"><span class="comment">//其实插入算法基本就是按照我们之前说的规律进行运算的</span></div></pre></td></tr></table></figure>
-<ul>
-<li>deleteMin 删除最小元素、也就是删除堆顶，<br>这里依旧强调下操作的规律：当我们删除了堆顶元素，那么就需要那么此刻根结点为空，所以在根结点建立一个空穴，<br>操作的策略是：选择空穴中较小的元素放入空穴中，也就是把空穴与最小值对调，然后依次选择空穴的较小者放入，将空穴一直向下推，直到树叶结点，然后将堆的最后一个元素放入完毕;</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">deleteMin</span><span class="params">()</span></span>&#123;</div><div class="line">   <span class="keyword">if</span>(array.lenght==<span class="number">0</span>)</div><div class="line">   <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">   T t=array[<span class="number">1</span>]; <span class="comment">//保存最小值</span></div><div class="line">   array[<span class="number">1</span>]=array[currentSize--]; <span class="comment">//先将最后一个结点放入根结点</span></div><div class="line">   percolateDown(<span class="number">1</span>); <span class="comment">//参数1，表示空穴在数组1中</span></div><div class="line">   <span class="keyword">return</span> t;</div><div class="line"></div><div class="line"> &#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">percolateDown</span><span class="params">(<span class="keyword">int</span> hole)</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> child;</div><div class="line">  T t=array[hole];  <span class="comment">//先将空穴值也就是尾结点yi</span></div><div class="line">  <span class="keyword">for</span>(;hole*<span class="number">2</span>&lt;=currentSize;hole=child)&#123; <span class="comment">//hole*2 是判断是否越界。并把child 赋值给hole,对于第一次循环是不会执行本次执行的</span></div><div class="line">    child=hole*<span class="number">2</span>;<span class="comment">//*2 表示的是该结点的左孩子</span></div><div class="line">    <span class="keyword">if</span>(child!=currentSize&amp;&amp;array[child+<span class="number">1</span>].compareTo(array[child])&lt;<span class="number">0</span>)&#123;</div><div class="line">      child++; <span class="comment">//如果左孩子没有越界，并且左孩子比右孩子小那么，就选中左孩子</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//判断如果左孩子比空穴值小，俺么就满足条件了，直接赋值，并且继续遍历移动位置，</span></div><div class="line">    <span class="keyword">if</span>(array[child].compareTo(t)&lt;<span class="number">0</span>)&#123;</div><div class="line">      array[hole]=array[child];</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    array[hole]=t;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="comment">//其中这个函数有多种用处，总之就是可以将传入参数对于位置的元素移动到合适的位置上</span></div></pre></td></tr></table></figure>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实关于堆的操作还有很多，目前的我只能掌握到这里，其他的还需要修炼才可以。</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化<br>我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很<br>多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于<br>图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。</p>
+<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><p>拓扑排序，如何理解呢？<br><img src="http://ok9vfjkgl.bkt.clouddn.com/tu2.png" alt=""><br>这张图是我从&lt;算法与数据结构&gt;中截取的图，这张图表示美国高校的课程，如图，它有方向，也就是<br>我们所说的有向图,方向表示必须先选修完一门课程才可以根据方向选修下一门,那么就有人要问了,没有<br>方向的图就不在我们的讨论范围呢吗？当然,对于拓扑排序,没有不是有向图,我们还有研究的意义嘛,因为<br>无向图的方向是任意的,那么从理论上说任何一张排序都是拓扑排序,所以在这里我们限定在有向图。其实<br>我们要将的算法核心思想就是 <strong><em>先将整个图遍历一会，检测入度为0的结点，将它保存到一个队列中，当队列不为空的时候，就出队，将出队的结点删除，并与该结点相互连接的结点入度减少1，然后重复上述操作，继续检查是否有入度为0的，入队，出队，删除……..最终我们把删除的结点顺序排列，就是我们所要求的拓扑排序</em></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">topSort</span><span class="params">()</span></span>&#123;</div><div class="line">  Queue&lt;Vertex&gt; q=<span class="keyword">new</span> LinkedList&lt;Vertex&gt;();</div><div class="line">  <span class="keyword">for</span>(Vertex v:list)&#123;</div><div class="line">    <span class="comment">//list 就是保存整个图的list集合</span></div><div class="line">    <span class="keyword">if</span>(v.indegeree==<span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">      <span class="comment">//如果入度为0 ，则将该结点入队</span></div><div class="line">      q.enqueu(v);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!q.isEmply())&#123;</div><div class="line">      <span class="comment">//只要队列不为空，就出队并删除</span></div><div class="line">      Vertex x=q.dequeue();</div><div class="line">      x.topNum=num++; <span class="comment">//这里的 意思就是我们把拓扑排序的顺序用topNum来表示，出队一个就将tpoNUm++   最终这个顺序就是拓扑排序的顺序</span></div><div class="line">      <span class="keyword">for</span>(Vertex e:list)&#123;</div><div class="line">        <span class="keyword">if</span>(--e.indegree==<span class="number">0</span>)&#123;</div><div class="line">          <span class="comment">//出队，并将与之连接的结点入度-1  我们这里用list来抽象与之关联的结点</span></div><div class="line">          q.enqueu(e);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//算法大致就是这样，其实我们的核心是如何构造一个Vertex  来表示结点，既要描述结点之间的关联，还要描述结点的性质。</span></div></pre></td></tr></table></figure></p>
+<h1 id="广搜"><a href="#广搜" class="headerlink" title="广搜"></a>广搜</h1><p>广度搜索：广度，其实就是当我遍历到一个结点的时候，我会优先将该结点的所有子结点遍历完成后，才会遍历子结点下的子结点，不知道我这样说，大家是否明白呢？用图说明吧,需要说明一点深搜广搜我们一般研究的是有向图，毕竟无向图没有研究的价值。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/tu1.png" alt=""><br>如图，这是一些图组成的,根据广搜的性质，我们先从0号结点开始，当然不是必须从0开始，只是我们默认找一个结点，如图 广搜的顺序:0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; 6，你看，我用语言叙述一次，广搜，就是<br>要凸显出它的广度，我遍历完0结点后，他有子节点，1 2 那我就先把子节点全部遍历完成后，才去遍历子节点的子节点，这就是广度遍历。在这里，我贴出代码的大概实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wfs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">  Queue que;  </div><div class="line">  <span class="comment">//传入的n表示我们要从哪个结点开始遍历</span></div><div class="line">  <span class="comment">//1.先将第n个结点的子结点按顺序入队</span></div><div class="line">  que.push();</div><div class="line">  Sysout.out.println(<span class="string">"输出结点信息"</span>);</div><div class="line">  <span class="comment">//上述2部操作是，每入队一个结点，就输出结点的信息</span></div><div class="line">  <span class="keyword">while</span>(que.isEmply!)&#123;</div><div class="line">    <span class="comment">//如果队列不为空的话，</span></div><div class="line">    v =que.pop();<span class="comment">//出队</span></div><div class="line">    Sysout.out.println(<span class="string">"输出结点信息"</span>);</div><div class="line">    wfs(v) <span class="comment">//递归调用</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="深搜"><a href="#深搜" class="headerlink" title="深搜"></a>深搜</h1><p>深度搜索：其实凸显的是深度这个词，就是当我遍历完一个结点后，在去遍历它的第一个结点，以此类推，<br>直到不能进去深入的时候，我才会退出来，从下一个开始。如上图中的遍历顺序是：0 -&gt; 1 -&gt; 3 -&gt; 4 -&gt;<br>2 -&gt; 5 -&gt; 6<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(conditon) &#123;  <span class="comment">//深搜结束的条件  </span></div><div class="line"></div><div class="line">    print;  </div><div class="line"></div><div class="line">    <span class="keyword">return</span>;  </div><div class="line"></div><div class="line">  &#125;  </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">3</span>; i++) &#123;<span class="comment">//与当前点联结的点,  一一遍历  </span></div><div class="line"></div><div class="line">     <span class="keyword">int</span> tx = nextx(i);  </div><div class="line"></div><div class="line">     <span class="keyword">int</span> ty = nexty(i);  </div><div class="line">    <span class="keyword">if</span>(condition(tx) &amp;&amp; condition(ty))  </div><div class="line">       dfs(tx, ty);</div><div class="line">      &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//其实我们使用的递归，递归本质也是栈，所以我们可以使用栈来替代递归</span></div></pre></td></tr></table></figure></p>
+<h1 id="深搜与广搜的区别"><a href="#深搜与广搜的区别" class="headerlink" title="深搜与广搜的区别"></a>深搜与广搜的区别</h1><p>深搜使用的是栈，广搜使用的是队列，深搜时间慢，但是省空间，深搜时间慢，但是占用空间多<br>深搜广搜一般用在无权有向图中。</p>
+<h1 id="图的其他算法"><a href="#图的其他算法" class="headerlink" title="图的其他算法"></a>图的其他算法</h1><p>关于图，还有很多算法，比如：求最短路径算法，求最小生成树算法，共有4种算法供我们学习，在接下来的时间，我会给大家分享这4种算法的思想以及代码。</p>
 </span>
       
     </div>
@@ -355,6 +351,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/12/spring ioc/" rel="prev">spring IOC容器源码解析(一)</a>
             
           </div>
 
@@ -440,7 +438,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -454,7 +452,7 @@
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">tags</span>
               
           </div>
@@ -489,7 +487,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拓扑排序"><span class="nav-number">2.</span> <span class="nav-text">拓扑排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广搜"><span class="nav-number">3.</span> <span class="nav-text">广搜</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深搜"><span class="nav-number">4.</span> <span class="nav-text">深搜</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深搜与广搜的区别"><span class="nav-number">5.</span> <span class="nav-text">深搜与广搜的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图的其他算法"><span class="nav-number">6.</span> <span class="nav-text">图的其他算法</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -1,0 +1,775 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+    
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="为什么会诞生AOP我们都知道，使用面向对象编程一直是Java的口号，万物皆对象，但是当我们大量使用OOP的设计模式的时候，就会出现一些弊端，大量继承关系导致层次混乱，出现大量冗余，这是我们编程最不希望看到的，例如：日志，安全监测等功能如果使用OOP的模式的话，那么就会出现大量类、接口。这不是利于维护的，所以AOP就此诞生，即面向切面编程，AOP关注的方向是横向的，不同于OOP的纵向。
+如何使用？在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring AOP源码解析(一)">
+<meta property="og:url" content="https://vincelz.github.io/2017/03/19/Spring Aop1/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="为什么会诞生AOP我们都知道，使用面向对象编程一直是Java的口号，万物皆对象，但是当我们大量使用OOP的设计模式的时候，就会出现一些弊端，大量继承关系导致层次混乱，出现大量冗余，这是我们编程最不希望看到的，例如：日志，安全监测等功能如果使用OOP的模式的话，那么就会出现大量类、接口。这不是利于维护的，所以AOP就此诞生，即面向切面编程，AOP关注的方向是横向的，不同于OOP的纵向。
+如何使用？在">
+<meta property="og:updated_time" content="2017-03-19T12:54:42.043Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring AOP源码解析(一)">
+<meta name="twitter:description" content="为什么会诞生AOP我们都知道，使用面向对象编程一直是Java的口号，万物皆对象，但是当我们大量使用OOP的设计模式的时候，就会出现一些弊端，大量继承关系导致层次混乱，出现大量冗余，这是我们编程最不希望看到的，例如：日志，安全监测等功能如果使用OOP的模式的话，那么就会出现大量类、接口。这不是利于维护的，所以AOP就此诞生，即面向切面编程，AOP关注的方向是横向的，不同于OOP的纵向。
+如何使用？在">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> spring AOP源码解析(一) | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              spring AOP源码解析(一)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-19T19:11:58+08:00" content="2017-03-19">
+            2017-03-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="为什么会诞生AOP"><a href="#为什么会诞生AOP" class="headerlink" title="为什么会诞生AOP"></a>为什么会诞生AOP</h1><p>我们都知道，使用面向对象编程一直是Java的口号，万物皆对象，但是当我们大量使用OOP的设计模式的时候，就会出现<br>一些弊端，大量继承关系导致层次混乱，出现大量冗余，这是我们编程最不希望看到的，例如：日志，安全监测等功能如果<br>使用OOP的模式的话，那么就会出现大量类、接口。这不是利于维护的，所以AOP就此诞生，即面向切面编程，AOP关注的方向是<br>横向的，不同于OOP的纵向。</p>
+<h1 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h1><p>在说明前，我们先来试试如何使用AOP。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAop</span></span>&#123;</div><div class="line">  <span class="keyword">private</span> String test=<span class="string">"testString"</span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getTestStr</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> test;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTestStr</span><span class="params">(String st)</span></span>&#123;</div><div class="line">    <span class="keyword">this</span>.test=st;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">    system.out.print(test);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AspectTest</span></span>&#123;</div><div class="line">  <span class="meta">@Pointcut</span>(<span class="string">"execution (* *.test(..))"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">  <span class="meta">@before</span>(<span class="string">"test()"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTest</span><span class="params">()</span></span></div><div class="line">  &#123;</div><div class="line">    sysout(<span class="string">"before"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@after</span>(<span class="string">"test()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTest</span><span class="params">()</span></span>&#123;</div><div class="line">    sysout(<span class="string">"after"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Around</span>(<span class="string">"test()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">arout</span><span class="params">(ProceedingJoinPoint p)</span></span>&#123;</div><div class="line">    sysout(<span class="string">"before1"</span>);</div><div class="line">    Object o=<span class="keyword">null</span>;</div><div class="line">    o=p.proceed();</div><div class="line">    sysout(<span class="string">"after1"</span>)</div><div class="line">    <span class="keyword">return</span> o;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//我们还需要在AOP中开启AOP功能，配置如下</span></div><div class="line">&lt; aop:Aspect-autoproxy /&gt;</div><div class="line">&lt; bean id=<span class="string">""</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"AopTest"</span>/&gt;</div><div class="line">&lt; bean <span class="class"><span class="keyword">class</span></span>=<span class="string">"AspectTest"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<p>我们知道spring 对自定义一的注解方式，都是对应有一个处理器的，那么我们发现aspect-autoproxy这个注解对应的处理器是：AspectJAutoProxyBeanDefinitionParser这个类，当然我们也知道要处理自定义注解的处理器都需要继承BeanDefinitionParse接口，然后进行parse方法的解析。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">	<span class="function"><span class="keyword">public</span> BeanDefinition <span class="title">parse</span><span class="params">(Element element, ParserContext parserContext)</span> </span>&#123;</div><div class="line">    <span class="comment">//注册，这才是我们关系的。</span></div><div class="line">		AopNamespaceUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(parserContext, element);</div><div class="line">		extendBeanDefinition(element, parserContext);<span class="comment">//对注解子类的处理</span></div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">registerAspectJAnnotationAutoProxyCreatorIfNecessary</span><span class="params">(</span></span></div><div class="line">    ParserContext parserContext, Element sourceElement) &#123;</div><div class="line"></div><div class="line">  BeanDefinition beanDefinition = AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(</div><div class="line">      parserContext.getRegistry(), parserContext.extractSource(sourceElement));</div><div class="line">  useClassProxyingIfNecessary(parserContext.getRegistry(), sourceElement);</div><div class="line">  registerComponentIfNecessary(beanDefinition, parserContext);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BeanDefinition <span class="title">registerAspectJAnnotationAutoProxyCreatorIfNecessary</span><span class="params">(BeanDefinitionRegistry registry, Object source)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> registerOrEscalateApcAsRequired(AnnotationAwareAspectJAutoProxyCreator.class, registry, source);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> BeanDefinition <span class="title">registerOrEscalateApcAsRequired</span><span class="params">(Class cls, BeanDefinitionRegistry registry, Object source)</span> </span>&#123;</div><div class="line">		Assert.notNull(registry, <span class="string">"BeanDefinitionRegistry must not be null"</span>);</div><div class="line">		<span class="keyword">if</span> (registry.containsBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME)) &#123;<span class="comment">//如果BeanDefinition已经存在了代理创建器，那么就根据优先级选择</span></div><div class="line">			BeanDefinition apcDefinition = registry.getBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME);</div><div class="line">			<span class="keyword">if</span> (!cls.getName().equals(apcDefinition.getBeanClassName())) &#123;</div><div class="line">				<span class="keyword">int</span> currentPriority = findPriorityForClass(apcDefinition.getBeanClassName());</div><div class="line">				<span class="keyword">int</span> requiredPriority = findPriorityForClass(cls);</div><div class="line">				<span class="keyword">if</span> (currentPriority &lt; requiredPriority) &#123;</div><div class="line">					apcDefinition.setBeanClassName(cls.getName());</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">      <span class="comment">//已经创建过并且一致，那么直接返回null也就是表示无须再次创建</span></div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//创建</span></div><div class="line">		RootBeanDefinition beanDefinition = <span class="keyword">new</span> RootBeanDefinition(cls);</div><div class="line">		beanDefinition.setSource(source);</div><div class="line">		beanDefinition.getPropertyValues().add(<span class="string">"order"</span>, Ordered.HIGHEST_PRECEDENCE);</div><div class="line">		beanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);</div><div class="line">		registry.registerBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME, beanDefinition);</div><div class="line">		<span class="keyword">return</span> beanDefinition;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>以上代码就是自动注册并且完成了代理器的创建，这里涉及到一个优先级，如果已经存在代理器那么需要选择等级最高的。<br>处理proxy-target-class属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useClassProxyingIfNecessary</span><span class="params">(BeanDefinitionRegistry registry, Element sourceElement)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (sourceElement != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">boolean</span> proxyTargetClass = Boolean.valueOf(sourceElement.getAttribute(PROXY_TARGET_CLASS_ATTRIBUTE));</div><div class="line">		<span class="keyword">if</span> (proxyTargetClass) &#123;</div><div class="line">       <span class="comment">//设置了proxy-target-class="true"</span></div><div class="line">       <span class="comment">//这里需要说明下proxy-target-class：是否决定使用JDK动态代理，还是使用GGLIB的方法来创建代理类。</span></div><div class="line">       <span class="comment">//JDK动态代理是必须要求类继承接口，否则无法生成。但是GGLIB不需要，他不需要继承接口，而是生成的目标类的子类。性能比JDK高，但是生成时间长</span></div><div class="line">			AopConfigUtils.forceAutoProxyCreatorToUseClassProxying(registry);</div><div class="line">		&#125;</div><div class="line">     <span class="comment">//expose-proxy的作用是：有时候对于事务 目标对象内部自我调用将无法实现切面的增强，所以需要设置expose-proxy=true</span></div><div class="line">		<span class="keyword">boolean</span> exposeProxy = Boolean.valueOf(sourceElement.getAttribute(EXPOSE_PROXY_ATTRIBUTE));</div><div class="line">		<span class="keyword">if</span> (exposeProxy) &#123;</div><div class="line">			AopConfigUtils.forceAutoProxyCreatorToExposeProxy(registry);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="创建AOP代理"><a href="#创建AOP代理" class="headerlink" title="创建AOP代理"></a>创建AOP代理</h2><p>我们通过代码跟踪发现这个函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		<span class="keyword">if</span> (bean != <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="comment">//判断如果bean不为空的时候，就使用class和name构建出一个className_beanName的key</span></div><div class="line">			Object cacheKey = getCacheKey(bean.getClass(), beanName);</div><div class="line">			<span class="keyword">if</span> (!<span class="keyword">this</span>.earlyProxyReferences.containsKey(cacheKey)) &#123;</div><div class="line">        <span class="comment">//不包含，也就是没有，则进行封装指定的bean</span></div><div class="line">				<span class="keyword">return</span> wrapIfNecessary(bean, beanName, cacheKey);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> bean;</div><div class="line">	&#125;</div><div class="line">----------------------------------------------------------------------------</div><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">wrapIfNecessary</span><span class="params">(Object bean, String beanName, Object cacheKey)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (beanName != <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.targetSourcedBeans.containsKey(beanName)) &#123;<span class="comment">//已经处理过了这个bean，直接返回</span></div><div class="line">			<span class="keyword">return</span> bean;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//已经增强过了，直接返回</span></div><div class="line">		<span class="keyword">if</span> (Boolean.FALSE.equals(<span class="keyword">this</span>.advisedBeans.get(cacheKey))) &#123;</div><div class="line">			<span class="keyword">return</span> bean;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//判断当前bean是否可用被代理</span></div><div class="line">		<span class="keyword">if</span> (isInfrastructureClass(bean.getClass()) || shouldSkip(bean.getClass(), beanName)) &#123;</div><div class="line">			<span class="keyword">this</span>.advisedBeans.put(cacheKey, Boolean.FALSE);</div><div class="line">			<span class="keyword">return</span> bean;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Create proxy if we have advice. 如果存在增强方法，则进行创建</span></div><div class="line">		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, <span class="keyword">null</span>);</div><div class="line">		<span class="keyword">if</span> (specificInterceptors != DO_NOT_PROXY) &#123;<span class="comment">//获取了增强方法</span></div><div class="line">			<span class="keyword">this</span>.advisedBeans.put(cacheKey, Boolean.TRUE);</div><div class="line">      <span class="comment">//创建代理</span></div><div class="line">			Object proxy = createProxy(bean.getClass(), beanName, specificInterceptors, <span class="keyword">new</span> SingletonTargetSource(bean));</div><div class="line">			<span class="keyword">this</span>.proxyTypes.put(cacheKey, proxy.getClass());</div><div class="line">			<span class="keyword">return</span> proxy;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">this</span>.advisedBeans.put(cacheKey, Boolean.FALSE);</div><div class="line">		<span class="keyword">return</span> bean;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="comment">//看到createProxy我们就知道核心到了，那么我们先看是如何获取到增强方法</span></div><div class="line"><span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) &#123;</div><div class="line">		List advisors = findEligibleAdvisors(beanClass, beanName);</div><div class="line">		<span class="keyword">if</span> (advisors.isEmpty()) &#123;</div><div class="line">			<span class="keyword">return</span> DO_NOT_PROXY;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> advisors.toArray();</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">protected</span> List&lt;Advisor&gt; <span class="title">findEligibleAdvisors</span><span class="params">(Class beanClass, String beanName)</span> </span>&#123;</div><div class="line">		List&lt;Advisor&gt; candidateAdvisors = findCandidateAdvisors();</div><div class="line">		List&lt;Advisor&gt; eligibleAdvisors = findAdvisorsThatCanApply(candidateAdvisors, beanClass, beanName);</div><div class="line">		extendAdvisors(eligibleAdvisors);</div><div class="line">		<span class="keyword">if</span> (!eligibleAdvisors.isEmpty()) &#123;</div><div class="line">			eligibleAdvisors = sortAdvisors(eligibleAdvisors);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> eligibleAdvisors;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  	<span class="function"><span class="keyword">protected</span> List&lt;Advisor&gt; <span class="title">findCandidateAdvisors</span><span class="params">()</span> </span>&#123;</div><div class="line">  		<span class="comment">// Add all the Spring advisors found according to superclass rules.</span></div><div class="line">  		List&lt;Advisor&gt; advisors = <span class="keyword">super</span>.findCandidateAdvisors();</div><div class="line">  		<span class="comment">// Build Advisors for all AspectJ aspects in the bean factory.</span></div><div class="line">  		advisors.addAll(<span class="keyword">this</span>.aspectJAdvisorsBuilder.buildAspectJAdvisors());</div><div class="line">  		<span class="keyword">return</span> advisors;</div><div class="line">  	&#125;</div><div class="line"></div><div class="line"></div><div class="line">----------------------------------------------------</div><div class="line"><span class="comment">//buildAspectJAdvisors的作用基本是：获取所有的beanNames.这一步可以在beanFactory中拿到，遍历所有的beanNames.并找到声明为@AspectJ的注解类，对标记为AspectJ进行提取增强器，将提取结果加载</span></div><div class="line"><span class="comment">//到缓存中，</span></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Advisor&gt; <span class="title">buildAspectJAdvisors</span><span class="params">()</span> </span>&#123;</div><div class="line">		List&lt;String&gt; aspectNames = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">			aspectNames = <span class="keyword">this</span>.aspectBeanNames;</div><div class="line">			<span class="keyword">if</span> (aspectNames == <span class="keyword">null</span>) &#123;</div><div class="line">				List&lt;Advisor&gt; advisors = <span class="keyword">new</span> LinkedList&lt;Advisor&gt;();</div><div class="line">				aspectNames = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        <span class="comment">//获取所有的beanNames</span></div><div class="line">				String[] beanNames =</div><div class="line">						BeanFactoryUtils.beanNamesForTypeIncludingAncestors(<span class="keyword">this</span>.beanFactory, Object.class, <span class="keyword">true</span>, <span class="keyword">false</span>);</div><div class="line">				<span class="keyword">for</span> (String beanName : beanNames) &#123;</div><div class="line">					<span class="keyword">if</span> (!isEligibleBean(beanName)) &#123;</div><div class="line">						<span class="keyword">continue</span>;</div><div class="line">					&#125;</div><div class="line">					<span class="comment">// We must be careful not to instantiate beans eagerly as in this</span></div><div class="line">					<span class="comment">// case they would be cached by the Spring container but would not</span></div><div class="line">					<span class="comment">// have been weaved</span></div><div class="line">					Class beanType = <span class="keyword">this</span>.beanFactory.getType(beanName);<span class="comment">//获取对于bean class类型</span></div><div class="line">					<span class="keyword">if</span> (beanType == <span class="keyword">null</span>) &#123;</div><div class="line">						<span class="keyword">continue</span>;</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">if</span> (<span class="keyword">this</span>.advisorFactory.isAspect(beanType)) &#123;<span class="comment">//如果存在aspectJ注解</span></div><div class="line">						aspectNames.add(beanName);</div><div class="line">						AspectMetadata amd = <span class="keyword">new</span> AspectMetadata(beanType, beanName);</div><div class="line">						<span class="keyword">if</span> (amd.getAjType().getPerClause().getKind() == PerClauseKind.SINGLETON) &#123;</div><div class="line">							MetadataAwareAspectInstanceFactory factory =</div><div class="line">									<span class="keyword">new</span> BeanFactoryAspectInstanceFactory(<span class="keyword">this</span>.beanFactory, beanName);</div><div class="line">							List&lt;Advisor&gt; classAdvisors = <span class="keyword">this</span>.advisorFactory.getAdvisors(factory);</div><div class="line">							<span class="keyword">if</span> (<span class="keyword">this</span>.beanFactory.isSingleton(beanName)) &#123;</div><div class="line">								<span class="keyword">this</span>.advisorsCache.put(beanName, classAdvisors);</div><div class="line">							&#125;</div><div class="line">							<span class="keyword">else</span> &#123;</div><div class="line">								<span class="keyword">this</span>.aspectFactoryCache.put(beanName, factory);</div><div class="line">							&#125;</div><div class="line">							advisors.addAll(classAdvisors);</div><div class="line">						&#125;</div><div class="line">						<span class="keyword">else</span> &#123;</div><div class="line">							<span class="comment">// Per target or per this.</span></div><div class="line">							<span class="keyword">if</span> (<span class="keyword">this</span>.beanFactory.isSingleton(beanName)) &#123;</div><div class="line">								<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Bean with name '"</span> + beanName +</div><div class="line">										<span class="string">"' is a singleton, but aspect instantiation model is not singleton"</span>);</div><div class="line">							&#125;</div><div class="line">							MetadataAwareAspectInstanceFactory factory =</div><div class="line">									<span class="keyword">new</span> PrototypeAspectInstanceFactory(<span class="keyword">this</span>.beanFactory, beanName);</div><div class="line">							<span class="keyword">this</span>.aspectFactoryCache.put(beanName, factory);</div><div class="line">							advisors.addAll(<span class="keyword">this</span>.advisorFactory.getAdvisors(factory));</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">this</span>.aspectBeanNames = aspectNames;</div><div class="line">				<span class="keyword">return</span> advisors;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (aspectNames.isEmpty()) &#123;</div><div class="line">			<span class="keyword">return</span> Collections.EMPTY_LIST;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//记录到缓存中</span></div><div class="line">		List&lt;Advisor&gt; advisors = <span class="keyword">new</span> LinkedList&lt;Advisor&gt;();</div><div class="line">		<span class="keyword">for</span> (String aspectName : aspectNames) &#123;</div><div class="line">			List&lt;Advisor&gt; cachedAdvisors = <span class="keyword">this</span>.advisorsCache.get(aspectName);</div><div class="line">			<span class="keyword">if</span> (cachedAdvisors != <span class="keyword">null</span>) &#123;</div><div class="line">				advisors.addAll(cachedAdvisors);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				MetadataAwareAspectInstanceFactory factory = <span class="keyword">this</span>.aspectFactoryCache.get(aspectName);</div><div class="line">				advisors.addAll(<span class="keyword">this</span>.advisorFactory.getAdvisors(factory));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> advisors;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>上述基本完成了Advisor的提取，剩下就是对于增强器的获取了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Advisor&gt; <span class="title">getAdvisors</span><span class="params">(MetadataAwareAspectInstanceFactory maaif)</span> </span>&#123;</div><div class="line">		<span class="keyword">final</span> Class&lt;?&gt; aspectClass = maaif.getAspectMetadata().getAspectClass();<span class="comment">//获取标记为AspextJ的类</span></div><div class="line">    <span class="comment">//获取标记为AspectJ类的类名name</span></div><div class="line">		<span class="keyword">final</span> String aspectName = maaif.getAspectMetadata().getAspectName();</div><div class="line">		validate(aspectClass);<span class="comment">//验证</span></div><div class="line"></div><div class="line">		<span class="comment">// We need to wrap the MetadataAwareAspectInstanceFactory with a decorator</span></div><div class="line">		<span class="comment">// so that it will only instantiate once.</span></div><div class="line">		<span class="keyword">final</span> MetadataAwareAspectInstanceFactory lazySingletonAspectInstanceFactory =</div><div class="line">				<span class="keyword">new</span> LazySingletonAspectInstanceFactoryDecorator(maaif);</div><div class="line"></div><div class="line">		<span class="keyword">final</span> List&lt;Advisor&gt; advisors = <span class="keyword">new</span> LinkedList&lt;Advisor&gt;();</div><div class="line">		<span class="keyword">for</span> (Method method : getAdvisorMethods(aspectClass)) &#123;</div><div class="line">			Advisor advisor = getAdvisor(method, lazySingletonAspectInstanceFactory, advisors.size(), aspectName);</div><div class="line">			<span class="keyword">if</span> (advisor != <span class="keyword">null</span>) &#123;</div><div class="line">				advisors.add(advisor);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// If it's a per target aspect, emit the dummy instantiating aspect.</span></div><div class="line">		<span class="keyword">if</span> (!advisors.isEmpty() &amp;&amp; lazySingletonAspectInstanceFactory.getAspectMetadata().isLazilyInstantiated()) &#123;</div><div class="line">			Advisor instantiationAdvisor = <span class="keyword">new</span> SyntheticInstantiationAdvisor(lazySingletonAspectInstanceFactory);</div><div class="line">			advisors.add(<span class="number">0</span>, instantiationAdvisor);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Find introduction fields.</span></div><div class="line">		<span class="keyword">for</span> (Field field : aspectClass.getDeclaredFields()) &#123;</div><div class="line">			Advisor advisor = getDeclareParentsAdvisor(field);</div><div class="line">			<span class="keyword">if</span> (advisor != <span class="keyword">null</span>) &#123;</div><div class="line">				advisors.add(advisor);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> advisors;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  ------------------------------------</div><div class="line">  <span class="comment">//提取具体的普通增强器</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Advisor <span class="title">getAdvisor</span><span class="params">(Method candidateAdviceMethod, MetadataAwareAspectInstanceFactory aif,</span></span></div><div class="line">			<span class="keyword">int</span> declarationOrderInAspect, String aspectName) &#123;</div><div class="line"></div><div class="line">		validate(aif.getAspectMetadata().getAspectClass());</div><div class="line">    <span class="comment">//切点信息的获取</span></div><div class="line">		AspectJExpressionPointcut ajexp =</div><div class="line">				getPointcut(candidateAdviceMethod, aif.getAspectMetadata().getAspectClass());</div><div class="line">		<span class="keyword">if</span> (ajexp == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//根据切点的信息生成增强器</span></div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> InstantiationModelAwarePointcutAdvisorImpl(</div><div class="line">				<span class="keyword">this</span>, ajexp, aif, candidateAdviceMethod, declarationOrderInAspect, aspectName);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  <span class="comment">//上述中切点信息的获取，就是如@Before("test()")</span></div><div class="line">  <span class="function"><span class="keyword">private</span> AspectJExpressionPointcut <span class="title">getPointcut</span><span class="params">(Method candidateAdviceMethod, Class&lt;?&gt; candidateAspectClass)</span> </span>&#123;</div><div class="line">    <span class="comment">//获取方法上面的注解信息</span></div><div class="line">    AspectJAnnotation&lt;?&gt; aspectJAnnotation =</div><div class="line">				AbstractAspectJAdvisorFactory.findAspectJAnnotationOnMethod(candidateAdviceMethod);</div><div class="line">		<span class="keyword">if</span> (aspectJAnnotation == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//使用AspectJExpressionPointcut实例来封装获取到的信息</span></div><div class="line">		AspectJExpressionPointcut ajexp =</div><div class="line">				<span class="keyword">new</span> AspectJExpressionPointcut(candidateAspectClass, <span class="keyword">new</span> String[<span class="number">0</span>], <span class="keyword">new</span> Class[<span class="number">0</span>]);</div><div class="line">		ajexp.setExpression(aspectJAnnotation.getPointcutExpression());<span class="comment">//提取注解中表达式如 "execution(* * test(..))"</span></div><div class="line">		<span class="keyword">return</span> ajexp;</div><div class="line">	&#125;</div><div class="line"><span class="comment">//InstantiationModelAwarePointcutAdvisorImpl 就是增强器</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">InstantiationModelAwarePointcutAdvisorImpl</span><span class="params">(AspectJAdvisorFactory af, AspectJExpressionPointcut ajexp,</span></span></div><div class="line">			MetadataAwareAspectInstanceFactory aif, Method method, <span class="keyword">int</span> declarationOrderInAspect, String aspectName) &#123;</div><div class="line">    <span class="comment">//test()</span></div><div class="line">		<span class="keyword">this</span>.declaredPointcut = ajexp;</div><div class="line">    <span class="comment">//public void test.beforeTest</span></div><div class="line">		<span class="keyword">this</span>.method = method;</div><div class="line">		<span class="keyword">this</span>.atAspectJAdvisorFactory = af;</div><div class="line">		<span class="keyword">this</span>.aspectInstanceFactory = aif;</div><div class="line">		<span class="keyword">this</span>.declarationOrder = declarationOrderInAspect;</div><div class="line">		<span class="keyword">this</span>.aspectName = aspectName;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (aif.getAspectMetadata().isLazilyInstantiated()) &#123;</div><div class="line">			<span class="comment">// Static part of the pointcut is a lazy type.</span></div><div class="line">			Pointcut preInstantiationPointcut =</div><div class="line">					Pointcuts.union(aif.getAspectMetadata().getPerClausePointcut(), <span class="keyword">this</span>.declaredPointcut);</div><div class="line"></div><div class="line">			<span class="comment">// Make it dynamic: must mutate from pre-instantiation to post-instantiation state.</span></div><div class="line">			<span class="comment">// If it's not a dynamic pointcut, it may be optimized out</span></div><div class="line">			<span class="comment">// by the Spring AOP infrastructure after the first evaluation.</span></div><div class="line">			<span class="keyword">this</span>.pointcut = <span class="keyword">new</span> PerTargetInstantiationModelPointcut(<span class="keyword">this</span>.declaredPointcut, preInstantiationPointcut, aif);</div><div class="line">			<span class="keyword">this</span>.lazy = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="comment">// A singleton aspect.</span></div><div class="line">      <span class="comment">//进行增强</span></div><div class="line">			<span class="keyword">this</span>.instantiatedAdvice = instantiateAdvice(<span class="keyword">this</span>.declaredPointcut);</div><div class="line">			<span class="keyword">this</span>.pointcut = declaredPointcut;</div><div class="line">			<span class="keyword">this</span>.lazy = <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;-</div><div class="line">  ---------------------------------------------</div><div class="line">  <span class="function"><span class="keyword">public</span> Advice <span class="title">getAdvice</span><span class="params">(Method candidateAdviceMethod, AspectJExpressionPointcut ajexp,</span></span></div><div class="line">			MetadataAwareAspectInstanceFactory aif, <span class="keyword">int</span> declarationOrderInAspect, String aspectName) &#123;</div><div class="line">		Class&lt;?&gt; candidateAspectClass = aif.getAspectMetadata().getAspectClass();</div><div class="line">		validate(candidateAspectClass);</div><div class="line">		AspectJAnnotation&lt;?&gt; aspectJAnnotation =</div><div class="line">				AbstractAspectJAdvisorFactory.findAspectJAnnotationOnMethod(candidateAdviceMethod);</div><div class="line">		<span class="keyword">if</span> (aspectJAnnotation == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// If we get here, we know we have an AspectJ method.</span></div><div class="line">		<span class="comment">// Check that it's an AspectJ-annotated class</span></div><div class="line">		<span class="keyword">if</span> (!isAspect(candidateAspectClass)) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> AopConfigException(<span class="string">"Advice must be declared inside an aspect type: "</span> +</div><div class="line">					<span class="string">"Offending method '"</span> + candidateAdviceMethod + <span class="string">"' in class ["</span> +</div><div class="line">					candidateAspectClass.getName() + <span class="string">"]"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			logger.debug(<span class="string">"Found AspectJ method: "</span> + candidateAdviceMethod);</div><div class="line">		&#125;</div><div class="line">		AbstractAspectJAdvice springAdvice;</div><div class="line">    <span class="comment">//核心，根据不同的注解类型进行封装不同的增强器</span></div><div class="line">		<span class="keyword">switch</span> (aspectJAnnotation.getAnnotationType()) &#123;</div><div class="line">			<span class="keyword">case</span> AtBefore:</div><div class="line">				springAdvice = <span class="keyword">new</span> AspectJMethodBeforeAdvice(candidateAdviceMethod, ajexp, aif);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> AtAfter:</div><div class="line">				springAdvice = <span class="keyword">new</span> AspectJAfterAdvice(candidateAdviceMethod, ajexp, aif);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> AtAfterReturning:</div><div class="line">				springAdvice = <span class="keyword">new</span> AspectJAfterReturningAdvice(candidateAdviceMethod, ajexp, aif);</div><div class="line">				AfterReturning afterReturningAnnotation = (AfterReturning) aspectJAnnotation.getAnnotation();</div><div class="line">				<span class="keyword">if</span> (StringUtils.hasText(afterReturningAnnotation.returning())) &#123;</div><div class="line">					springAdvice.setReturningName(afterReturningAnnotation.returning());</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> AtAfterThrowing:</div><div class="line">				springAdvice = <span class="keyword">new</span> AspectJAfterThrowingAdvice(candidateAdviceMethod, ajexp, aif);</div><div class="line">				AfterThrowing afterThrowingAnnotation = (AfterThrowing) aspectJAnnotation.getAnnotation();</div><div class="line">				<span class="keyword">if</span> (StringUtils.hasText(afterThrowingAnnotation.throwing())) &#123;</div><div class="line">					springAdvice.setThrowingName(afterThrowingAnnotation.throwing());</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> AtAround:</div><div class="line">				springAdvice = <span class="keyword">new</span> AspectJAroundAdvice(candidateAdviceMethod, ajexp, aif);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> AtPointcut:</div><div class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">					logger.debug(<span class="string">"Processing pointcut '"</span> + candidateAdviceMethod.getName() + <span class="string">"'"</span>);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">			<span class="keyword">default</span>:</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(</div><div class="line">						<span class="string">"Unsupported advice type on method "</span> + candidateAdviceMethod);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// Now to configure the advice...</span></div><div class="line">		springAdvice.setAspectName(aspectName);</div><div class="line">		springAdvice.setDeclarationOrder(declarationOrderInAspect);</div><div class="line">		String[] argNames = <span class="keyword">this</span>.parameterNameDiscoverer.getParameterNames(candidateAdviceMethod);</div><div class="line">		<span class="keyword">if</span> (argNames != <span class="keyword">null</span>) &#123;</div><div class="line">			springAdvice.setArgumentNamesFromStringArray(argNames);</div><div class="line">		&#125;</div><div class="line">		springAdvice.calculateArgumentBindings();</div><div class="line">		<span class="keyword">return</span> springAdvice;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>其实内部他是对不同增强的注解采取的方案不同，我们分析几种常用的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//前置增强</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AspectJMethodBeforeAdvice</span> <span class="keyword">extends</span> <span class="title">AbstractAspectJAdvice</span> <span class="keyword">implements</span> <span class="title">MethodBeforeAdvice</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">AspectJMethodBeforeAdvice</span><span class="params">(</span></span></div><div class="line">			Method aspectJBeforeAdviceMethod, AspectJExpressionPointcut pointcut, AspectInstanceFactory aif) &#123;</div><div class="line">		<span class="keyword">super</span>(aspectJBeforeAdviceMethod, pointcut, aif);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">(Method method, Object[] args, Object target)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		invokeAdviceMethod(getJoinPointMatch(), <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBeforeAdvice</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAfterAdvice</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">----------------------------------------跟踪invokeAdviceMethod方法</div><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">invokeAdviceMethodWithGivenArgs</span><span class="params">(Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		Object[] actualArgs = args;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.aspectJAdviceMethod.getParameterTypes().length == <span class="number">0</span>) &#123;</div><div class="line">			actualArgs = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ReflectionUtils.makeAccessible(<span class="keyword">this</span>.aspectJAdviceMethod);</div><div class="line">			<span class="comment">// TODO AopUtils.invokeJoinpointUsingReflection</span></div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.aspectJAdviceMethod.invoke(<span class="keyword">this</span>.aspectInstanceFactory.getAspectInstance(), actualArgs);<span class="comment">//其实前置增强就是通过反射调用invoke方法</span></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> AopInvocationException(<span class="string">"Mismatch on arguments to advice method ["</span> +</div><div class="line">					<span class="keyword">this</span>.aspectJAdviceMethod + <span class="string">"]; pointcut expression ["</span> +</div><div class="line">					<span class="keyword">this</span>.pointcut.getPointcutExpression() + <span class="string">"]"</span>, ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (InvocationTargetException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> ex.getTargetException();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"><span class="comment">//这就是前置增强，大致的结构是在拦截器链中放置MethodBeforeAdviceInterceptor，并在MethodBeforeAdviceInterceptor后面放置AspectJMethodBeforeAdvice，当在调用方法的时候，会先</span></div><div class="line"><span class="comment">//串联的调用interceptor链条中的所有前置拦截器，然后再调用AspectJMethodBeforeAdvice原本的方法。</span></div></pre></td></tr></table></figure></p>
+<p>待这里基本完成了增强链条的创建，那么剩余的就是过滤一些合适的增强器。到这里我们已经获取到了所有的增强bean,剩余工作就是创建代理了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">createProxy</span><span class="params">(</span></span></div><div class="line">			Class&lt;?&gt; beanClass, String beanName, Object[] specificInterceptors, TargetSource targetSource) &#123;</div><div class="line"></div><div class="line">		ProxyFactory proxyFactory = <span class="keyword">new</span> ProxyFactory();</div><div class="line">		<span class="comment">// Copy our properties (proxyTargetClass etc) inherited from ProxyConfig.</span></div><div class="line">    <span class="comment">//将当前类中的属性复制到proxyFactory中去</span></div><div class="line">		proxyFactory.copyFrom(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (!shouldProxyTargetClass(beanClass, beanName)) &#123;</div><div class="line">			<span class="comment">// Must allow for introductions; can't just set interfaces to</span></div><div class="line">			<span class="comment">// the target's interfaces only.</span></div><div class="line">			Class&lt;?&gt;[] targetInterfaces = ClassUtils.getAllInterfacesForClass(beanClass, <span class="keyword">this</span>.proxyClassLoader);</div><div class="line">			<span class="keyword">for</span> (Class&lt;?&gt; targetInterface : targetInterfaces) &#123;</div><div class="line">				proxyFactory.addInterface(targetInterface);<span class="comment">//添加代理接口</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);</div><div class="line">		<span class="keyword">for</span> (Advisor advisor : advisors) &#123;</div><div class="line">			proxyFactory.addAdvisor(advisor);<span class="comment">//加载增强器</span></div><div class="line">		&#125;</div><div class="line"><span class="comment">//设置代理类</span></div><div class="line">		proxyFactory.setTargetSource(targetSource);</div><div class="line">		customizeProxyFactory(proxyFactory);</div><div class="line"></div><div class="line">		proxyFactory.setFrozen(<span class="keyword">this</span>.freezeProxy);</div><div class="line">		<span class="keyword">if</span> (advisorsPreFiltered()) &#123;</div><div class="line">			proxyFactory.setPreFiltered(<span class="keyword">true</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> proxyFactory.getProxy(<span class="keyword">this</span>.proxyClassLoader);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>createProxy的大体作用是：  </p>
+<ul>
+<li>1 获取当前类中属性</li>
+<li>2 添加代理接口</li>
+<li>3 封装Advisor并加入到proxyFactory</li>
+<li>4 设置要代理的类</li>
+<li><p>5 获取代理操作<br>到这里spring基本完成了AOP的增强，切记，我们增强的是通过proxyFactory对bean 进行增强，当增强时候可以设置一个链条，串联执行。但并不是直接修改了bean的代码，而是用成员变量来保存前置增强、后置增强。当我们调用了某个方法后，他就会查找对于方法的前置增强的方法链条。以此执行。</p>
+<h1 id="JDK的动态代理"><a href="#JDK的动态代理" class="headerlink" title="JDK的动态代理"></a>JDK的动态代理</h1><p>在这里我们演示下JDK的动态代理，说白了，spring基本一致，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserServie</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServieImpl</span> <span class="keyword">implements</span> <span class="title">UserServie</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>&#123;</div><div class="line">    system.out.pritln(<span class="string">"添加用户"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAop</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> Object target;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyAop</span><span class="params">(Object o)</span></span>&#123;</div><div class="line">    <span class="keyword">this</span>.target=o;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object Proxy,Method method,Object []args)</span></span>&#123;</div><div class="line">    sysout.out.println(<span class="string">"--------before------------"</span>);<span class="comment">//前置增强，spring 是一个链条</span></div><div class="line">    Object result=method.invoke(target,args);</div><div class="line">    sysout.out.println(<span class="string">"--------------after-------------"</span>)<span class="comment">//后置增强，</span></div><div class="line">    <span class="keyword">return</span> reuslt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">return</span> Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),target.getClass.getInterface(),<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>那么看看spring 是如何处理的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			logger.debug(<span class="string">"Creating JDK dynamic proxy: target source is "</span> + <span class="keyword">this</span>.advised.getTargetSource());</div><div class="line">		&#125;</div><div class="line">		Class[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(<span class="keyword">this</span>.advised);</div><div class="line">		findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);</div><div class="line">		<span class="keyword">return</span> Proxy.newProxyInstance(classLoader, proxiedInterfaces, <span class="keyword">this</span>);</div><div class="line">	&#125;</div><div class="line">  ------------------------------------------------------------------------------</div><div class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		MethodInvocation invocation;</div><div class="line">		Object oldProxy = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">boolean</span> setProxyContext = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">		TargetSource targetSource = <span class="keyword">this</span>.advised.targetSource;</div><div class="line">		Class targetClass = <span class="keyword">null</span>;</div><div class="line">		Object target = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">      <span class="comment">//equals方法的处理</span></div><div class="line">			<span class="keyword">if</span> (!<span class="keyword">this</span>.equalsDefined &amp;&amp; AopUtils.isEqualsMethod(method)) &#123;</div><div class="line">				<span class="comment">// The target does not implement the equals(Object) method itself.</span></div><div class="line">				<span class="keyword">return</span> equals(args[<span class="number">0</span>]);</div><div class="line">			&#125;</div><div class="line">      <span class="comment">//hash方法处理</span></div><div class="line">			<span class="keyword">if</span> (!<span class="keyword">this</span>.hashCodeDefined &amp;&amp; AopUtils.isHashCodeMethod(method)) &#123;</div><div class="line">				<span class="comment">// The target does not implement the hashCode() method itself.</span></div><div class="line">				<span class="keyword">return</span> hashCode();</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (!<span class="keyword">this</span>.advised.opaque &amp;&amp; method.getDeclaringClass().isInterface() &amp;&amp;</div><div class="line">					method.getDeclaringClass().isAssignableFrom(Advised.class)) &#123;</div><div class="line">				<span class="comment">// Service invocations on ProxyConfig with the proxy config...</span></div><div class="line">				<span class="keyword">return</span> AopUtils.invokeJoinpointUsingReflection(<span class="keyword">this</span>.advised, method, args);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			Object retVal;</div><div class="line">      <span class="comment">//前面说过切面编程不能自我调用，所以exposeProxy属性就是暴露代理</span></div><div class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.advised.exposeProxy) &#123;</div><div class="line">				<span class="comment">// Make invocation available if necessary.</span></div><div class="line">				oldProxy = AopContext.setCurrentProxy(proxy);</div><div class="line">				setProxyContext = <span class="keyword">true</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="comment">// May be null. Get as late as possible to minimize the time we "own" the target,</span></div><div class="line">			<span class="comment">// in case it comes from a pool.</span></div><div class="line">			target = targetSource.getTarget();</div><div class="line">			<span class="keyword">if</span> (target != <span class="keyword">null</span>) &#123;</div><div class="line">				targetClass = target.getClass();</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="comment">// Get the interception chain for this method.</span></div><div class="line">      <span class="comment">//获取当前方法的拦截器链（也就是增强链）</span></div><div class="line">			List&lt;Object&gt; chain = <span class="keyword">this</span>.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);</div><div class="line"></div><div class="line">			<span class="comment">// Check whether we have any advice. If we don't, we can fallback on direct</span></div><div class="line">			<span class="comment">// reflective invocation of the target, and avoid creating a MethodInvocation.</span></div><div class="line">			<span class="keyword">if</span> (chain.isEmpty()) &#123;</div><div class="line">        <span class="comment">//没有任何拦截器，直接调用目标方法</span></div><div class="line">				<span class="comment">// We can skip creating a MethodInvocation: just invoke the target directly</span></div><div class="line">				<span class="comment">// Note that the final invoker must be an InvokerInterceptor so we know it does</span></div><div class="line">				<span class="comment">// nothing but a reflective operation on the target, and no hot swapping or fancy proxying.</span></div><div class="line">				retVal = AopUtils.invokeJoinpointUsingReflection(target, method, args);</div><div class="line">        <span class="comment">/*</span></div><div class="line">        public static Object invokeJoinpointUsingReflection(Object target, Method method, Object[] args)</div><div class="line">        			throws Throwable &#123;</div><div class="line"></div><div class="line">        		// Use reflection to invoke the method.</div><div class="line">        		try &#123;</div><div class="line">        			ReflectionUtils.makeAccessible(method);</div><div class="line">        			return method.invoke(target, args);//其实核心就是这句，也就是我们jdk里面执行目标方法的代码</div><div class="line">        		&#125;</div><div class="line">        		catch (InvocationTargetException ex) &#123;</div><div class="line">        			// Invoked method threw a checked exception.</div><div class="line">        			// We must rethrow it. The client won't see the interceptor.</div><div class="line">        			throw ex.getTargetException();</div><div class="line">        		&#125;</div><div class="line">        		catch (IllegalArgumentException ex) &#123;</div><div class="line">        			throw new AopInvocationException("AOP configuration seems to be invalid: tried calling method [" +</div><div class="line">        					method + "] on target [" + target + "]", ex);</div><div class="line">        		&#125;</div><div class="line">        		catch (IllegalAccessException ex) &#123;</div><div class="line">        			throw new AopInvocationException("Could not access method [" + method + "]", ex);</div><div class="line">        		&#125;</div><div class="line">        	&#125;</div><div class="line">        */</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				<span class="comment">// We need to create a method invocation... 也就是我们需要把所有的增强链条用ReflectiveMethodInvocation进行封装，但是这个链条中有前置和后置，那么我们就需要研究下spring是如何区别的，通过ReflectiveMethodInvocation的proceed逐一调用增强链</span></div><div class="line">				invocation = <span class="keyword">new</span> ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);</div><div class="line">        <span class="comment">/*</span></div><div class="line">        protected ReflectiveMethodInvocation(</div><div class="line">        			Object proxy, Object target, Method method, Object[] arguments,</div><div class="line">        			Class targetClass, List&lt;Object&gt; interceptorsAndDynamicMethodMatchers) &#123;</div><div class="line">        		this.proxy = proxy;</div><div class="line">        		this.target = target;</div><div class="line">        		this.targetClass = targetClass;</div><div class="line">        		this.method = BridgeMethodResolver.findBridgedMethod(method);</div><div class="line">        		this.arguments = arguments;</div><div class="line">        		this.interceptorsAndDynamicMethodMatchers = interceptorsAndDynamicMethodMatchers;</div><div class="line">        	&#125;</div><div class="line"></div><div class="line">          我们可以看到，构造函数基本都是赋值操作</div><div class="line">          ----------------------------------------------------------------------</div><div class="line">          public Object proceed() throws Throwable &#123;</div><div class="line">		//	We start with an index of -1 and increment early.</div><div class="line">		if (this.currentInterceptorIndex == this.interceptorsAndDynamicMethodMatchers.size() - 1) &#123;</div><div class="line">			return invokeJoinpoint();//当前执行到最后一个结束了,那么就应该要执行切点方法，也就是被增强的方法</div><div class="line">		&#125;</div><div class="line">    //到这里说明没有执行完毕，则先获取下一个增强器</div><div class="line">		Object interceptorOrInterceptionAdvice =</div><div class="line">				this.interceptorsAndDynamicMethodMatchers.get(++this.currentInterceptorIndex);</div><div class="line">		if (interceptorOrInterceptionAdvice instanceof InterceptorAndDynamicMethodMatcher) &#123;</div><div class="line">			// Evaluate dynamic method matcher here: static part will already have</div><div class="line">			// been evaluated and found to match.</div><div class="line">			InterceptorAndDynamicMethodMatcher dm =</div><div class="line">					(InterceptorAndDynamicMethodMatcher) interceptorOrInterceptionAdvice;</div><div class="line">			if (dm.methodMatcher.matches(this.method, this.targetClass, this.arguments)) &#123;</div><div class="line">				return dm.interceptor.invoke(this); //进行一些匹配校验后，执行</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				// Dynamic matching failed.</div><div class="line">				// Skip this interceptor and invoke the next in the chain.</div><div class="line">				return proceed(); //不匹配就不执行了执行下一个拦截增强器</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		else &#123;</div><div class="line">			// It's an interceptor, so we just invoke it: The pointcut will have</div><div class="line">			// been evaluated statically before this object was constructed.</div><div class="line">      //普通拦截器，直接调用即可</div><div class="line">			return ((MethodInterceptor) interceptorOrInterceptionAdvice).invoke(this);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">        */</div><div class="line">				<span class="comment">// Proceed to the joinpoint through the interceptor chain.</span></div><div class="line">				retVal = invocation.proceed();<span class="comment">//调用拦截器链中方法</span></div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="comment">// Massage return value if necessary.</span></div><div class="line">			Class&lt;?&gt; returnType = method.getReturnType();</div><div class="line">			<span class="keyword">if</span> (retVal != <span class="keyword">null</span> &amp;&amp; retVal == target &amp;&amp; returnType.isInstance(proxy) &amp;&amp;</div><div class="line">					!RawTargetAccess.class.isAssignableFrom(method.getDeclaringClass())) &#123;</div><div class="line">				<span class="comment">// Special case: it returned "this" and the return type of the method</span></div><div class="line">				<span class="comment">// is type-compatible. Note that we can't help if the target sets</span></div><div class="line">				<span class="comment">// a reference to itself in another returned object.</span></div><div class="line">				retVal = proxy;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (retVal == <span class="keyword">null</span> &amp;&amp; returnType != Void.TYPE &amp;&amp; returnType.isPrimitive()) &#123;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> AopInvocationException(<span class="string">"Null return value from advice does not match primitive return type for: "</span> + method);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> retVal;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">finally</span> &#123;</div><div class="line">			<span class="keyword">if</span> (target != <span class="keyword">null</span> &amp;&amp; !targetSource.isStatic()) &#123;</div><div class="line">				<span class="comment">// Must have come from TargetSource.</span></div><div class="line">				targetSource.releaseTarget(target);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (setProxyContext) &#123;</div><div class="line">				<span class="comment">// Restore old proxy.</span></div><div class="line">				AopContext.setCurrentProxy(oldProxy);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>ReflectiveMethodInvocation内部维护着链条调用的计数器，用来记录当前执行的位置，但是并没有想象中的前置、后置分开维护，那是因为spring 把这些工作交给了各个拦截器自己去做。<br>到此我们基本完成了AOP的功能剖析。其实AOP个人感觉要比IOC简单很多，无非是先扫描注解，然后组织前置、后置等增强链。然后使用JDK动态代理分别对增强链的逐一执行。只要我们对JDK的动态代理理解到位即可。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/18/spring IOC&BeanFactory&Application/" rel="next">spring IOC容器源码解析(五)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么会诞生AOP"><span class="nav-number">1.</span> <span class="nav-text">为什么会诞生AOP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何使用？"><span class="nav-number">2.</span> <span class="nav-text">如何使用？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建AOP代理"><span class="nav-number">2.1.</span> <span class="nav-text">创建AOP代理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JDK的动态代理"><span class="nav-number">3.</span> <span class="nav-text">JDK的动态代理</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

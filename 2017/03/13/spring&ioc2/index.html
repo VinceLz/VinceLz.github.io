@@ -1,0 +1,796 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="上节留下的东西当我们写完第一篇后，最后关于EntityResolover这个类，我没有过多的去介绍，那么在这里我简单介绍下吧。对于文件的查找，有2个值，publicID,systemId,我直接截图看把。这张图是内部实现,他就是判断systemId与publicID来进行加载文件的。
+解析&amp;amp;注册上篇文章中,我们已经对XML 解析成了Document了，那么我们接下来就需要对内容的提取并且注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring IOC容器源码解析(二)">
+<meta property="og:url" content="https://vincelz.github.io/2017/03/13/spring&ioc2/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="上节留下的东西当我们写完第一篇后，最后关于EntityResolover这个类，我没有过多的去介绍，那么在这里我简单介绍下吧。对于文件的查找，有2个值，publicID,systemId,我直接截图看把。这张图是内部实现,他就是判断systemId与publicID来进行加载文件的。
+解析&amp;amp;注册上篇文章中,我们已经对XML 解析成了Document了，那么我们接下来就需要对内容的提取并且注">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/sprin18.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring19.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring20.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring21.png">
+<meta property="og:updated_time" content="2017-03-15T08:46:34.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring IOC容器源码解析(二)">
+<meta name="twitter:description" content="上节留下的东西当我们写完第一篇后，最后关于EntityResolover这个类，我没有过多的去介绍，那么在这里我简单介绍下吧。对于文件的查找，有2个值，publicID,systemId,我直接截图看把。这张图是内部实现,他就是判断systemId与publicID来进行加载文件的。
+解析&amp;amp;注册上篇文章中,我们已经对XML 解析成了Document了，那么我们接下来就需要对内容的提取并且注">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/sprin18.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> spring IOC容器源码解析(二) | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              spring IOC容器源码解析(二)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-13T16:01:23+08:00" content="2017-03-13">
+            2017-03-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="上节留下的东西"><a href="#上节留下的东西" class="headerlink" title="上节留下的东西"></a>上节留下的东西</h1><p>当我们写完第一篇后，最后关于EntityResolover这个类，我没有过多的去介绍，那么在这里我简单介绍下吧。对于文件的查找，有2个值，publicID,systemId,我直接截图看把。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/sprin18.png" alt=""><br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring19.png" alt=""><br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring20.png" alt=""><br>这张图是内部实现,他就是判断systemId与publicID来进行加载文件的。</p>
+<h1 id="解析-amp-注册"><a href="#解析-amp-注册" class="headerlink" title="解析&amp;注册"></a>解析&amp;注册</h1><p>上篇文章中,我们已经对XML 解析成了Document了，那么我们接下来就需要对内容的提取并且注册了。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring21.png" alt=""><br>分析上面代码,我们发现最终重要的是documentReader.registerBeanDefinitions(doc,createReaderContext(resouce));这行代码，其他的的欧式一些基本操作，那我们继续跟进代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(Document doc,XmlReaderContext context)</span></span>&#123;</div><div class="line">  <span class="keyword">this</span>.context=readerContext;</div><div class="line">  logger.debug();</div><div class="line">  Element root=doc.getDocumentElement();</div><div class="line">  doRegisterBeanDefinitions(root);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这几行代码很简单，主要的作用就是获取xml文件的ROOT ,然后继续调用doRegisterBeanDefinitions方法。继续跟进。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doRegisterBeanDefinitions</span><span class="params">(Element root)</span></span>&#123;</div><div class="line">  String profileSpec=root.getAttribute(PROFILE_ATTRIBUTE);</div><div class="line">  <span class="keyword">if</span>(StringUtil.hasText(profileSpec))&#123;</div><div class="line">    Assert.state(<span class="keyword">this</span>.environment!=<span class="keyword">null</span>,<span class="string">"environment propertymust not be null"</span>);</div><div class="line">    String []specif=StringUtil.tokenizeToStringArray(profileSpec,BeanDefinitionParseDelegate.MULT_VALUE_ATTRIBUTE_DELIMITERS);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.environment.acceptProfiles(specif));</div><div class="line">    <span class="keyword">return</span> ;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  BeanDefinitionParseDelegate parent=<span class="keyword">this</span>.delegate;</div><div class="line">  <span class="keyword">this</span>.delegate=createHelper(readerContext,root,parent);</div><div class="line">  preProcessXml(root);</div><div class="line">  parseBeanDefinitions(root,<span class="keyword">this</span>.delegate);</div><div class="line">  postProcessXml(root);</div><div class="line">  <span class="keyword">this</span>.delegate=parent;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>特别要强调一些，preProcessXml &amp; postProcessXml 这2个方法如果大家学过设计模式，那么就应该明白，什么叫模板模式，对，这2个方法是没有实现的，只留给它的子类去实现。</p>
+<h2 id="profile属性"><a href="#profile属性" class="headerlink" title="profile属性"></a>profile属性</h2><p>  对于profile属性，其实我们一般很少使用的，它的属性值有dev | producation ，其实这是设置生成环境还是测试环境的。平时我没用过，所以不知道如何解释，大家可以去googole一下吧。</p>
+<h2 id="解析重头戏"><a href="#解析重头戏" class="headerlink" title="解析重头戏"></a>解析重头戏</h2><p> 解析重头戏终于到了，既然preProcessXml和postProcessXml方法都留给子类去实现了那么我们只能研究parseBeanDefinitions 了，其实核心代码都在这里。<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">parseBeanDefinitions</span><span class="params">(Element root, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (delegate.isDefaultNamespace(root)) &#123;</div><div class="line">			NodeList nl = root.getChildNodes();</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nl.getLength(); i++) &#123;</div><div class="line">				Node node = nl.item(i);</div><div class="line">				<span class="keyword">if</span> (node <span class="keyword">instanceof</span> Element) &#123;</div><div class="line">					Element ele = (Element) node;</div><div class="line">					<span class="keyword">if</span> (delegate.isDefaultNamespace(ele)) &#123;</div><div class="line">						parseDefaultElement(ele, delegate);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">else</span> &#123;</div><div class="line">						delegate.parseCustomElement(ele);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			delegate.parseCustomElement(root);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p> 其实逻辑很简单，他进来后，先判断我们是否用了自定义标签了，则走的路径不同，什么叫自定义标签呢？例如：《tx:annotation-driven /&gt; 这就是自定义标签，默认标签则是 《bean id=”” clasee=”” /&gt;,我们先考虑是默认标签，然后他就会通过root结点获取到全部的子结点，getChileNode(),然后遍历每一个结点，进行解析，那么我们继续跟进parseDefaultElement,<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseDefaultElement</span><span class="params">(Element ele, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (delegate.nodeNameEquals(ele, IMPORT_ELEMENT)) &#123;</div><div class="line">			importBeanDefinitionResource(ele);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, ALIAS_ELEMENT)) &#123;</div><div class="line">			processAliasRegistration(ele);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) &#123;</div><div class="line">			processBeanDefinition(ele, delegate);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, NESTED_BEANS_ELEMENT)) &#123;</div><div class="line">			<span class="comment">// recurse</span></div><div class="line">			doRegisterBeanDefinitions(ele);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>根据上述代码，它进行解析一个结点的时候，会进行判断，如果是</p>
+<ul>
+<li>1 “ &lt; import resource=”” /&gt;” 那么他就会走importBeanDefinitionResource(ele)逻辑</li>
+<li>2 如果是&lt; alias name=”” alias=””/&gt; 那就走processAliasRegistration(ele)的逻辑</li>
+<li>3 如果是&lt; bean&gt;&lt;/ bean &gt; 那么就走processBeanDefinition（ele,delega)</li>
+<li>4 如果是&lt; beans&gt; 就调用我们之前调用过的方法doRegisterBeanDefinitions(ele)</li>
+</ul>
+<p>那么我们先分析分别分析他们是如何解析对应的标签的，当然我们先进行讲解第三种方式，比较bean标签才是我们的核心<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">processBeanDefinition</span><span class="params">(Element ele, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);</div><div class="line">		<span class="keyword">if</span> (bdHolder != <span class="keyword">null</span>) &#123;</div><div class="line">			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="comment">// Register the final decorated instance.</span></div><div class="line">				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (BeanDefinitionStoreException ex) &#123;</div><div class="line">				getReaderContext().error(<span class="string">"Failed to register bean definition with name '"</span> +</div><div class="line">						bdHolder.getBeanName() + <span class="string">"'"</span>, ele, ex);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">// Send registration event.</span></div><div class="line">			getReaderContext().fireComponentRegistered(<span class="keyword">new</span> BeanComponentDefinition(bdHolder));</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>从代码中，我们可以看到，它先是委托delegate.parseBeanDefinitionElement方法将Element的标签解析成<br>BeanDefinitionHolder ,从名字Holder也可以知道，他是将我们的Element中的class 、id 、name 、alias等属性全部封装到holeer属性中，如果holder返回为空null，那么我们还需要对bean标签的自定义属性进行解析，并返回,那么至此我们完成了一个bean标签的装载、解析那么接下来就需要注册了，        BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());就是对bena的注册操作,当完成到这里，所有的操作完成了，剩下就需要通知相关的类，此次bean类加载注册完成。那么我们还需要分析具体的过程，先从解析开始。</p>
+<ul>
+<li><p>1 parseBeanDefinitionElement(ele)这个方法就是进行解析并返回holeder,那么跟进代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BeanDefinitionHolder <span class="title">parseBeanDefinitionElement</span><span class="params">(Element ele)</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> parseBeanDefinitionElement(ele, <span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>//根据代码，发现他调用了不同参数的方法代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> BeanDefinitionHolder <span class="title">parseBeanDefinitionElement</span><span class="params">(Element ele, BeanDefinition containingBean)</span> </span>&#123;</div><div class="line">	String id = ele.getAttribute(ID_ATTRIBUTE);<span class="comment">//解析id属性</span></div><div class="line">	String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);<span class="comment">//name属性</span></div><div class="line"></div><div class="line">	List&lt;String&gt; aliases = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">	<span class="keyword">if</span> (StringUtils.hasLength(nameAttr)) &#123;</div><div class="line">		String[] nameArr = StringUtils.tokenizeToStringArray(nameAttr, MULTI_VALUE_ATTRIBUTE_DELIMITERS);<span class="comment">//MULTI_VALUE_ATTRIBUTE_DELIMITERS的值为",;"</span></div><div class="line">     <span class="comment">//tokenizeToStringArray的作用是分割name属性并加入集合List中</span></div><div class="line">		aliases.addAll(Arrays.asList(nameArr));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	String beanName = id;</div><div class="line">	<span class="keyword">if</span> (!StringUtils.hasText(beanName) &amp;&amp; !aliases.isEmpty()) &#123;</div><div class="line">		beanName = aliases.remove(<span class="number">0</span>);</div><div class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			logger.debug(<span class="string">"No XML 'id' specified - using '"</span> + beanName +</div><div class="line">					<span class="string">"' as bean name and "</span> + aliases + <span class="string">" as aliases"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (containingBean == <span class="keyword">null</span>) &#123;</div><div class="line">		checkNameUniqueness(beanName, aliases, ele);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean); <span class="comment">//这里调用了parseBeanDefinitionElement 3个参数的方法，我们下面跟进</span></div><div class="line">	<span class="keyword">if</span> (beanDefinition != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (!StringUtils.hasText(beanName)) &#123;<span class="comment">//如果没有设置beanName，那么就根据spring 默认规则进行配置属性</span></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">if</span> (containingBean != <span class="keyword">null</span>) &#123;</div><div class="line">					beanName = BeanDefinitionReaderUtils.generateBeanName(</div><div class="line">							beanDefinition, <span class="keyword">this</span>.readerContext.getRegistry(), <span class="keyword">true</span>);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					beanName = <span class="keyword">this</span>.readerContext.generateBeanName(beanDefinition);</div><div class="line">					<span class="comment">// Register an alias for the plain bean class name, if still possible,</span></div><div class="line">					<span class="comment">// if the generator returned the class name plus a suffix.</span></div><div class="line">					<span class="comment">// This is expected for Spring 1.2/2.0 backwards compatibility.</span></div><div class="line">					String beanClassName = beanDefinition.getBeanClassName();</div><div class="line">					<span class="keyword">if</span> (beanClassName != <span class="keyword">null</span> &amp;&amp;</div><div class="line">							beanName.startsWith(beanClassName) &amp;&amp; beanName.length() &gt; beanClassName.length() &amp;&amp;</div><div class="line">							!<span class="keyword">this</span>.readerContext.getRegistry().isBeanNameInUse(beanClassName)) &#123;</div><div class="line">						aliases.add(beanClassName);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">					logger.debug(<span class="string">"Neither XML 'id' nor 'name' specified - "</span> +</div><div class="line">							<span class="string">"using generated bean name ["</span> + beanName + <span class="string">"]"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">				error(ex.getMessage(), ele);</div><div class="line">				<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		String[] aliasesArray = StringUtils.toStringArray(aliases);</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> BeanDefinitionHolder(beanDefinition, beanName, aliasesArray);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> AbstractBeanDefinition <span class="title">parseBeanDefinitionElement</span><span class="params">(</span></span></div><div class="line">		Element ele, String beanName, BeanDefinition containingBean) &#123;</div><div class="line"> <span class="keyword">this</span>.parseState.push(<span class="keyword">new</span> BeanEntry(beanName));</div><div class="line">	String className = <span class="keyword">null</span>;</div><div class="line">   <span class="comment">//解析class属性</span></div><div class="line">	<span class="keyword">if</span> (ele.hasAttribute(CLASS_ATTRIBUTE)) &#123;</div><div class="line">		className = ele.getAttribute(CLASS_ATTRIBUTE).trim();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		String parent = <span class="keyword">null</span>;</div><div class="line">     <span class="comment">//解析parent属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(PARENT_ATTRIBUTE)) &#123;</div><div class="line">			parent = ele.getAttribute(PARENT_ATTRIBUTE);</div><div class="line">		&#125;</div><div class="line">     <span class="comment">//创建承载属性的AbstractBeanDefinition类</span></div><div class="line">		AbstractBeanDefinition bd = createBeanDefinition(className, parent);</div><div class="line"></div><div class="line">		parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);</div><div class="line">		bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));</div><div class="line">     <span class="comment">//解析元数据</span></div><div class="line">		parseMetaElements(ele, bd);</div><div class="line">     <span class="comment">//解析lookup属性</span></div><div class="line">		parseLookupOverrideSubElements(ele, bd.getMethodOverrides());</div><div class="line">     <span class="comment">//解析replaceMethod方法</span></div><div class="line">		parseReplacedMethodSubElements(ele, bd.getMethodOverrides());</div><div class="line">     <span class="comment">//解析构造方法</span></div><div class="line">		parseConstructorArgElements(ele, bd);</div><div class="line">     <span class="comment">//解析property子属性</span></div><div class="line">		parsePropertyElements(ele, bd);</div><div class="line">     <span class="comment">//解析qulifi子属性</span></div><div class="line">		parseQualifierElements(ele, bd);</div><div class="line"></div><div class="line">		bd.setResource(<span class="keyword">this</span>.readerContext.getResource());</div><div class="line">		bd.setSource(extractSource(ele));</div><div class="line"></div><div class="line">		<span class="keyword">return</span> bd;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (ClassNotFoundException ex) &#123;</div><div class="line">		error(<span class="string">"Bean class ["</span> + className + <span class="string">"] not found"</span>, ele, ex);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (NoClassDefFoundError err) &#123;</div><div class="line">		error(<span class="string">"Class that bean class ["</span> + className + <span class="string">"] depends on not found"</span>, ele, err);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">		error(<span class="string">"Unexpected failure during bean definition parsing"</span>, ele, ex);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">finally</span> &#123;</div><div class="line">		<span class="keyword">this</span>.parseState.pop();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="BeanDefinition"><a href="#BeanDefinition" class="headerlink" title="BeanDefinition"></a>BeanDefinition</h2><p>到这基本完成了对bean标签的所有属性解析，最终它解析为了BeanDefinition,通过查看源码我们得知Spring<br>对BeanDefinition有3种实现，RootBeanDefinition、ChildBeanDefinition以及GenericBeanDefinition,通过<br>继承树我们知道，它都继承了AbstractBeanDefinition，其实BeanDefinition就是用来显示bean标签的，比如bean标签<br>的class scope lazy-init等配置属性，都在BeanDefinition内部提供了beanClass scope lazyInit属性，并且是一一<br>对应的，GenericBeanDefinition是2.5版本后加入的，其实他是一站式服务类。涵盖了上述类的所有功能。那么RootBeanDefinition<br>和ChildBeanDefinition是表示bean的父子关系的，如果有子bean,那么父bean就用RootBeanDefinition表示，子bean用ChildBeanDefinition<br>表示，而GenericBeanDefinition是对他们2者共同的抽象。就这样spring利用了BeanDefinition将配置文件中的bean信息在内部展现出来了，<br>并最终将BeanDefinition注册到BeanDefinitionRegistry中，其实我们这样理解BeanDefinitionRegistry,他就像一个大容器，map吧，然后将<br>所有的BeanDefinition全部放到map容器中，后续操作直接就对这个容器进行操作。<br>所以在这之前，我们需要创建出GenericBeanDefinition，那么AbstractBeanDefinition bd = createBeanDefinition(className, parent);<br>这行代码就是用来创建的，我们继续跟进。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> AbstractBeanDefinition <span class="title">createBeanDefinition</span><span class="params">(String className, String parentName)</span></span></div><div class="line">			<span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> BeanDefinitionReaderUtils.createBeanDefinition(</div><div class="line">				parentName, className, <span class="keyword">this</span>.readerContext.getBeanClassLoader());</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从代码中我们得知，他最终又委托了createBeanDefinition这个方法，跟进<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AbstractBeanDefinition <span class="title">createBeanDefinition</span><span class="params">(</span></span></div><div class="line">			String parentName, String className, ClassLoader classLoader) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line"></div><div class="line"><span class="comment">//找到了，他在这里进行实例化了一个GenericBeanDefinition的</span></div><div class="line">		GenericBeanDefinition bd = <span class="keyword">new</span> GenericBeanDefinition();</div><div class="line">		bd.setParentName(parentName);<span class="comment">//设置父结点</span></div><div class="line">		<span class="keyword">if</span> (className != <span class="keyword">null</span>) &#123;<span class="comment">//如果我们设置了class属性那么将会调用classLoader</span></div><div class="line">			<span class="keyword">if</span> (classLoader != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">//这部操作其实是将class通过name加载class文件</span></div><div class="line">				bd.setBeanClass(ClassUtils.forName(className, classLoader));</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				bd.setBeanClassName(className);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> bd;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>当我们将className解析完毕后，就向下看，他parseBeanDefinitionAttributes()这个方法，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> AbstractBeanDefinition <span class="title">parseBeanDefinitionAttributes</span><span class="params">(Element ele, String beanName,</span></span></div><div class="line">			BeanDefinition containingBean, AbstractBeanDefinition bd) &#123;</div><div class="line">      <span class="comment">//解析scope属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(SCOPE_ATTRIBUTE)) &#123;</div><div class="line">			<span class="comment">// Spring 2.x "scope" attribute</span></div><div class="line">			bd.setScope(ele.getAttribute(SCOPE_ATTRIBUTE));</div><div class="line">      <span class="comment">//从这个我明白，为什么scope和singleton属性不能同时出现，不然就会报异常</span></div><div class="line">			<span class="keyword">if</span> (ele.hasAttribute(SINGLETON_ATTRIBUTE)) &#123;</div><div class="line">				error(<span class="string">"Specify either 'scope' or 'singleton', not both"</span>, ele);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">     <span class="comment">//解析singleton属性</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ele.hasAttribute(SINGLETON_ATTRIBUTE)) &#123;</div><div class="line">			<span class="comment">// Spring 1.x "singleton" attribute</span></div><div class="line">			bd.setScope(TRUE_VALUE.equals(ele.getAttribute(SINGLETON_ATTRIBUTE)) ?</div><div class="line">					BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (containingBean != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="comment">// Take default from containing bean in case of an inner bean definition.</span></div><div class="line">			bd.setScope(containingBean.getScope());</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//解析abstract属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(ABSTRACT_ATTRIBUTE)) &#123;</div><div class="line">			bd.setAbstract(TRUE_VALUE.equals(ele.getAttribute(ABSTRACT_ATTRIBUTE)));</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//懒加载lazyInit</span></div><div class="line">		String lazyInit = ele.getAttribute(LAZY_INIT_ATTRIBUTE);</div><div class="line">		<span class="keyword">if</span> (DEFAULT_VALUE.equals(lazyInit)) &#123;</div><div class="line">			lazyInit = <span class="keyword">this</span>.defaults.getLazyInit();</div><div class="line">		&#125;</div><div class="line">		bd.setLazyInit(TRUE_VALUE.equals(lazyInit));</div><div class="line">    <span class="comment">//自动写</span></div><div class="line">		String autowire = ele.getAttribute(AUTOWIRE_ATTRIBUTE);</div><div class="line">		bd.setAutowireMode(getAutowireMode(autowire));</div><div class="line">    <span class="comment">//依赖检查 depends-check属性</span></div><div class="line">		String dependencyCheck = ele.getAttribute(DEPENDENCY_CHECK_ATTRIBUTE);</div><div class="line">		bd.setDependencyCheck(getDependencyCheck(dependencyCheck));</div><div class="line">    <span class="comment">//depend-on属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(DEPENDS_ON_ATTRIBUTE)) &#123;</div><div class="line">			String dependsOn = ele.getAttribute(DEPENDS_ON_ATTRIBUTE);</div><div class="line">			bd.setDependsOn(StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		String autowireCandidate = ele.getAttribute(AUTOWIRE_CANDIDATE_ATTRIBUTE);</div><div class="line">		<span class="keyword">if</span> (<span class="string">""</span>.equals(autowireCandidate) || DEFAULT_VALUE.equals(autowireCandidate)) &#123;</div><div class="line">			String candidatePattern = <span class="keyword">this</span>.defaults.getAutowireCandidates();</div><div class="line">			<span class="keyword">if</span> (candidatePattern != <span class="keyword">null</span>) &#123;</div><div class="line">				String[] patterns = StringUtils.commaDelimitedListToStringArray(candidatePattern);</div><div class="line">				bd.setAutowireCandidate(PatternMatchUtils.simpleMatch(patterns, beanName));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			bd.setAutowireCandidate(TRUE_VALUE.equals(autowireCandidate));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(PRIMARY_ATTRIBUTE)) &#123;</div><div class="line">			bd.setPrimary(TRUE_VALUE.equals(ele.getAttribute(PRIMARY_ATTRIBUTE)));</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//initMethod方法属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(INIT_METHOD_ATTRIBUTE)) &#123;</div><div class="line">			String initMethodName = ele.getAttribute(INIT_METHOD_ATTRIBUTE);</div><div class="line">			<span class="keyword">if</span> (!<span class="string">""</span>.equals(initMethodName)) &#123;</div><div class="line">				bd.setInitMethodName(initMethodName);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.defaults.getInitMethod() != <span class="keyword">null</span>) &#123;</div><div class="line">				bd.setInitMethodName(<span class="keyword">this</span>.defaults.getInitMethod());</div><div class="line">				bd.setEnforceInitMethod(<span class="keyword">false</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">    <span class="comment">//destor-method属性</span></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(DESTROY_METHOD_ATTRIBUTE)) &#123;</div><div class="line">			String destroyMethodName = ele.getAttribute(DESTROY_METHOD_ATTRIBUTE);</div><div class="line">			<span class="keyword">if</span> (!<span class="string">""</span>.equals(destroyMethodName)) &#123;</div><div class="line">				bd.setDestroyMethodName(destroyMethodName);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.defaults.getDestroyMethod() != <span class="keyword">null</span>) &#123;</div><div class="line">				bd.setDestroyMethodName(<span class="keyword">this</span>.defaults.getDestroyMethod());</div><div class="line">				bd.setEnforceDestroyMethod(<span class="keyword">false</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(FACTORY_METHOD_ATTRIBUTE)) &#123;</div><div class="line">			bd.setFactoryMethodName(ele.getAttribute(FACTORY_METHOD_ATTRIBUTE));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (ele.hasAttribute(FACTORY_BEAN_ATTRIBUTE)) &#123;</div><div class="line">			bd.setFactoryBeanName(ele.getAttribute(FACTORY_BEAN_ATTRIBUTE));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> bd;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>上述代码通过对spring 的所有属性进行了解析。解析完毕后，他就开始对&lt; meta &gt;标签的解析了，<br>那么我们先了解下meta标签的作用，<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;bean id="ss" class=""&gt;</div><div class="line">  &lt;meta key="key" value="va"</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>它不会体现在类中的，只是bean的额外声明，当需要里面的信息<br>的时候，通过BeanDefinition的getAttribute(key)来获取值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这是对meta进行解析的代码</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseMetaElements</span><span class="params">(Element ele, BeanMetadataAttributeAccessor attributeAccessor)</span> </span>&#123;</div><div class="line">		NodeList nl = ele.getChildNodes();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nl.getLength(); i++) &#123;</div><div class="line">			Node node = nl.item(i);</div><div class="line">			<span class="keyword">if</span> (isCandidateElement(node) &amp;&amp; nodeNameEquals(node, META_ELEMENT)) &#123;</div><div class="line">				Element metaElement = (Element) node;</div><div class="line">				String key = metaElement.getAttribute(KEY_ATTRIBUTE);</div><div class="line">				String value = metaElement.getAttribute(VALUE_ATTRIBUTE);</div><div class="line">        将key values  保存到BeanMetadataAttribute中</div><div class="line">				BeanMetadataAttribute attribute = <span class="keyword">new</span> BeanMetadataAttribute(key, value);</div><div class="line">				attribute.setSource(extractSource(metaElement));</div><div class="line">				attributeAccessor.addMetadataAttribute(attribute);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来就是lookup-method的属性解析，有人可能没有用过这个属性，那么这个属性是做什么的呢?<br>他其实是可以动态指定方法的返回值的，具体使用方法自己百度去吧。我们直接研究他的源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseLookupOverrideSubElements</span><span class="params">(Element beanEle, MethodOverrides overrides)</span> </span>&#123;</div><div class="line">		NodeList nl = beanEle.getChildNodes();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nl.getLength(); i++) &#123;</div><div class="line">			Node node = nl.item(i);</div><div class="line">      <span class="comment">//其实与meta差不多，只不过在这里是判断是否是lookup-method的标签属性，然后</span></div><div class="line">      <span class="comment">//封装一个LookupOverride的实体类保存起来，放到BeanDefinition中</span></div><div class="line">			<span class="keyword">if</span> (isCandidateElement(node) &amp;&amp; nodeNameEquals(node, LOOKUP_METHOD_ELEMENT)) &#123;</div><div class="line">				Element ele = (Element) node;</div><div class="line">				String methodName = ele.getAttribute(NAME_ATTRIBUTE);</div><div class="line">				String beanRef = ele.getAttribute(BEAN_ELEMENT);</div><div class="line">				LookupOverride override = <span class="keyword">new</span> LookupOverride(methodName, beanRef);</div><div class="line">				override.setSource(extractSource(ele));</div><div class="line">				overrides.addOverride(override);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来就是parseReplacedMethodSubElements()方法了，他的对应标签是replace-Method，听名字都明白，他是<br>可以动态替换某个方法的<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">replace-Method</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">replace</span>=<span class="string">""</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseReplacedMethodSubElements</span><span class="params">(Element beanEle, MethodOverrides overrides)</span> </span>&#123;</div><div class="line">		NodeList nl = beanEle.getChildNodes();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nl.getLength(); i++) &#123;</div><div class="line">			Node node = nl.item(i);</div><div class="line">      <span class="comment">//同上，差不多，判断是否为replacedMethod标签</span></div><div class="line">			<span class="keyword">if</span> (isCandidateElement(node) &amp;&amp; nodeNameEquals(node, REPLACED_METHOD_ELEMENT)) &#123;</div><div class="line">				Element replacedMethodEle = (Element) node;</div><div class="line">        <span class="comment">//获取替换的旧方法名字</span></div><div class="line">				String name = replacedMethodEle.getAttribute(NAME_ATTRIBUTE);</div><div class="line">        <span class="comment">//获取替换的方法名字</span></div><div class="line">				String callback = replacedMethodEle.getAttribute(REPLACER_ATTRIBUTE);</div><div class="line">        <span class="comment">//最终构造了一个ReplaceOverride属性，放置在BeanDefinition内部中</span></div><div class="line">				ReplaceOverride replaceOverride = <span class="keyword">new</span> ReplaceOverride(name, callback);</div><div class="line">				<span class="comment">// Look for arg-type match elements.</span></div><div class="line">				List&lt;Element&gt; argTypeEles = DomUtils.getChildElementsByTagName(replacedMethodEle, ARG_TYPE_ELEMENT);</div><div class="line">				<span class="keyword">for</span> (Element argTypeEle : argTypeEles) &#123;</div><div class="line">          <span class="comment">//获取方法参数</span></div><div class="line">					String match = argTypeEle.getAttribute(ARG_TYPE_MATCH_ATTRIBUTE);</div><div class="line">					match = (StringUtils.hasText(match) ? match : DomUtils.getTextValue(argTypeEle));</div><div class="line">					<span class="keyword">if</span> (StringUtils.hasText(match)) &#123;</div><div class="line">						replaceOverride.addTypeIdentifier(match);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				replaceOverride.setSource(extractSource(replacedMethodEle));</div><div class="line">				overrides.addOverride(replaceOverride);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>接下来就是parseConstructorArgElements ，构造函数 spring是通过pareseConstructorArgElement<br>方法进行解析的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseConstructorArgElement</span><span class="params">(Element ele, BeanDefinition bd)</span> </span>&#123;</div><div class="line">		String indexAttr = ele.getAttribute(INDEX_ATTRIBUTE);</div><div class="line">		String typeAttr = ele.getAttribute(TYPE_ATTRIBUTE);</div><div class="line">		String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);</div><div class="line">		<span class="keyword">if</span> (StringUtils.hasLength(indexAttr)) &#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">int</span> index = Integer.parseInt(indexAttr);</div><div class="line">				<span class="keyword">if</span> (index &lt; <span class="number">0</span>) &#123;</div><div class="line">					error(<span class="string">"'index' cannot be lower than 0"</span>, ele);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">try</span> &#123;</div><div class="line">						<span class="keyword">this</span>.parseState.push(<span class="keyword">new</span> ConstructorArgumentEntry(index));</div><div class="line">						Object value = parsePropertyValue(ele, bd, <span class="keyword">null</span>);</div><div class="line">						ConstructorArgumentValues.ValueHolder valueHolder = <span class="keyword">new</span> ConstructorArgumentValues.ValueHolder(value);</div><div class="line">						<span class="keyword">if</span> (StringUtils.hasLength(typeAttr)) &#123;</div><div class="line">							valueHolder.setType(typeAttr);</div><div class="line">						&#125;</div><div class="line">						<span class="keyword">if</span> (StringUtils.hasLength(nameAttr)) &#123;</div><div class="line">							valueHolder.setName(nameAttr);</div><div class="line">						&#125;</div><div class="line">						valueHolder.setSource(extractSource(ele));</div><div class="line">						<span class="keyword">if</span> (bd.getConstructorArgumentValues().hasIndexedArgumentValue(index)) &#123;</div><div class="line">							error(<span class="string">"Ambiguous constructor-arg entries for index "</span> + index, ele);</div><div class="line">						&#125;</div><div class="line">						<span class="keyword">else</span> &#123;</div><div class="line">							bd.getConstructorArgumentValues().addIndexedArgumentValue(index, valueHolder);</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">finally</span> &#123;</div><div class="line">						<span class="keyword">this</span>.parseState.pop();</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (NumberFormatException ex) &#123;</div><div class="line">				error(<span class="string">"Attribute 'index' of tag 'constructor-arg' must be an integer"</span>, ele);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">this</span>.parseState.push(<span class="keyword">new</span> ConstructorArgumentEntry());</div><div class="line">				Object value = parsePropertyValue(ele, bd, <span class="keyword">null</span>);</div><div class="line">				ConstructorArgumentValues.ValueHolder valueHolder = <span class="keyword">new</span> ConstructorArgumentValues.ValueHolder(value);</div><div class="line">				<span class="keyword">if</span> (StringUtils.hasLength(typeAttr)) &#123;</div><div class="line">					valueHolder.setType(typeAttr);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (StringUtils.hasLength(nameAttr)) &#123;</div><div class="line">					valueHolder.setName(nameAttr);</div><div class="line">				&#125;</div><div class="line">				valueHolder.setSource(extractSource(ele));</div><div class="line">				bd.getConstructorArgumentValues().addGenericArgumentValue(valueHolder);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">finally</span> &#123;</div><div class="line">				<span class="keyword">this</span>.parseState.pop();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>其实代码挺多，但是我们就知道他做的事情是提取了index type name 然后，将所有的构造函数<br>封装到ConstructorArgumentValues.ValueHolder中，并将添加到BeanDefinition中。具体细节很多<br>但是大致流程就是读取解析constructor 。<br>接下来就是property属性了，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bena</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">class</span>=<span class="string">""</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">values</span>=<span class="string">""</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这个过程无非就是提取所有的property元素，并保存到一个属性中，并放置在BeanDefinition中。</p>
+<h1 id="接下来"><a href="#接下来" class="headerlink" title="接下来"></a>接下来</h1><p>到这我们完成了xml文档到GenericBeanDefinition的转换，换句话说，就是我们在xml 定义的一些属性<br>方法，都已经被映射到了GenericBeanDefinition这个类中了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/17/spring IOC&4/" rel="prev">spring IOC容器源码解析(四)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/spring ioc/" rel="next">spring IOC容器源码解析(一)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#上节留下的东西"><span class="nav-number">1.</span> <span class="nav-text">上节留下的东西</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析-amp-注册"><span class="nav-number">2.</span> <span class="nav-text">解析&注册</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#profile属性"><span class="nav-number">2.1.</span> <span class="nav-text">profile属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析重头戏"><span class="nav-number">2.2.</span> <span class="nav-text">解析重头戏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanDefinition"><span class="nav-number">2.3.</span> <span class="nav-text">BeanDefinition</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接下来"><span class="nav-number">3.</span> <span class="nav-text">接下来</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

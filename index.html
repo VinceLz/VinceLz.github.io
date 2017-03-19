@@ -3376,8 +3376,359 @@
           
           
             
+              <a class="post-title-link" href="/2017/03/19/Spring Aop1/" itemprop="url">
+                spring AOP源码解析(一)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-19T19:11:58+08:00" content="2017-03-19">
+            2017-03-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            为什么会诞生AOP我们都知道，使用面向对象编程一直是Java的口号，万物皆对象，但是当我们大量使用OOP的设计模式的时候，就会出现一些弊端，大量继承关系导致层次混乱，出现大量冗余，这是我们编程最不希望看到的，例如：日志，安全监测等功能如果使用OOP的模式的话，那么就会出现大量类、接口。这不是利于维护
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/19/Spring Aop1/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2017/03/18/spring IOC&BeanFactory&Application/" itemprop="url">
+                spring IOC容器源码解析(五)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-18T19:11:58+08:00" content="2017-03-18">
+            2017-03-18
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            前言前面我们基本上完成了对一个bean的创建全过程，当然还有很多细节我没有深究，毕竟有些东西还是一知半解,所以放到以后。那么今天我们来进行分析下XmlbeanFactory与Application之间的区别，很明显Application要比XmlbeanFactory功能强大很多，我们就是分析下他为
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/18/spring IOC&BeanFactory&Application/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2017/03/17/spring IOC&4/" itemprop="url">
+                spring IOC容器源码解析(四)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-17T16:01:23+08:00" content="2017-03-17">
+            2017-03-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            bean加载既然我们要了解加载bean的过程，那么就需要通过getBean()这个函数来了解,首先我们查看到对getBean的第一次实现是在AbstractBeanFactory中123public Object getBean(String name) throws BeansException 
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/17/spring IOC&4/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2017/03/13/spring&ioc2/" itemprop="url">
+                spring IOC容器源码解析(二)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-13T16:01:23+08:00" content="2017-03-13">
+            2017-03-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            上节留下的东西当我们写完第一篇后，最后关于EntityResolover这个类，我没有过多的去介绍，那么在这里我简单介绍下吧。对于文件的查找，有2个值，publicID,systemId,我直接截图看把。这张图是内部实现,他就是判断systemId与publicID来进行加载文件的。
+解析&amp;
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/13/spring&ioc2/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2017/03/12/spring ioc/" itemprop="url">
+                spring IOC容器源码解析(一)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-12T16:01:23+08:00" content="2017-03-12">
+            2017-03-12
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            前言前几天面试了阿里，最终跪倒在阿里面试官前，但是不管如何，我一个二本院校的普通学生，能走到三面也已经是很不容易了，同时也明白了自己的不足还有很多，所以虽败犹荣。所以最近想对spring IOC&amp; AOP的实现源码进行一波研究，看了一会《spring 技术内幕》后，发现看书有点不直观，而且有
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/12/spring ioc/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2017/03/08/heap/" itemprop="url">
-                堆
+                图
               </a>
             
           
@@ -3409,7 +3760,7 @@
         
           <span itemprop="articleBody">
             
-            前言昨天看完了树&amp;二叉树的一些基本操作，那么今天我们要说的是堆。首先得强调下，其实堆也是树，只不过就像查找二叉树一样，它只是在树的基础上限制了一些条件，那么Heap堆也是一样的，只不过在树的基础上又做了一些限制条件，那么限制条件是: 任一节点的子孙类节点都不能比它大或者小,就叫堆，只不过对于
+            前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多
             ...
           </span>
           <div class="post-more-link text-center">
@@ -3484,6 +3835,77 @@
           </span>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/03/07/Tree/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2017/03/06/tu/" itemprop="url">
+                堆
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-06T19:56:17+08:00" content="2017-03-06">
+            2017-03-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            待上传
+
+            
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/06/tu/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -4002,443 +4424,11 @@ Java JNA?
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/01/22/Rquest/" itemprop="url">
-                Java设计模式（八）职责链模式
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2017-01-22T14:37:33+08:00" content="2017-01-22">
-            2017-01-22
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            Filter有过java web 开发的经理的同学们，都应该知道Filter过滤器，那么你知道他是如何实现的呢？那当然是使用了我们的Java设计模式中的职责链模式，如果使用过Filter的话，他里面有有一个概念就是过滤器链chain,这个名词，其实这种模式的原理就是把我们定义的，系统的过滤器都加入到
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/22/Rquest/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/01/22/java虚拟机总结(1)/" itemprop="url">
-                java虚拟机总结(1)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2017-01-22T10:49:52+08:00" content="2017-01-22">
-            2017-01-22
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            回到了家，终于有时间可以更新下自己的博客了,长话短说
-
-抽时间读完了&lt;深入理解java虚拟机&gt;,收获颇丰总结如下：
-1.jvm中共享的数据区为:方法区  堆(heap)  1.1 方法区：与堆一样是线程共享的，存储的是虚拟机加载的类信息，常量，静态变量等      在hotspot上方法
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/22/java虚拟机总结(1)/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/01/12/ms-6/" itemprop="url">
-                Java设计模式（七）状态模式
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2017-01-12T14:37:33+08:00" content="2017-01-12">
-            2017-01-12
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            什么是状态模式什么是状态模式？我们单从字面无法理解状态模式的概念，但是如果我们需要设计一个类，根据某些变量相应的类的行为会发生改变，那么我们就可以把这个变量叫做这个类的状态，也就是说，状态决定了我们类的行为，性质等。
-
-没有状态模式之前，我们是这样设计代码的 12345678910111213141
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/12/ms-6/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/01/08/ms-5/" itemprop="url">
-                Java设计模式（六）观察者模式
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2017-01-08T14:37:33+08:00" content="2017-01-08">
-            2017-01-08
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            观察者观察者模式：大家如果使用过Rxjava的话，应该对观察者模式很熟悉了吧。没错Rxjava就是使用了观察者模式，实现了类似函数式编程的原理。那么观察者到底是什么东西呢？从字面上，我们只能解析出一些信息，就是观察者，肯定是有观察的能力，其实，没错，他有几个概念  
-观察者
-订阅者
-那么我们从代码中
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/08/ms-5/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/12/28/app&web/" itemprop="url">
-                知识产权app&后端web技术总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2016-12-28T16:01:23+08:00" content="2016-12-28">
-            2016-12-28
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            项目前言继上篇介绍完知识产权app的android后，今天我们来介绍下web的一些功能实现
-代码架构:
-
-项目采用了Maven来构建项目的，不得不提下Maven,很大程度上简化了我们开发的成本，再也不需要到处找不到jar而发愁了，所以没有使用过Maven的同学们，可以尝试下，很不错！
-此次项目是依赖
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/28/app&web/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/12/24/ms-4/" itemprop="url">
-                Java设计模式（五）抽象工厂模式
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2016-12-24T14:37:33+08:00" content="2016-12-24">
-            2016-12-24
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            抽象工厂与普通工厂区别之前我们学过了普通工厂模式，今天又蹦出来抽象工厂模式，实在是让人头疼，但是我们还是暂时把头疼的事抛出去吧，先把抽象工厂模式弄懂才行。那它们的区别是什么？抽象工厂是工厂模式的升级版本，他用来创建一组相关或者相互依赖的对象。它与工厂模式的区别在于，工厂模式针对着是一个产品等级结构，
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/24/ms-4/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </nav>
 
  </div>
@@ -4472,7 +4462,7 @@ Java JNA?
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -4486,7 +4476,7 @@ Java JNA?
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">tags</span>
               
           </div>

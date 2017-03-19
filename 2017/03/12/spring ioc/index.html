@@ -1,0 +1,790 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="前言前几天面试了阿里，最终跪倒在阿里面试官前，但是不管如何，我一个二本院校的普通学生，能走到三面也已经是很不容易了，同时也明白了自己的不足还有很多，所以虽败犹荣。所以最近想对spring IOC&amp;amp; AOP的实现源码进行一波研究，看了一会《spring 技术内幕》后，发现看书有点不直观，而且有些东西看不懂。所以只能把书先放一些，自己在网上找一些资料，先了解后才去看书，效果可能更好。
+容器IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring IOC容器源码解析(一)">
+<meta property="og:url" content="https://vincelz.github.io/2017/03/12/spring ioc/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="前言前几天面试了阿里，最终跪倒在阿里面试官前，但是不管如何，我一个二本院校的普通学生，能走到三面也已经是很不容易了，同时也明白了自己的不足还有很多，所以虽败犹荣。所以最近想对spring IOC&amp;amp; AOP的实现源码进行一波研究，看了一会《spring 技术内幕》后，发现看书有点不直观，而且有些东西看不懂。所以只能把书先放一些，自己在网上找一些资料，先了解后才去看书，效果可能更好。
+容器IO">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring11.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring 12.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring14.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring15.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring16.png">
+<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring17.png">
+<meta property="og:updated_time" content="2017-03-14T12:43:41.405Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring IOC容器源码解析(一)">
+<meta name="twitter:description" content="前言前几天面试了阿里，最终跪倒在阿里面试官前，但是不管如何，我一个二本院校的普通学生，能走到三面也已经是很不容易了，同时也明白了自己的不足还有很多，所以虽败犹荣。所以最近想对spring IOC&amp;amp; AOP的实现源码进行一波研究，看了一会《spring 技术内幕》后，发现看书有点不直观，而且有些东西看不懂。所以只能把书先放一些，自己在网上找一些资料，先了解后才去看书，效果可能更好。
+容器IO">
+<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/spring11.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> spring IOC容器源码解析(一) | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              spring IOC容器源码解析(一)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-03-12T16:01:23+08:00" content="2017-03-12">
+            2017-03-12
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前几天面试了阿里，最终跪倒在阿里面试官前，但是不管如何，我一个二本院校的普通学生，能走到三面也已经是很不容易了，同时也明白了自己的不足还有很多，所以虽败犹荣。所以最近想对spring IOC&amp; AOP的实现源码<br>进行一波研究，看了一会《spring 技术内幕》后，发现看书有点不直观，而且有些东西看不懂。所以只能把<br>书先放一些，自己在网上找一些资料，先了解后才去看书，效果可能更好。</p>
+<h1 id="容器IOC"><a href="#容器IOC" class="headerlink" title="容器IOC"></a>容器IOC</h1><p>提到容器，我们可以就可以使用水桶来比喻,水桶是用来做什么的呢?装水的,也就是说spring 也有一个类似装对象（物品）的容器,我们将物品放进去后，随时可以取出来，这大概就是容器的概念。<br> 那么这个容器我们如何使用呢？<br> 1.在xml文件中配置 <bean id="id" class="类路径名"></bean></p>
+<p> 2.BeanFactory bf=new XmlBeanFactory(new ClassPathResource(“bean.xml”));</p>
+<p> 3.bf.get(“id”);</p>
+<p> 这样我们就使用了spring 的容器功能了,其实使用很简单，内部原理才是我们想知道的。当然容器的使用还可以利用<br> 注解来实现的。原理一致。</p>
+<ul>
+<li><p>1容器的核心类介绍：</p>
+<p> DefaultListableBeanFactory 这个类比较重要，因为这个类是我们BeanFactory的最基本的实现，也就是说其他功能的容器都是在它的基础上实现的。比如上述代码中我们使用的 XmlBeanFactory这个类，就是在 DefaultListableBeanFactory基础上，增加了读取XML配置文件的功能。</p>
+</li>
+</ul>
+<ul>
+<li><p>2XmlBeanDefinitionReader 大家一看这个类的名字就应该明白了吧，他就是BeanDefinition的实现，专门用来读取XMl文件的。</p>
+</li>
+<li><p>3 ResouceLoader  资源加载器，主要用于加载返回Resouce</p>
+</li>
+<li><p>4 BeanDefinitionReader 这是个接口，就是它的存在，才可以实现我们对不同资源的读取为Resouce，最终转换成BeanDefinition 的形式。</p>
+</li>
+<li><p>5 BeanDefinitionDocumentReader 这个接口看名字，其实大概功能就是读取Document并加载转换为BeanDefinition</p>
+</li>
+<li><p><strong>总结一下上面的步骤，先使用ResouceLoader接口将不同的资源对象转换为Resouce并返回，但是我们的内部是xml格式的信息，所以我们需要转换成Document才可以读取，即使用DocumentLoader 将Resouce的资源转换成Document文件对象。最终使用BeanDefinitionDocumentReader  接口将我们的Document文件对象转换成BeanDefinition,到这里步骤基本完毕。再这里我们需要在解释下什么是BeanDefinition，这样解释吧，当我们把xml里的配置的 bean结点读到内存中，然后spring 就需要使用一个Map 集合来保存这些结点，那么BeanDefinition就是对这个节点的说明，class  是什么，id是什么，是否单例，init-Method 是什么…….等等都是我们配置的一些信息。</strong></p>
+</li>
+</ul>
+<p>上述过程基本就是一个xml文件是如何被加载到内存中的，当然实现的远远还没结束呢！ 这只是一些简单的加载，后续还有注册….依赖注入等操作呢！！</p>
+<h1 id="配置文件的封装"><a href="#配置文件的封装" class="headerlink" title="配置文件的封装"></a>配置文件的封装</h1><p>大家想不想了解spring 是如何降低耦合，将多种形式的资源文件转换成Resouce进而加载的呢？我们来看看Resouce接口代码吧<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InputStreamSource</span></span>&#123;</div><div class="line">  <span class="function">InputStream <span class="title">getInputStream</span><span class="params">()</span><span class="keyword">throws</span> IOException</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Resouce</span> <span class="keyword">extends</span> <span class="title">InputStreamSource</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span></span>;</div><div class="line">  <span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">  <span class="function">URI <span class="title">getUEI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">  <span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">  <span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">  <span class="function">Resouce <span class="title">createRelative</span><span class="params">(String relaivePath)</span> <span class="keyword">throws</span> IOException</span>;</div><div class="line">  <span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;</div><div class="line">  <span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是我从源码中手打的接口代码，其实看完代码，我们知道，虽然Spring自己封装了Resouce，但是它的底层还是InputStream，所以大家不要被Resouce这个默认的类吓到,我对框架的理解就是堆积起来的小功能，实现了大功能。<br>既然我们看完了Resouce接口，那我们就必须研究下Resouce的实现：文件 FileSystemResouce  ClassPath ClassPathResource URL资源（URLResouce) InputStream (InputStreamSource) byte数组（byteArrayResouce)…………等等。<br>在这里想说一个自己刚想到的一个功能,如果大家需要获取ClassPath下的文件流，可以采取getClass.getClassLoader这个功能，但是我们既然学了spring 的Resouce,其实还可以这样使用:<br>Resouce resouce=new ClassPathResource(“xxxx”);<br>resouce.getInputStream();<br>是不是很方便，其实想通过这个方法的使用，让大家明白，spring只是封装了一些功能而已，底层还是哪些基本功能。大家不要害怕。那么既然使用方法都告诉大家了，那我们进跟进代码，看spring 如何实现的？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//ClassPathResource</span></div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.clazz!=<span class="keyword">null</span>)&#123;</div><div class="line">     is=<span class="keyword">this</span>.clazz.getResourceAsStream(<span class="keyword">this</span>.path);</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    is=<span class="keyword">this</span>.getClassLoader.getResourceAsStream(<span class="keyword">this</span>.path);</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//FileSystemResouce</span></div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> FileInputStream(<span class="keyword">this</span>.path);</div></pre></td></tr></table></figure></p>
+<p>是不是底层很简单，就是我们经常用的。</p>
+<h1 id="IOC如何实现-1"><a href="#IOC如何实现-1" class="headerlink" title="IOC如何实现 1."></a>IOC如何实现 1.</h1><p>既然前面我们分析了配置文件的封装Resouce，那么接下来我们就要分析容器是如何使用Resouce对信息的装载呢。那就要我们看一下XmlBeanFactory这个类是如何实现的呗。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring11.png" alt=""><br>这是我截取的一张图，当我们将Resouce传入后，这个XmlBeanFactory 它调用了super()，以及this.reader.loadBeanDefinitions(resouce); 其实内部他委托给了XmlBeanDefinitionReader这个类的loadBeanDefinitions方法去加载resouce的，那么我们的研究重点就是这个类了，那么有没有发现在它前面还调用了一个super()方法，这有什么用呢？<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring 12.png" alt=""><br>这就是super()我们跟进的代码,ignoreDependencyInterface()方法的功能主要是忽略给定接口的自动装配功能。那这有什么用呢？我举个一些书籍中的例子吧，当A中有属性B，那么当Spring 获取A的时候，肯定会根据依赖注入装载B的，但是某些情况，B不会初始化，那就是其中B的接口实现了BeanNameAware接口，spring 这这么说的，自动装配时忽略给定的依赖接口。接下来我们就要介绍reader.loadBeanDefinitions这个方法了，这也是我们研究的入口<br><img src="" alt=""><br>我们看到其实虽然我们传入了Resouce，但是这个类又被一个叫EncodingResouce的包装了下，其实看名字我们也应该明白，这个类是对Resouce的编码进行控制的，它内部有一个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Reader <span class="title">getReader</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</div><div class="line">     <span class="keyword">if</span>(<span class="keyword">this</span>.ending!=<span class="keyword">null</span>)&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> InputStreamReader(<span class="keyword">this</span>.resouce.getInputStream,<span class="keyword">this</span>.ending);</div><div class="line">     &#125;<span class="keyword">else</span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> InputStreamReader(<span class="keyword">this</span>.resouce.getInputStream());</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上述代码通过构造了一个有编码的InputStreamReader并返回。那么之后再次转入了一个可复用的方法,loadBeanDefinitions,那么我们看他内部的代码是什么：<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring14.png" alt=""><br>代码的大概思路是 内部使用了一个Set集合来保存我们的EncodedResouce中，然后再从当前resouce获取到InputStream,然后构造一个InputSouce类，其实这个类并不是spring的，而是在org.xml.sax.InputSouce,听名字SAX，这不是解析xml的吗，呀终于快到核心了，加油看。<br>接下来它判断了我们之前那个类是否设置了编码，如果设置了，那么就将整个编码设置给InputSouce,然后<br>return doLoadBeanDefinitions(InputSouce,EncodedResouce.getResource); 其实到这里，我已经看到了快要解析xml文件的代码了，说明接下来应该就是解析xml的了。那么我们整理下思路 <strong><em> 首先根据InputStream传入Resouce,然后又使用EncodedResouce对Resouce进行封装,其实就是考虑到了解析xml可能会遇到编码问题,然后再传入进去后，他先将EncodedResouce放入一个set集合中，然后生成一个解析xml文件的InputSouce,并设置编码，到此完成，然后调用doLoadBeanDefinitions（）方法，将我们生成的InputSouce和Resouce传入</em></strong></p>
+<h1 id="IOC如何实现-2"><a href="#IOC如何实现-2" class="headerlink" title="IOC如何实现 2."></a>IOC如何实现 2.</h1><p>继上面我们分析到了doLoadBeanDefinitions这个方法，那么看图<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring15.png" alt=""><br>int validationMode=getValidationModeForResouce(resouce);<br>看这行代码是什么鬼东西,其实你如果要了解spring xml文件的验证模式，它是有2种模式DTD &amp; XSD,这2种模式有什么区别，可以去<a href="http://blog.csdn.net/ningguixin/article/details/8171581" target="_blank" rel="external">http://blog.csdn.net/ningguixin/article/details/8171581</a> 这里了解。在这我就不做过多解释。但是我们要明白一点，如果是DTD模式，那么在头上面会有一个！DOCTYPE,大家记住喽，后面会用到。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring16.png" alt="">)<br>上述代码的主要意思就是说，你指定了验证模式我就用指定的，没有指定，我就自己去检查选择。那最终我找到了实现代码<br><img src="http://ok9vfjkgl.bkt.clouddn.com/spring17.png" alt=""><br>其实主要的代码就是hasDocType(content),就是我前面说的，判断是否有DOCTYPE来判断使用什么模式。OK，这里面我们也完成了验证模式的选择，接下来就是XML的解析了，也就是DocumentLoader,这只是一个接口，真正实现的是DefaultDocumentLoader 这个类，这个类的主要作用就是使用SAX解析XML,这里我不在介绍SAX模式,它无非是首先创建DocumentBuilderFactory ,再创建DocumentBuil,进而解析InputSouce并返回Documen。但是特别要注意一点就是，在这里有一个 <strong><em>EntityResolver</em></strong>这个类，它的作用主要是解决验证文件的问题，比如验证文件是通过网络传输使用呢，还是在本地查找呢？在这个方法中实现。当然我们也可以自定义自己的文件查找器。当然，对不同的验证模式，spring使用了不同的解析器，比如加载DTD类型的，他会直接去当前路径寻找，而加载XSD文件，会去META-INF/Spring.schemas寻找。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/13/spring&ioc2/" rel="prev">spring IOC容器源码解析(二)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/heap/" rel="next">图</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器IOC"><span class="nav-number">2.</span> <span class="nav-text">容器IOC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件的封装"><span class="nav-number">3.</span> <span class="nav-text">配置文件的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC如何实现-1"><span class="nav-number">4.</span> <span class="nav-text">IOC如何实现 1.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC如何实现-2"><span class="nav-number">5.</span> <span class="nav-text">IOC如何实现 2.</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
