@@ -1,0 +1,800 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+    
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="#前言#最接这段时间一直在为实习而反复笔试、面试、被耍。搞的心力憔悴,不过这样也好,说明自己还是比较差劲,有很大的进步空间。所以就认真做写好项目中的每一行代码,也是对自己的最大的安慰吧。
+项目介绍项目一直在做，最近需要做优惠劵&amp;amp;支付功能模块了，对于优惠劵,自己不敢轻视,因为之前一直没有做过优惠劵的经验,也算是自己凭着自己的以往项目经历去做这个功能,目前功能已经实现,自我感觉还不错,扩展性确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行吧云购&利用mysql存储过程解决业务处理心得&优惠劵设计">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/02/sql/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="#前言#最接这段时间一直在为实习而反复笔试、面试、被耍。搞的心力憔悴,不过这样也好,说明自己还是比较差劲,有很大的进步空间。所以就认真做写好项目中的每一行代码,也是对自己的最大的安慰吧。
+项目介绍项目一直在做，最近需要做优惠劵&amp;amp;支付功能模块了，对于优惠劵,自己不敢轻视,因为之前一直没有做过优惠劵的经验,也算是自己凭着自己的以往项目经历去做这个功能,目前功能已经实现,自我感觉还不错,扩展性确">
+<meta property="og:updated_time" content="2017-04-03T12:44:22.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="行吧云购&利用mysql存储过程解决业务处理心得&优惠劵设计">
+<meta name="twitter:description" content="#前言#最接这段时间一直在为实习而反复笔试、面试、被耍。搞的心力憔悴,不过这样也好,说明自己还是比较差劲,有很大的进步空间。所以就认真做写好项目中的每一行代码,也是对自己的最大的安慰吧。
+项目介绍项目一直在做，最近需要做优惠劵&amp;amp;支付功能模块了，对于优惠劵,自己不敢轻视,因为之前一直没有做过优惠劵的经验,也算是自己凭着自己的以往项目经历去做这个功能,目前功能已经实现,自我感觉还不错,扩展性确">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 行吧云购&利用mysql存储过程解决业务处理心得&优惠劵设计 | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              行吧云购&利用mysql存储过程解决业务处理心得&优惠劵设计
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-04-02T16:01:23+08:00" content="2017-04-02">
+            2017-04-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>#前言#<br>最接这段时间一直在为实习而反复笔试、面试、被耍。搞的心力憔悴,不过这样也好,说明自己还是比较差劲,<br>有很大的进步空间。所以就认真做写好项目中的每一行代码,也是对自己的最大的安慰吧。</p>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>项目一直在做，最近需要做优惠劵&amp;支付功能模块了，对于优惠劵,自己不敢轻视,因为之前一直没有做过<br>优惠劵的经验,也算是自己凭着自己的以往项目经历去做这个功能,目前功能已经实现,自我感觉还不错,<br>扩展性确实比较高(其实看了很多书,中毒了,每写一行代码都会想到如何做到性能不损失的情况下,提高扩展性)。<br>所以就在这里分享下自己经验。</p>
+<h1 id="优惠劵的实现"><a href="#优惠劵的实现" class="headerlink" title="优惠劵的实现"></a>优惠劵的实现</h1><p>常见的优惠券发放途径有两种：</p>
+<ul>
+<li>1活动统一发放：给不活跃用户短信通知发放优惠券来促进活跃、提高留存，给特定活动造势：女神节全体女性用户优惠券等。</li>
+<li>2用户操作触发：活动页面发放，订单满额发放，邀请好友发放，新用户注册发放等。</li>
+</ul>
+<p>一般的优惠劵触发的场景就这2种，所有我们的项目目前只考虑用户操作触发,也就是当用户注册&amp;购买金额到达一定的区间就会放发对应的优惠劵。</p>
+<p>优惠劵的使用规则：<br>优惠券的实质就是通过“价格歧视”来让用户感到享有特权，从而完成产品想实现的效果，具体“歧视”手段也有很多：</p>
+<ul>
+<li>1用户：新用户专用，女性用户专用，黄金用户专用，北京地区专用</li>
+<li>2商品：电子产品专用，商家专用</li>
+<li>订单：满额使用，在线支付专用</li>
+</ul>
+<p>优惠劵状态<br>优惠券状态</p>
+<ul>
+<li>1待使用：发放后的正常状态，可以正常使用；</li>
+<li>2占用中：订单使用优惠券但是未付款，优惠券占用中不可使用，根据订单后续状态转化状态，订单失效转为待使用。高并发下很有必要</li>
+<li>3已使用：订单支付成功后标记优惠券已使用。</li>
+<li>4已失效：优惠券超期未使用失效。</li>
+</ul>
+<h1 id="如何做？"><a href="#如何做？" class="headerlink" title="如何做？"></a>如何做？</h1><p>我的如何做的呢？ 首先数据库中会有3张表 user 用户表 roll_user 用户拥有的优惠劵表  roll_grant 规则表（其实就是设定活动，满足某些条件就送优惠劵)</p>
+<p>重点是grant规则表，也就是活动表，他可以控制我们的活动大家看一下我的实体类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RollGrant</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String USER_REGIST = <span class="string">"注册发放"</span>;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String USER_PAY = <span class="string">"购买发放"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> rgid;</div><div class="line"></div><div class="line">	<span class="comment">// 是什么活动</span></div><div class="line">	<span class="keyword">private</span> String rgname;<span class="comment">// 活动名</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> status;<span class="comment">// 该规则是否启用</span></div><div class="line">	<span class="comment">// 需要发放哪些优惠劵</span></div><div class="line">	<span class="keyword">private</span> List&lt;Param&gt; param;<span class="comment">// 优惠条件判断类Param</span></div><div class="line">	<span class="comment">// 是否满足条件的处理类</span></div><div class="line">	<span class="keyword">private</span> ConditionHandler handler; <span class="comment">// 对应的数据库中保存对应的处理类的全路径名</span></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">这个类就是user_grant表，有人问，这是Java实体类，如何保存进数据库的,很简单</div><div class="line">list&lt;Param&gt; 在数据库存的json序列化  而handler 对应的数据库中存的是处理类的全路径，这样用到了反射。 我之前在上一篇文章中说过，对于一般的小系统，我们完全可以利用set/get写一些逻辑处理，简化我们的开发*/</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParam</span><span class="params">(String param)</span> </span>&#123;</div><div class="line"></div><div class="line">		List&lt;Param&gt; jsonToList = JsonUtils.jsonToList(param, Param.class);</div><div class="line">		System.out.println(jsonToList);</div><div class="line">		<span class="keyword">this</span>.param = jsonToList;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHandler</span><span class="params">(String classname)</span> </span>&#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ConditionHandler newInstance = (ConditionHandler) Class.forName(</div><div class="line">					classname).newInstance();</div><div class="line">			<span class="keyword">this</span>.handler = newInstance;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">			<span class="keyword">this</span>.handler = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>那我们进跟进Param 和ConditionHandler到底是什么？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * 条件类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Param</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> String condition;</div><div class="line">	<span class="keyword">private</span> Set&lt;Integer&gt; rids;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getCondition</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> condition;</div><div class="line">	&#125;</div><div class="line">  <span class="comment">/*</span></div><div class="line">其实Param就是保存一个条件的 那么List&lt;Param&gt; 就是若干的条件的集合</div><div class="line">如：购买金额100-200 就送30元的优惠劵  购买金额201--300 就送50元的优惠劵。那么这2个条件就是保存在List&lt;Param&gt;中</div><div class="line"></div><div class="line">  */</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">/*</span></div><div class="line">   * 送优惠劵的满足条件处理类</div><div class="line">   */</div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ConditionHandler</span> <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line">  	<span class="comment">/*</span></div><div class="line">  	 * 根据传入的条件object 判断是否满足 true 满足 false 不满足</div><div class="line">      其实这是一个接口，也就是说我们数据库保存的全路径名其实是该接口的实现类。</div><div class="line">      statisfy方法就是判断该用户是否满足条件，如果满足就返回赠送的优惠劵集合Set中</div><div class="line">      其中Object 是用户已有的条件</div><div class="line">      params 系统官方的判别条件</div><div class="line">  	 */</div><div class="line"></div><div class="line">  	<span class="function">Set&lt;Integer&gt; <span class="title">statisfy</span><span class="params">(Object object, List&lt;Param&gt; params)</span></span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"><span class="comment">//来看一个我已经实现的类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PayConditionHandler</span> <span class="keyword">implements</span> <span class="title">ConditionHandler</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Set&lt;Integer&gt; <span class="title">statisfy</span><span class="params">(Object object, List&lt;Param&gt; params)</span> </span>&#123;</div><div class="line">		Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet();</div><div class="line">		<span class="keyword">float</span> price = (<span class="keyword">float</span>) object;</div><div class="line">		<span class="keyword">for</span> (Param p : params) &#123;<span class="comment">//遍历所有的条件，与用户传入的金额进行判断，返回即将赠送的优惠劵id集合</span></div><div class="line">			String[] split = p.getCondition().split(<span class="string">"-"</span>);</div><div class="line">			<span class="keyword">if</span> (Float.parseFloat(split[<span class="number">0</span>]) &lt;= price</div><div class="line">					&amp;&amp; Float.parseFloat(split[<span class="number">1</span>]) &gt;= price) &#123;</div><div class="line">				<span class="keyword">if</span> (p.getRids() != <span class="keyword">null</span>) &#123;</div><div class="line">					set.addAll(p.getRids());</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> set;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 发放优惠劵 这是业务代码</span></div><div class="line">  ExecutorUtil.getInstance().execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="comment">// 获取注册规则类</span></div><div class="line">      RollGrant rollGrant = rollService</div><div class="line">          .getRollGrant(RollGrant.USER_PAY);</div><div class="line">      RollUtil.insert(rollGrant, rollService, uid, price);<span class="comment">// 根据规则进行放发优惠劵</span></div><div class="line">    &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>到这里优惠劵的实现就完了,其实某种角度来说，实现优惠劵很简单，只不过是我们如何做的对于后续的优惠劵活动可以很简单的扩展。</p>
+<h1 id="优惠劵的遗留问题"><a href="#优惠劵的遗留问题" class="headerlink" title="优惠劵的遗留问题"></a>优惠劵的遗留问题</h1><p>完成了优惠劵的业务处理，这里有的问题，就是优惠劵有过期日期,那么我当时在设计的时候使用了status 2表示该卷过期了，那么很简单，我们需要跑一个调度系统，每晚0：00对数据库进行一次遍历即可，找如果有日期过期，则让status =2有以下方案:</p>
+<ul>
+<li>1 spring &amp; Java 的调度任务</li>
+<li>2 linux crontab 调度任务</li>
+<li>3 MySQL自带的时间调度</li>
+</ul>
+<p>最终我采用了mysql自带调度，性能肯定要比上述2种快。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">SET GLOBAL event_scheduler = 1; //先开启调度</div><div class="line"></div><div class="line">CREATE EVENT [IF NOT EXISTS] event_name</div><div class="line"> ON SCHEDULE schedule</div><div class="line"> [ON COMPLETION [NOT] PRESERVE]</div><div class="line"> [ENABLE | DISABLE]</div><div class="line"> [COMMENT &apos;comment&apos;]</div><div class="line"> DO sql_statement;</div><div class="line"></div><div class="line"></div><div class="line"> CREATE EVENT IF NOT EXISTS e_roll</div><div class="line">ON SCHEDULE EVERY 1 DAY STARTS DATE_ADD(DATE(CURDATE() + 1),INTERVAL 0 HOUR) //我们要实现每晚的0:00执行，所有需要这句</div><div class="line">ON COMPLETION PRESERVE   //表示调度完成后，是否删除</div><div class="line">DO CALL updateRoll();   //调度就是调用存储过程</div></pre></td></tr></table></figure></p>
+<p>所以我们要重点介绍下MySQL的存储过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">create procedure sp_name(INT |OUT |INOUT 变量名　类型)</div><div class="line">begin</div><div class="line">.........  存储代码</div><div class="line">end</div><div class="line"></div><div class="line">INT 表示我们调用该函数，需要传入的参数例如：</div><div class="line">create procedure sp_name(INT a INT)</div><div class="line">begin</div><div class="line">select * from user uid=a</div><div class="line">end</div><div class="line"></div><div class="line"></div><div class="line">OUT 表示需要输出的变量</div><div class="line">create procedure sp_name (OUT a INT)</div><div class="line">begin</div><div class="line">select count(*) into a from user; //into就是将count(*)绑定给a</div></pre></td></tr></table></figure></p>
+<h2 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h2><p>call sp_nme();</p>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>drop procedure sp_name;<br>注意事项<br>(1)不能在一个存储过程中删除另一个存储过程，只能调用另一个存储过程</p>
+<h2 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h2><p>1.show procedure status</p>
+<p>显示数据库中所有存储的存储过程基本信息，包括所属数据库，存储过程名称，创建时间等</p>
+<p>2.show create procedure sp_name</p>
+<p>显示某一个MySQL存储过程的详细信息</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>声明变量：declare 变量名 类型 DEFAULT 默认值</p>
+<p>set 变量名=变量值</p>
+<p>变量分为系统变量&amp;用户变量&amp;用户变量一般会采用@表示</p>
+<h2 id="运算符："><a href="#运算符：" class="headerlink" title="运算符："></a>运算符：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">1.算术运算符</div><div class="line">+     加   SET var1=2+2;       4</div><div class="line">-     减   SET var2=3-2;       1</div><div class="line">*      乘   SET var3=3*2;       6</div><div class="line">/     除   SET var4=10/3;      3.3333</div><div class="line">DIV   整除 SET var5=10 DIV 3; 3</div><div class="line">%     取模 SET var6=10%3 ;     1</div><div class="line">2.比较运算符</div><div class="line">&gt;            大于 1&gt;2 False</div><div class="line">&lt;            小于 2&lt;1 False</div><div class="line">&lt;=           小于等于 2&lt;=2 True</div><div class="line">&gt;=           大于等于 3&gt;=2 True</div><div class="line">BETWEEN      在两值之间 5 BETWEEN 1 AND 10 True</div><div class="line">NOT BETWEEN 不在两值之间 5 NOT BETWEEN 1 AND 10 False</div><div class="line">IN           在集合中 5 IN (1,2,3,4) False</div><div class="line">NOT IN       不在集合中 5 NOT IN (1,2,3,4) True</div><div class="line">=             等于 2=3 False</div><div class="line">&lt;&gt;, !=       不等于 2&lt;&gt;3 False</div><div class="line">&lt;=&gt;          严格比较两个NULL值是否相等 NULL&lt;=&gt;NULL True</div><div class="line">LIKE          简单模式匹配 &quot;Guy Harrison&quot; LIKE &quot;Guy%&quot; True</div><div class="line">REGEXP       正则式匹配 &quot;Guy Harrison&quot; REGEXP &quot;[Gg]reg&quot; False</div><div class="line">IS NULL      为空 0 IS NULL False</div><div class="line">IS NOT NULL 不为空 0 IS NOT NULL True</div><div class="line">3.逻辑运算符</div><div class="line">4.位运算符</div><div class="line">|   或</div><div class="line">&amp;   与</div><div class="line">&lt;&lt; 左移位</div><div class="line">&gt;&gt; 右移位</div><div class="line">~   非(单目运算，按位取反)</div></pre></td></tr></table></figure>
+<h2 id="条件控制"><a href="#条件控制" class="headerlink" title="条件控制"></a>条件控制</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> IF 条件 THEN</div><div class="line">    ...</div><div class="line"> ELSE  ....</div><div class="line"> END IF</div><div class="line"></div><div class="line"></div><div class="line">WHILE 条件 <span class="keyword">do</span></div><div class="line">.....</div><div class="line">END WHILE</div><div class="line"></div><div class="line"></div><div class="line">repeat</div><div class="line">  .....</div><div class="line">  until 条件            ------其实他就是<span class="keyword">do</span> <span class="keyword">while</span></div><div class="line">end repeat</div></pre></td></tr></table></figure>
+<h2 id="游标遍历"><a href="#游标遍历" class="headerlink" title="游标遍历"></a>游标遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">我就是在这里卡了很久,因为之前没学过存储过程，不知道游标的遍历，无法遍历整个结果集导致。那么在这里我们要说下如何遍历结果集：</div><div class="line">遍历结果集，我们需要游标，也就是移动游标来获取下一个值。</div><div class="line"></div><div class="line"> DECLARE cur_account CURSOR FOR select phone,password,name from account_temp;<span class="comment">//定义游标  也就是说结果集就是select phone,password,name from account_temp</span></div><div class="line"></div><div class="line"> open cur_account;<span class="comment">//打开游标</span></div><div class="line"></div><div class="line"> FETCH NEXT FROM cur_account INTO result;<span class="comment">//将结果集中的下一个结果绑定到result上</span></div><div class="line"></div><div class="line"> <span class="keyword">while</span> result is not <span class="keyword">null</span></div><div class="line"> select * from user uid=result;</div><div class="line"> update   set</div><div class="line"> delete ....</div><div class="line">  FETCH NEXT FROM cur_account INTO result;<span class="comment">//将结果集中的下一个结果绑定到result上</span></div><div class="line"> end <span class="keyword">while</span></div><div class="line"></div><div class="line">colse cur_account;<span class="comment">//关闭游标</span></div><div class="line">end</div></pre></td></tr></table></figure>
+<p>到这里存储过程基本完了，不过还有很多知识点，我只将自己用到的进行总结。后续在做补充吧。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag">#项目</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/25/ESB/" rel="next">ESB企业服务总线源码剖析（一）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">1.</span> <span class="nav-text">项目介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优惠劵的实现"><span class="nav-number">2.</span> <span class="nav-text">优惠劵的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何做？"><span class="nav-number">3.</span> <span class="nav-text">如何做？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优惠劵的遗留问题"><span class="nav-number">4.</span> <span class="nav-text">优惠劵的遗留问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调用"><span class="nav-number">4.1.</span> <span class="nav-text">调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">4.2.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用命令"><span class="nav-number">4.3.</span> <span class="nav-text">其他常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">4.4.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符："><span class="nav-number">4.5.</span> <span class="nav-text">运算符：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件控制"><span class="nav-number">4.6.</span> <span class="nav-text">条件控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标遍历"><span class="nav-number">4.7.</span> <span class="nav-text">游标遍历</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
