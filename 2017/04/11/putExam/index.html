@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="Java模式," />
+  <meta name="keywords" content="项目," />
 
 
 
@@ -42,25 +42,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="观察者观察者模式：大家如果使用过Rxjava的话，应该对观察者模式很熟悉了吧。没错Rxjava就是使用了观察者模式，实现了类似函数式编程的原理。那么观察者到底是什么东西呢？从字面上，我们只能解析出一些信息，就是观察者，肯定是有观察的能力，其实，没错，他有几个概念  
-观察者
-订阅者
-那么我们从代码中进行分析 123456789101112131415161718192021222324252627">
+<meta name="description" content="前言本来这个录入试题的功能在上一博文中写的，但是因为篇幅有点长，所以就新开一个文章吧，其实实现在线录入试题有2种方案: 1 就是用户一道一道的录入 2 批量录入，根据模板实现批量录入，第一种可能比较简单，所以我就不说了，我在这里分享下我实现的第二种方案。
+实现批量录入要实现批量录入，还是需要读取World/exce/xls等文件，这样就应该明白了Java肯定是需要使用POI来读取文档内容，并进行对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java设计模式（六）观察者模式">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/08/ms-5/index.html">
+<meta property="og:title" content="在线批量录入试题">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/11/putExam/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="观察者观察者模式：大家如果使用过Rxjava的话，应该对观察者模式很熟悉了吧。没错Rxjava就是使用了观察者模式，实现了类似函数式编程的原理。那么观察者到底是什么东西呢？从字面上，我们只能解析出一些信息，就是观察者，肯定是有观察的能力，其实，没错，他有几个概念  
-观察者
-订阅者
-那么我们从代码中进行分析 123456789101112131415161718192021222324252627">
-<meta property="og:updated_time" content="2017-03-05T03:05:42.412Z">
+<meta property="og:description" content="前言本来这个录入试题的功能在上一博文中写的，但是因为篇幅有点长，所以就新开一个文章吧，其实实现在线录入试题有2种方案: 1 就是用户一道一道的录入 2 批量录入，根据模板实现批量录入，第一种可能比较简单，所以我就不说了，我在这里分享下我实现的第二种方案。
+实现批量录入要实现批量录入，还是需要读取World/exce/xls等文件，这样就应该明白了Java肯定是需要使用POI来读取文档内容，并进行对">
+<meta property="og:updated_time" content="2017-05-16T08:20:02.166Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java设计模式（六）观察者模式">
-<meta name="twitter:description" content="观察者观察者模式：大家如果使用过Rxjava的话，应该对观察者模式很熟悉了吧。没错Rxjava就是使用了观察者模式，实现了类似函数式编程的原理。那么观察者到底是什么东西呢？从字面上，我们只能解析出一些信息，就是观察者，肯定是有观察的能力，其实，没错，他有几个概念  
-观察者
-订阅者
-那么我们从代码中进行分析 123456789101112131415161718192021222324252627">
+<meta name="twitter:title" content="在线批量录入试题">
+<meta name="twitter:description" content="前言本来这个录入试题的功能在上一博文中写的，但是因为篇幅有点长，所以就新开一个文章吧，其实实现在线录入试题有2种方案: 1 就是用户一道一道的录入 2 批量录入，根据模板实现批量录入，第一种可能比较简单，所以我就不说了，我在这里分享下我实现的第二种方案。
+实现批量录入要实现批量录入，还是需要读取World/exce/xls等文件，这样就应该明白了Java肯定是需要使用POI来读取文档内容，并进行对">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +64,7 @@
   };
 </script>
 
-  <title> Java设计模式（六）观察者模式 | 1000 words a Day </title>
+  <title> 在线批量录入试题 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -304,7 +298,7 @@
           
           
             
-              Java设计模式（六）观察者模式
+              在线批量录入试题
             
           
         </h1>
@@ -313,8 +307,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-01-08T14:37:33+08:00" content="2017-01-08">
-            2017-01-08
+          <time itemprop="dateCreated" datetime="2017-04-11T10:57:45+08:00" content="2017-04-11">
+            2017-04-11
           </time>
         </span>
 
@@ -332,11 +326,24 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h1><p>观察者模式：大家如果使用过Rxjava的话，应该对观察者模式很熟悉了吧。没错Rxjava就是使用了<br>观察者模式，实现了类似函数式编程的原理。那么观察者到底是什么东西呢？从字面上，我们只能<br>解析出一些信息，就是观察者，肯定是有观察的能力，其实，没错，他有几个概念  </p>
-<pre><code>观察者
-订阅者
-</code></pre><p>那么我们从代码中进行分析<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span></span>&#123;</div><div class="line">     <span class="keyword">private</span> List&lt;Observer&gt; observer=<span class="keyword">new</span> List&lt;Observer&gt;();</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Observer observer)</span></span>&#123;</div><div class="line">       <span class="keyword">this</span>.observer.add(observer);</div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Observer observer)</span></span>&#123;</div><div class="line">       <span class="keyword">this</span>.observer.remove(observer);</div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Notify</span><span class="params">()</span></span>&#123;</div><div class="line">       <span class="keyword">for</span>(Observer o:observer)&#123;</div><div class="line">         o.update();</div><div class="line">       &#125;</div><div class="line">     &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span></span>&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">update</span><span class="params">()</span></span>&#123;</div><div class="line">    System.out.println(<span class="string">"我收到了信息"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  MessageSubject Subject=<span class="keyword">new</span> MessageSubject();</div><div class="line">  MessageObserver a=<span class="keyword">new</span> MessageObserver();</div><div class="line">  MessageObserver b=<span class="keyword">new</span> MessageObserver();</div><div class="line">  MessageObserver c=<span class="keyword">new</span> MessageObserver();</div><div class="line"></div><div class="line">  Subject.add(a);</div><div class="line">    Subject.add(b);</div><div class="line">      Subject.add(c);</div><div class="line">      Subject.Notify();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>当我们调用Notify（）方法的时候，就会触发a,b,c的update方法了，那么当我们在实际项目中，如果有些<br>对象的状态时根据一个主类中的状态而更新的话，我们就可以使用该模式。最经常使用的就是，子系统和主系统之间的关系，当我们的主系统发生改变后，就需要马上通知子系统进行自我更新，我们在这里使用该模式，<br>最恰好不过了。这个模式很重要，在很多框架都使用了该模式，所有我们一定要掌握。</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本来这个录入试题的功能在上一博文中写的，但是因为篇幅有点长，所以就新开一个文章吧，其实实现在线录入试题有2种方案: 1 就是用户一道一道的录入 2 批量录入，根据模板实现批量录入，第一种可能比较简单，所以我就不说了，我在这里分享下我实现的第二种方案。</p>
+<h1 id="实现批量录入"><a href="#实现批量录入" class="headerlink" title="实现批量录入"></a>实现批量录入</h1><p>要实现批量录入，还是需要读取World/exce/xls等文件，这样就应该明白了Java肯定是需要使用POI来读取文档内容，并进行对应的映射。其实我在这里说明下我自己的算法，当然实现办法很多，我是根据indexOf()和substring()2个函数实现的，之前试过使用栈，也同样实现，但是相对比较麻烦，所以我就不说了，看代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Question&gt; <span class="title">getAllExam</span><span class="params">(InputStream i)</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		HWPFDocument doc;</div><div class="line">		doc = <span class="keyword">new</span> HWPFDocument(i);</div><div class="line">		String doc1 = doc.getDocumentText().trim();</div><div class="line">		List&lt;Question&gt; list = <span class="keyword">new</span> ArrayList();</div><div class="line">		<span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span> (start &lt; doc1.length()) &#123;</div><div class="line">			Question q = <span class="keyword">new</span> Question();</div><div class="line">			<span class="keyword">int</span> indexOf = doc1.indexOf(<span class="string">"#"</span>, start);</div><div class="line">			<span class="keyword">int</span> indexOf2 = doc1.indexOf(<span class="string">"#"</span>, indexOf + <span class="number">1</span>);</div><div class="line">			String timu = doc1.substring(indexOf + <span class="number">1</span>, indexOf2);</div><div class="line">			q.setSubject(timu);</div><div class="line">			<span class="comment">// A</span></div><div class="line">			<span class="keyword">int</span> indexOf3 = doc1.indexOf(<span class="string">"$"</span>, indexOf2 + <span class="number">1</span>);</div><div class="line">			<span class="keyword">int</span> indexOf4 = doc1.indexOf(<span class="string">"$"</span>, indexOf3 + <span class="number">1</span>);</div><div class="line">			String A = doc1.substring(indexOf3 + <span class="number">1</span>, indexOf4);</div><div class="line">			q.setOptionA(A);</div><div class="line"></div><div class="line">			<span class="comment">// B</span></div><div class="line">			<span class="keyword">int</span> indexOf5 = doc1.indexOf(<span class="string">"$"</span>, indexOf4 + <span class="number">1</span>);</div><div class="line">			<span class="keyword">int</span> indexOf6 = doc1.indexOf(<span class="string">"$"</span>, indexOf5 + <span class="number">1</span>);</div><div class="line">			String B = doc1.substring(indexOf5 + <span class="number">1</span>, indexOf6);</div><div class="line">			q.setOptionB(B);</div><div class="line"></div><div class="line">			<span class="comment">// C</span></div><div class="line">			<span class="keyword">int</span> indexOf7 = doc1.indexOf(<span class="string">"$"</span>, indexOf6 + <span class="number">1</span>);</div><div class="line">			<span class="keyword">int</span> indexOf8 = doc1.indexOf(<span class="string">"$"</span>, indexOf7 + <span class="number">1</span>);</div><div class="line">			String C = doc1.substring(indexOf7 + <span class="number">1</span>, indexOf8);</div><div class="line">			q.setOptionC(C);</div><div class="line"></div><div class="line">			<span class="comment">// D</span></div><div class="line">			<span class="keyword">int</span> indexOf9 = doc1.indexOf(<span class="string">"$"</span>, indexOf8 + <span class="number">1</span>);</div><div class="line">			<span class="keyword">int</span> indexOf10 = doc1.indexOf(<span class="string">"$"</span>, indexOf9 + <span class="number">1</span>);</div><div class="line">			String D = doc1.substring(indexOf9 + <span class="number">1</span>, indexOf10);</div><div class="line">			q.setOptionD(D);</div><div class="line"></div><div class="line">			<span class="comment">// 答案</span></div><div class="line">			<span class="keyword">int</span> indexOf11 = doc1.indexOf(<span class="string">"@"</span>, indexOf10 + <span class="number">1</span>);</div><div class="line">			<span class="keyword">int</span> indexOf12 = doc1.indexOf(<span class="string">"@"</span>, indexOf11 + <span class="number">1</span>);</div><div class="line">			String E = doc1.substring(indexOf11 + <span class="number">1</span>, indexOf12);</div><div class="line">			q.setAnswer(E);</div><div class="line">			start = indexOf12 + <span class="number">1</span>;</div><div class="line">			System.out.println(doc1.length());</div><div class="line">			System.out.println(start);</div><div class="line">			list.add(q);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> list;</div><div class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">		e.printStackTrace();</div><div class="line">	&#125;<span class="keyword">final</span>&#123;</div><div class="line">	i.colse()</div><div class="line">&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>#下列属于jsp中注释的有#
+$A&lt;%--  与 --%&gt;$
+$Bx$
+$C/** 与 **/$
+$D&lt;!-- 与 --&gt;$
+@C@
+
+#下列属于jsp中注释的有#
+$333333$
+$4444$
+$55555$
+$6666$
+@D@
+</code></pre><p>如上，模板中，我们通过$来拆分选项，#来标识题干，最后使用@来标识答案。我们通过读取答案的个数，如果是A,B 那么就默认该题目是多选，否则就是单项。目前只实现了选择题的批量录入，后续在这个基础上很容易实现简单题的录入。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>批量录入也比较简单，主要是实现批量的思路正确，实现起来很简单的，没有过多的讲的，代码说明了一些，看代码吧。</p>
 </span>
       
     </div>
@@ -345,7 +352,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java模式/" rel="tag">#Java模式</a>
+            <a href="/tags/项目/" rel="tag">#项目</a>
           
         </div>
       
@@ -354,13 +361,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/12/ms-6/" rel="prev">Java设计模式（七）状态模式</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/28/app&web/" rel="next">知识产权app&后端web技术总结</a>
+              <a href="/2017/04/10/exam/" rel="next">慕课视频网站&在线答题实现</a>
             
           </div>
         </div>
@@ -489,7 +494,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者"><span class="nav-number">1.</span> <span class="nav-text">观察者</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现批量录入"><span class="nav-number">2.</span> <span class="nav-text">实现批量录入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
