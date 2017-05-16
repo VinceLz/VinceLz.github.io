@@ -1,0 +1,775 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="前言继行吧项目的大部分功能完成后，需要完善支付功能，支付采用的是建行的清算平台，集成了支付宝、微信、银联等功能。其实个人感觉在实现的过程中，它们提供的文档比较少，有的东西也没有说清楚，只能靠自己和它们的demo来分析，不过还好，目前完成了支付、查询、退款等功能。所以今天总结下支付相关的实现经验。
+为什么要支付日志其实对于支付，我们要一直怀着谨慎的心态去做的，毕竟跟钱打交道的，如果我们出意外失误一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行吧云购&支付日志&认证机制">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/16/xingbas/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="前言继行吧项目的大部分功能完成后，需要完善支付功能，支付采用的是建行的清算平台，集成了支付宝、微信、银联等功能。其实个人感觉在实现的过程中，它们提供的文档比较少，有的东西也没有说清楚，只能靠自己和它们的demo来分析，不过还好，目前完成了支付、查询、退款等功能。所以今天总结下支付相关的实现经验。
+为什么要支付日志其实对于支付，我们要一直怀着谨慎的心态去做的，毕竟跟钱打交道的，如果我们出意外失误一下">
+<meta property="og:updated_time" content="2017-05-16T09:33:58.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="行吧云购&支付日志&认证机制">
+<meta name="twitter:description" content="前言继行吧项目的大部分功能完成后，需要完善支付功能，支付采用的是建行的清算平台，集成了支付宝、微信、银联等功能。其实个人感觉在实现的过程中，它们提供的文档比较少，有的东西也没有说清楚，只能靠自己和它们的demo来分析，不过还好，目前完成了支付、查询、退款等功能。所以今天总结下支付相关的实现经验。
+为什么要支付日志其实对于支付，我们要一直怀着谨慎的心态去做的，毕竟跟钱打交道的，如果我们出意外失误一下">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 行吧云购&支付日志&认证机制 | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              行吧云购&支付日志&认证机制
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Veröffentlicht am
+          <time itemprop="dateCreated" datetime="2017-04-16T15:24:55+08:00" content="2017-04-16">
+            2017-04-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>继行吧项目的大部分功能完成后，需要完善支付功能，支付采用的是建行的清算平台，集成了支付宝、微信、银联等功能。其实个人感觉在实现的过程中，它们提供的文档比较少，有的东西也没有说清楚，只能靠自己和它们的demo来分析，不过还好，目前完成了支付、查询、退款等功能。所以今天总结下支付相关的实现经验。</p>
+<h1 id="为什么要支付日志"><a href="#为什么要支付日志" class="headerlink" title="为什么要支付日志"></a>为什么要支付日志</h1><p>其实对于支付，我们要一直怀着谨慎的心态去做的，毕竟跟钱打交道的，如果我们出意外失误一下，可能就导致财产的损失，但是代码我们只能测试、测试、再测试的去找问题，但是还是会有很多东西出现毕竟奇葩的问题，所以这时候日志就显示的很重要了，就算出现了问题，我们可以通过日志来查找问题，核算金额，这样尽可能的减少损失，也为后续维护提供了很大的便利。</p>
+<h1 id="日志实现"><a href="#日志实现" class="headerlink" title="日志实现"></a>日志实现</h1><h2 id="日志实现载体"><a href="#日志实现载体" class="headerlink" title="日志实现载体"></a>日志实现载体</h2><p>日志的载体，也就是日志到底放哪里比较好，<strong>数据库、本地文件、内存</strong>。对于这个项目，我想的是这样的，目前正在内测中，日志能比较直观，方便查看，所以我把日志写到的数据库中。后续一般是写到了日志服务器中或者是文件中。</p>
+<h2 id="日志需要记录哪些"><a href="#日志需要记录哪些" class="headerlink" title="日志需要记录哪些"></a>日志需要记录哪些</h2><p>日志一般需要记录的是核心业务，比如支付、用户敏感操作等都需要通过日志记录的，这得根据自己的项目决定的。</p>
+<h2 id="日志实现手段"><a href="#日志实现手段" class="headerlink" title="日志实现手段"></a>日志实现手段</h2><pre><code>1. 拦截器 
+    如果你使用了spring mvc的话，那么他提供了拦截器，你可以在拦截器一层上实现日志记录，并且可以配合自定义注解，根据接口上是否有自定义注解来决定是否记录等
+2. 过滤器
+    j2ee 原生的过滤器，也可以实现日志记录功能
+3. 代码串行模式
+    其实就是在你把相关操作完成后，进行手动日志记录，可扩展性不高
+4. Aop 
+    Spring 也提供了Aop功能，我们可以利用环绕通知、前置通知、后置通知、异常通知等实现日志记录
+5.  Log4j 
+    我们伟大的log4j很强大，他不仅提供将日志打印到控制台，也支持写到本地文件、数据库中的。
+</code></pre><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>在这里我用的是AOP实现的日志记录功能，当然后续上线后，我可能考虑使用本地文件和log4j实现日志记录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//@Aspect</span></div><div class="line"><span class="comment">//@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnapshotLogWriteService</span> </span>&#123;</div><div class="line"><span class="comment">//	@Autowired</span></div><div class="line">	<span class="keyword">private</span> OptionLogMapper optionLogMapperion;</div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//	public OptionLogMapper getLogService() &#123;</span></div><div class="line"><span class="comment">//		return optionLogMapperion;</span></div><div class="line"><span class="comment">//	&#125;</span></div><div class="line"></div><div class="line"><span class="comment">// 环绕通知方法</span></div><div class="line"><span class="comment">//@Around("execution(* com.xawl.car.controller.*.*(..))")</span></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">doWriteLog</span><span class="params">(ProceedingJoinPoint pjp)</span> </span>&#123;</div><div class="line">	Object target = pjp.getTarget();</div><div class="line">	<span class="comment">// 拦截的方法名称</span></div><div class="line">	String methodName = pjp.getSignature().getName();</div><div class="line">	<span class="comment">// 拦截的方法参数</span></div><div class="line">	Object[] args = pjp.getArgs();</div><div class="line">	<span class="comment">// 拦截的放参数类型</span></div><div class="line"></div><div class="line">	Class[] parameterTypes = ((MethodSignature) pjp.getSignature())</div><div class="line">			.getMethod().getParameterTypes();</div><div class="line">	Object object = <span class="keyword">null</span>;</div><div class="line">	<span class="comment">// 获得被拦截的方法</span></div><div class="line">	Method method = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		method = target.getClass().getMethod(methodName, parameterTypes);</div><div class="line">	&#125; <span class="keyword">catch</span> (NoSuchMethodException e1) &#123;</div><div class="line">		e1.printStackTrace();</div><div class="line">	&#125; <span class="keyword">catch</span> (SecurityException e1) &#123;</div><div class="line">		e1.printStackTrace();</div><div class="line">	&#125;</div><div class="line">	OptionLog log = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != method) &#123;</div><div class="line">		<span class="comment">// 判断是否包含自定义的注解</span></div><div class="line">		<span class="keyword">if</span> (method.isAnnotationPresent(OpLog.class)) &#123;</div><div class="line"></div><div class="line">			<span class="comment">// 获取自定义注解实体</span></div><div class="line">			OpLog myAnnotation = method.getAnnotation(OpLog.class);</div><div class="line">			<span class="keyword">switch</span> (myAnnotation.OpLogType()) &#123;</div><div class="line">			<span class="keyword">case</span> OpLog.ORDER_CREATE: <span class="comment">// 创建订单</span></div><div class="line">				User user = findParamByType(User.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				YcOrder order = findParamByType(YcOrder.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				log = <span class="keyword">new</span> OptionLog();</div><div class="line">				log.setGoodid(order.getGoodid());</div><div class="line">				log.setUlogin(user.getUlogin());</div><div class="line">				log.setCreatedate(DateUtil.getSqlDate());</div><div class="line">				log.setContent(<span class="string">"创建订单-----"</span></div><div class="line">						+ <span class="string">"订单价格:"</span></div><div class="line">						+ order.getPrice()</div><div class="line">						+ <span class="string">"----创建时间:"</span></div><div class="line">						+ (DateUtil.getSqlDate() + <span class="string">"商家:"</span></div><div class="line">								+ order.getBmname() + <span class="string">"---手机号:"</span></div><div class="line">								+ order.getUphone() + <span class="string">"---优惠劵"</span> + order</div><div class="line">									.getRuid()));</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> OpLog.REQUEST_PAY:<span class="comment">// 请求支付</span></div><div class="line">				Bank bank = findParamByType(Bank.class, args,</div><div class="line">						parameterTypes);</div><div class="line"></div><div class="line">				String goodid = findParamByType(String.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				User user2 = findParamByType(User.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				log = <span class="keyword">new</span> OptionLog();</div><div class="line">				log.setBankname(bank.getBankname());</div><div class="line">				log.setGoodid(goodid);</div><div class="line">				log.setUlogin(user2.getUlogin());</div><div class="line">				log.setCreatedate(DateUtil.getSqlDate());</div><div class="line">				log.setContent(<span class="string">"---发起交易请求--------"</span>);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> OpLog.SERVICE_BLAK:</div><div class="line">				<span class="comment">// 服务器回调接口</span></div><div class="line">				<span class="comment">// 先判断服务器的回调是否正确，不正确则直接丢弃</span></div><div class="line">				HttpServletRequest request = findParamByType(</div><div class="line">						HttpServletRequest.class, args, parameterTypes);</div><div class="line">				String sign = request.getParameter(<span class="string">"sign"</span>);</div><div class="line">				<span class="keyword">if</span> (sign == <span class="keyword">null</span> || sign.isEmpty()) &#123;</div><div class="line">					<span class="comment">// 直接丢弃本次请求</span></div><div class="line">					<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">				&#125;</div><div class="line">				log = <span class="keyword">new</span> OptionLog();</div><div class="line">				log.setContent(<span class="string">"---收到服务器的回调"</span>);</div><div class="line">				log.setCreatedate(DateUtil.getSqlDate());</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> OpLog.Client_BLAK:</div><div class="line">				User user3 = findParamByType(User.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				String goodid2 = findParamByType(String.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				Integer status = findParamByType(Integer.class, args,</div><div class="line">						parameterTypes);</div><div class="line">				log = <span class="keyword">new</span> OptionLog();</div><div class="line">				log.setContent(<span class="string">"---客户端回调  status："</span> + status);</div><div class="line">				log.setCreatedate(DateUtil.getSqlDate());</div><div class="line">				log.setGoodid(goodid2);</div><div class="line">				log.setUlogin(user3.getUlogin());</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				object = pjp.proceed(args);</div><div class="line">			<span class="comment">//	log.setResult("" + object);</span></div><div class="line">			<span class="comment">//	log.setStatus(1);</span></div><div class="line">			&#125; <span class="keyword">catch</span> (Throwable e) &#123;</div><div class="line">			<span class="comment">//	log.setStatus(0);</span></div><div class="line">			<span class="comment">//	log.setExeception(e.toString());</span></div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">			optionLogMapperion.insertLog(log);</div><div class="line">			<span class="keyword">return</span> object;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 不进行拦截</span></div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			object = pjp.proceed(args);</div><div class="line">		&#125; <span class="keyword">catch</span> (Throwable e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> object;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">findParamByType</span><span class="params">(Class&lt;T&gt; c, Object[] par,</span></span></div><div class="line">		Class[] parameterTypes) &#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameterTypes.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (parameterTypes[i].equals(c)) &#123;</div><div class="line">			<span class="keyword">return</span> (T) par[i];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用注解@component 让spring 将整个class类管理起来，@Aspect是告诉spring 这个类是切面类。这样spring 就会将这个类解析为AOP切面类。</p>
+<p>@Around(“execution(* com………))很像server层的事务注解吧，没错他就是拦截对应的方法，可以使一个，也可以使若干个，就看你的表达式是如何写的。对于这个方法，他的参数是ProceedingJoinPotin 这个类，通过这个参数，我们可以获取到方法的方法名，参数类型，参数实体，在这里，我使用了自定义注解，这样对于不同的注解值，我可以写入不同的日志，当然这样有个缺点，扩展性不高，因为你每加一个注解类型值，那么就需要在case 中加一条条件判断。 最终我们组织好日志实体 OptionLog 后，然后执行pjp.proceed(args)目标方法，返回值我们都可以拦截到，进而写到数据库中。</p>
+<h1 id="token认证机制"><a href="#token认证机制" class="headerlink" title="token认证机制"></a>token认证机制</h1><p>在这里我继续分享下项目的token认证机制，因为面对客户端是安卓、苹果，而我们有时候需要保存回话，那么就需要登录，但是不可能让用户三天俩头就登录一次，那么APP的体验性太差了，如何实现APP免登录呢?那么我们引入了token 机制，具体流程：</p>
+<pre><code>app首次登录----&gt;服务器回写token-----&gt;APP保存tokan----&gt;请求并携带token----&gt;校验----&gt;返回结果
+</code></pre><p>app的每一次请求，尤其是敏感操作（我以前博文中说过实现的权限注解）那么就需要让app携带过来之前回写的toakn,如果不存在，直接拒绝访问，并让app登录，那么如果token存在，那么我们一直使用的是java的session机制，那么会使session失效的有几种情况 1.session id丢失，也就是cookie丢失 2.session过期。那么我们在服务器中先直接从session中获取当前对象的值，如果获取到的是空，那么就启动校验token机制，对比用户传递的token与数据库中保存的token，一致，模拟用户登录，并重写回写新的token,如果校验失败，拒绝访问。这样，就可以有效的解决了登录问题，相比安全的话，在本地app会使用一些加密算法对token进行加密，这样对于保密性不高的app，足以了。</p>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request,</span></span></div><div class="line">		HttpServletResponse response, Object handler) <span class="keyword">throws</span> Exception &#123;</div><div class="line">	<span class="comment">// 进行检测权限</span></div><div class="line">	HandlerMethod methodHandler = (HandlerMethod) handler;</div><div class="line">	java.lang.reflect.Method method = methodHandler.getMethod();</div><div class="line">	Role role = method.getAnnotation(Role.class);</div><div class="line">	<span class="keyword">if</span> (role != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">int</span> roleCode = role.role(); <span class="comment">// 权限码</span></div><div class="line">		<span class="keyword">if</span> ((roleCode == Role.ROLE_USER)) &#123;<span class="comment">// 需要登陆</span></div><div class="line">			String token = request.getParameter(<span class="string">"token"</span>);</div><div class="line">			<span class="keyword">if</span> (token == <span class="keyword">null</span>) &#123;</div><div class="line">				send(response, keyUtil.SERVICE_NO_LOGIN);</div><div class="line">				request.getSession().invalidate();</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">			User user = (User) request.getSession().getAttribute(</div><div class="line">					ResourceUtil.CURRENT_USER);</div><div class="line">			<span class="keyword">if</span> (user != <span class="keyword">null</span> &amp;&amp; user.getToken().equals(token)) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="comment">// session为空或者已经过期，则进行判断token</span></div><div class="line">				User usernew = userService.getUserByToken(token);</div><div class="line">				<span class="keyword">if</span> (usernew == <span class="keyword">null</span>) &#123;</div><div class="line">					send(response, keyUtil.SERVICE_NO_LOGIN);</div><div class="line">					request.getSession().invalidate();</div><div class="line">					System.out.println(<span class="string">"你被拦截了"</span>);</div><div class="line">					<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					request.getSession().setAttribute(</div><div class="line">							ResourceUtil.CURRENT_USER, usernew);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> ((roleCode == Role.ROLE_BUSINESS)) &#123;</div><div class="line">			<span class="comment">// 商家校验</span></div><div class="line">			System.out.println(<span class="string">"我是商家拦截器"</span>);</div><div class="line">			MaintainBusiness business = (MaintainBusiness) request</div><div class="line">					.getSession().getAttribute(</div><div class="line">							ResourceUtil.CURRENT_BUSINESS);</div><div class="line">			<span class="keyword">if</span> (business != <span class="keyword">null</span>) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				send(response, keyUtil.SERVICE_NO_LOGIN);</div><div class="line">				request.getSession().invalidate();</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，完成了校验免登录的功能，具体也有很多细节，篇幅有限，点到为止，很多东西都需要我们自己去钻研，动手实现才能明白其中奥秘。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>行吧云购项目几个板块也快到了尾声，感觉自己的知识储备还是很有限，所以最近一直在补一些新概念，毕竟不能被时代淘汰，有时间的话，我下篇博文就是调用建行支付的一些关于支付的代码、思想总结。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag">#项目</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/putExam/" rel="next">在线批量录入试题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">Kategorien</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">Tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要支付日志"><span class="nav-number">2.</span> <span class="nav-text">为什么要支付日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志实现"><span class="nav-number">3.</span> <span class="nav-text">日志实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#日志实现载体"><span class="nav-number">3.1.</span> <span class="nav-text">日志实现载体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志需要记录哪些"><span class="nav-number">3.2.</span> <span class="nav-text">日志需要记录哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志实现手段"><span class="nav-number">3.3.</span> <span class="nav-text">日志实现手段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">3.4.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#token认证机制"><span class="nav-number">4.</span> <span class="nav-text">token认证机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现代码"><span class="nav-number">4.1.</span> <span class="nav-text">实现代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
