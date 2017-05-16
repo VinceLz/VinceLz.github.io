@@ -42,30 +42,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
+<meta name="description" content="前言继上次完成了在线预览文档的功能后，这次又需要实现一个在线答题的功能，目前来说我从来没有实现过此类功能，相比而言实现很简单，只不过是如何实现的比较好。
+需求分析总结分析我们发现，要实现一个答题功能，而且还需要记录成绩，简答题的答案功能。对于一套试题来说，包含很多试题，比如选择题、简答题、可能后续还需要编程题等等。那么试题还需要计时功能，总不得让学生无限期的去做一套题，综上分析，我们得出一个结论：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="知识产权app&Android技术总结">
-<meta property="og:url" content="https://vincelz.github.io/2016/12/22/app&Android/index.html">
+<meta property="og:title" content="慕课视频网站&在线答题实现">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/10/exam/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png">
-<meta property="og:image" content="1http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/frame.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/dowm.png">
-<meta property="og:updated_time" content="2017-02-27T09:16:29.730Z">
+<meta property="og:description" content="前言继上次完成了在线预览文档的功能后，这次又需要实现一个在线答题的功能，目前来说我从来没有实现过此类功能，相比而言实现很简单，只不过是如何实现的比较好。
+需求分析总结分析我们发现，要实现一个答题功能，而且还需要记录成绩，简答题的答案功能。对于一套试题来说，包含很多试题，比如选择题、简答题、可能后续还需要编程题等等。那么试题还需要计时功能，总不得让学生无限期的去做一套题，综上分析，我们得出一个结论：">
+<meta property="og:updated_time" content="2017-05-16T08:04:37.395Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知识产权app&Android技术总结">
-<meta name="twitter:description" content="项目前言知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力
-本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png">
+<meta name="twitter:title" content="慕课视频网站&在线答题实现">
+<meta name="twitter:description" content="前言继上次完成了在线预览文档的功能后，这次又需要实现一个在线答题的功能，目前来说我从来没有实现过此类功能，相比而言实现很简单，只不过是如何实现的比较好。
+需求分析总结分析我们发现，要实现一个答题功能，而且还需要记录成绩，简答题的答案功能。对于一套试题来说，包含很多试题，比如选择题、简答题、可能后续还需要编程题等等。那么试题还需要计时功能，总不得让学生无限期的去做一套题，综上分析，我们得出一个结论：">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -75,7 +64,7 @@
   };
 </script>
 
-  <title> 知识产权app&Android技术总结 | 1000 words a Day </title>
+  <title> 慕课视频网站&在线答题实现 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -309,7 +298,7 @@
           
           
             
-              知识产权app&Android技术总结
+              慕课视频网站&在线答题实现
             
           
         </h1>
@@ -318,8 +307,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2016-12-22T16:55:13+08:00" content="2016-12-22">
-            2016-12-22
+          <time itemprop="dateCreated" datetime="2017-04-10T18:21:23+08:00" content="2017-04-10">
+            2017-04-10
           </time>
         </span>
 
@@ -337,79 +326,26 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="项目前言"><a href="#项目前言" class="headerlink" title="项目前言"></a>项目前言</h1><p>知识产权app，原计划最迟今年12月份就会上线，但是最终因为一些外力原因，导致项目停止，期间有悲有喜吧，故此总结下自己的这个项目，已祭奠自己曾经的付出与努力</p>
-<p>本次项目的界面UI基本上是模仿市场上主流app的风格的，功能上也大部分是模仿其他app做的，有人为难道需求方没给需求吗？其实是给了，但是他们只给了我们业务上的需求，但是界面UI与其他功能他们没提(其实他们不懂)，所以就让我们自由发挥去实现，对于我们只是应届生，其实不管从技术上还是其他方面，都有一定的困难，对于我本人，我是一个技术狂热的人，所以迎难而上是我的作风…QAQ 废话不多说了，我们介绍我们的项目吧！！</p>
-<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h3 id="先来一波截图看看效果吧"><a href="#先来一波截图看看效果吧" class="headerlink" title="先来一波截图看看效果吧"></a>先来一波截图看看效果吧</h3><p><img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-53-54.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-06.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-18.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-54-25.png" alt="首页">  <img src="http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-08-55-06.png" alt=""> <img src="1http://ok9vfjkgl.bkt.clouddn.com/Screenshot_2016-11-09-09-02-47.png" alt=""></p>
-<hr>
-<p>我们先来看看项目代码架构：</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/jiagou.png" alt="首页"></p>
-<p>先从BaseApplication MyApplication说起吧，这2个类是继承关系，BaseApplication继承了Application，这个类的主要作用是对一些全局性的基本功能的实现，而MyApplication又继承了BaseApplication，它主要的功能就是对这个app的状态的控制，例如商家信息，用户信息，app状态的控制处理。</p>
-<h1 id="软件层架构"><a href="#软件层架构" class="headerlink" title="软件层架构"></a>软件层架构</h1><p><img src="http://ok9vfjkgl.bkt.clouddn.com/frame.png" alt=""></p>
-<h2 id="Home-主页"><a href="#Home-主页" class="headerlink" title=" Home  主页"></a> Home  主页</h2><p>   –</p>
-<h2 id="Send-发布"><a href="#Send-发布" class="headerlink" title=" Send  发布"></a> Send  发布</h2><p>   –</p>
-<h2 id="UserInfo-个人中心"><a href="#UserInfo-个人中心" class="headerlink" title=" UserInfo 个人中心"></a> UserInfo 个人中心</h2><p>   –</p>
-<h2 id="AllByby-F-购物车"><a href="#AllByby-F-购物车" class="headerlink" title=" AllByby_F  购物车"></a> AllByby_F  购物车</h2><p>   –</p>
-<h2 id="Category-搜索"><a href="#Category-搜索" class="headerlink" title=" Category 搜索"></a> Category 搜索</h2><p>项目主体采用了Frangment进行5大模块载体，这5大模块各自处理自己的业务，但通过又通过MyApplication进行数据交换和通信。其中具体实现功能请去github地址下载源码观看</p>
-<hr>
-<h1 id="通信工具-amp-图片缓存"><a href="#通信工具-amp-图片缓存" class="headerlink" title="通信工具&amp;图片缓存"></a>通信工具&amp;图片缓存</h1><p>项目采用了OkHttp请求框架，并且和picasso图像框架整合到了一起，为了优化流量消耗，所以集成了图像自动缓存本地的功能，其中如何实现picasso缓存功能，这里贴出部分代码，</p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/okhttp.png" alt=""></p>
-<p><img src="http://ok9vfjkgl.bkt.clouddn.com/dowm.png" alt=""></p>
-<p>其中OkHttpDownLoader()他继承了DownLoader用于实现本地缓存化，最终在Okhttp初始时，把OkhpptDownloader交付给picasso已实现缓存</p>
-<h1 id="cookie缓存"><a href="#cookie缓存" class="headerlink" title="cookie缓存"></a>cookie缓存</h1><p>因为web基于java写的，所以java web有jcookie回话机制，用来保存当前session中的用户，但是安卓okhttp框架没有实现cookid的自动缓存，这样导致android一直处于无状态，那么web端也就无法实现对android用户的识别，期间想过使用token机制进行验证已检测身份，但是app的情况，最终还是选择了实现cookie缓存，还好okhttp框架比较强大，所以我们可以定制内部功能部分代码：</p>
-<pre><code>//将持久化的cookies缓存到内存中 即map cookies
-   Map&lt;String, ?&gt; prefsMap = cookiePrefs.getAll();
-   for (Map.Entry&lt;String, ?&gt; entry : prefsMap.entrySet()) {
-       String[] cookieNames = TextUtils.split((String) entry.getValue(), &quot;,&quot;);
-       for (String name : cookieNames) {
-           String encodedCookie = cookiePrefs.getString(name, null);
-           if (encodedCookie != null) {
-               Cookie decodedCookie = decodeCookie(encodedCookie);
-               if (decodedCookie != null) {
-                   if (!cookies.containsKey(entry.getKey())) {
-                       cookies.put(entry.getKey(), new ConcurrentHashMap&lt;String, Cookie&gt;());
-                   }
-                   cookies.get(entry.getKey()).put(name, decodedCookie);
-               }
-           }
-       }
-
-
-
-
-    //将cookies持久化到本地
-   SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
-   Log.v(&quot;#####SharedPr&quot;,&quot;SharedPreferences.cookie.save=&quot;);
-   prefsWriter.putString(url.host(), TextUtils.join(&quot;,&quot;, cookies.get(url.host()).keySet()));
-   prefsWriter.putString(name, encodeCookie(new SerializableOkHttpCookies(cookie)));
-   prefsWriter.apply();
-</code></pre><p>我们把cookie缓存到内存中，并最终实现持久化到本地，这样，我们后端就可以读取cookie，实现业务处理。</p>
-<p>#通信框架#<br>其实我用过很多种通信框架，但是觉得OKHTTP框架是最好用的一款，所以建议大家也学习下okhttp框架的使用，对我们开发一套好的app至关重要。</p>
-<h1 id="实时推送"><a href="#实时推送" class="headerlink" title="实时推送"></a>实时推送</h1><pre><code>消息推送
-1 长连接  心跳的骚扰  要求实时性高
-2消息推送  实时要求不高  手机端  跑一个timer 10分钟发送一个数据udp  服务器接收到就推送
-</code></pre><ol>
-<li>购买市面上的推送服务   —-资金问题不考虑</li>
-<li>使用http请求 轮询    —-不够及时推送，并且加大服务器的负载放弃</li>
-<li>DDPush    —-开源，免费 功能实现相对不错，</li>
-</ol>
-<p>因为这种app不会大量推送消息，所以最终我们选择了DDpush这个开源的推送框架，并且在实现后，功能相对比较满意。</p>
-<h1 id="短信功能"><a href="#短信功能" class="headerlink" title="短信功能"></a>短信功能</h1><p>俗话说现在的任务是无法脱离手机的，所以一款好的app必须要集成短信功能，所以最终选择了阿里大鱼短信服务平台，短信在android基本不需要什么实现，只需要加一个图形验证码就可以防止短信攻击，web后端有部分代码实现，我将会在另外一篇文章中介绍</p>
-<p>#APP缓存#<br>        缓存处理<br>            文本处理可以缓存到系统data中，图片等信息一般不要缓存到data中<br>        网络缓存<br>        三级缓存<br>            内存缓存<br>            本地io缓存<br>            网络缓存</p>
-<p>#Frament#<br>Frament不得不说，确实比Activy开发高效的很多，我们也不需要管理那么多Activy，所以建议没有使用过的同学可以试试。</p>
-<p>#安卓线程通信#<br>其实安卓线程通信的方式有很多，首先从系统架构上来说，我们可以使用信号量实现信息的传递，所以安卓框架已经为我们添加 了很多种线程之间的通信</p>
-<ol>
-<li>Hander 通信 一般采用的较多</li>
-<li>文件通信   共享一个文件达到信息的交流</li>
-<li>MessageHander 这种通信比Hander难，但是同时他可以传递信息，</li>
-<li>ContentProvider 这种大家都应该用过吧</li>
-<li>Socket  这种一般用的很少</li>
-</ol>
-<p>以上3种我自己使用过，其实实现通信的方法还有很多，大家可以google下</p>
-<p>#UI 触摸滑动#<br>对于安卓的滑动触摸，其实里面的坑也有很多，尤其是比较复杂的程序，他需要对滑动检测的特别详细，一定要避免滑动冲突导致的问题，也需要对滑动事件的传播方式有所了解。</p>
-<h1 id="其他模块"><a href="#其他模块" class="headerlink" title="其他模块"></a>其他模块</h1><p>做到后期，我们需要对app进行优化的地址太多，省电，智能化，体积小，稳定。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实要想做好一款好的app真的不简单，所以当我们遇到技术难题时，不管如何都要迎面而上，路就在前方！！！！</p>
-<p>废话不多说了，大家有想要源码的，可以去 <a href="https://github.com/VinceLz/ShopByAndroid" target="_blank" rel="external">https://github.com/VinceLz/ShopByAndroid</a> 下载</p>
-<p>辛苦了一年，对自己致敬！！！！！</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>继上次完成了在线预览文档的功能后，这次又需要实现一个在线答题的功能，目前来说我从来没有实现过此类功能，相比而言实现很简单，只不过是如何实现的比较好。</p>
+<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>总结分析我们发现，要实现一个答题功能，而且还需要记录成绩，简答题的答案功能。对于一套试题来说，包含很多试题，比如选择题、简答题、可能后续还需要编程题等等。那么试题还需要计时功能，总不得让学生无限期的去做一套题，综上分析，我们得出一个结论：</p>
+<pre><code>1. 试卷中包含若干试题 典型的一 对应 多的关系
+2. 试卷需要一些附属的属性，试卷名、用时、类型等
+3. 试题包含多种类型。选择题、多选题、简答题等
+</code></pre><h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p>经过上述分析，我们发现一共需要4张表</p>
+<pre><code>1. db_question 试题表，记录试题，包含题干、答案、说明、类型（多选，单选，简答）
+2. db_paper 试卷表 与 试题表 属于一对多关系映射
+3. db_exam 考试结果表，记录了学生答题情况，包括选择题的得分情况
+4. db_exam_resume 简答题，对于简答题，我们无法给出直观的分数，需要教师去评分，所以我们需要多一张表来维护学生的答案。
+</code></pre><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="试卷展示"><a href="#试卷展示" class="headerlink" title="试卷展示"></a>试卷展示</h3><p>这个功能，只需要查询db_paper表选择出全部的试卷，交由前端显示</p>
+<pre><code>select * from db_paper;  //当然实际开发中不建议大家直接用*，哪怕是所有的字段都需要也别，这样会导致数据库浪费性能
+</code></pre><h3 id="答题"><a href="#答题" class="headerlink" title="答题"></a>答题</h3><p>答题，就需要前端传给后端试卷的id，然后去数据库查询该试卷下的所有题型</p>
+<pre><code>select * from db_question where paperId=?
+</code></pre><p>查询出来这个试题是一个集合list,然后我们需要遍历整个集合，拆分这个集合，将整个集合分为若干个几个，单项集合、多选项集合、简答题集合等等。这样，交由前端根据不同的类型选择不同的表现，如单项就需要radbutton按钮，多选就需要使用checkbox，简答题当然用textare，当然具体使用什么现实，有很多种。主要是前端需要负责一个计时功能，因为我们只是实现一个比较基础的在线答题功能，如果需要专业的话，计时功能不仅前端显示，后端也要计时，防止作弊，而且还需要试题恢复功能，也就是当用户答了若干道题，你就应该使用ajax向后台传递答案，而不是等他完成了全部的试题主动去触发提交，所以这个是根据项目所定的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//$&#123;paper.lengthTime&#125; 是后端传递的试卷答题时间 以分为单位</span></div><div class="line">var examTime=<span class="string">'$&#123;paper.lengthTime&#125;'</span> * <span class="number">60</span>;</div><div class="line">var useTime=<span class="number">0</span>,remainTime=examTime;</div><div class="line"></div><div class="line"><span class="function">function <span class="title">showCount</span><span class="params">()</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(remainTime==<span class="number">0</span>)&#123;</div><div class="line">		document.getElementById(<span class="string">"myForm"</span>).submit();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	useTime+=<span class="number">1</span>;</div><div class="line">	remainTime-=<span class="number">1</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(remainTime==<span class="number">0</span>)&#123;</div><div class="line">	alert(<span class="string">"---时间结束"</span>);</div><div class="line">	&#125;</div><div class="line">	var hourU=Math.floor(useTime/<span class="number">3600</span>);</div><div class="line">	var minuteU=Math.floor((useTime-hourU*<span class="number">3600</span>)/<span class="number">60</span>);</div><div class="line">	var secondU=Math.floor(useTime-hourU*<span class="number">3600</span>-minuteU*<span class="number">60</span>);</div><div class="line">	document.getElementById(<span class="string">"useTime"</span>).innerHTML=format(hourU)+<span class="string">":"</span>+format(minuteU)+<span class="string">":"</span>+format(secondU);</div><div class="line">	</div><div class="line">	var hourR=Math.floor(remainTime/<span class="number">3600</span>);</div><div class="line">	var minuteR=Math.floor((remainTime-hourR*<span class="number">3600</span>)/<span class="number">60</span>);</div><div class="line">	var secondR=Math.floor(remainTime-hourR*<span class="number">3600</span>-minuteR*<span class="number">60</span>);</div><div class="line">	document.getElementById(<span class="string">"remainTime"</span>).innerHTML=format(hourR)+<span class="string">":"</span>+format(minuteR)+<span class="string">":"</span>+format(secondR);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">function <span class="title">format</span><span class="params">(timeNumber)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(timeNumber&lt;<span class="number">10</span>)&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"0"</span>+timeNumber;</div><div class="line">	&#125;<span class="keyword">else</span>&#123;</div><div class="line">		<span class="keyword">return</span> timeNumber;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">window.setInterval(<span class="string">"showCount()"</span>, <span class="number">1000</span>);</div></pre></td></tr></table></figure>
+<h3 id="提交之后"><a href="#提交之后" class="headerlink" title="提交之后"></a>提交之后</h3><p>当用户点击了提交按钮或者是计时结束自动提交后，后端就需要判断选择题的答题情况，在这之前我们的前端是这样设计的。</p>
+<pre><code>在题干上配置name=&quot;id-t-${试题id}&quot; valus=&quot;试题id&quot;   在选项上配置name=&quot;id-c-${试题id} values=&quot;A/B/C&quot;
+</code></pre><p>这样，我们后端就可以遍历Map集合，来进行答题情况的判断：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line">Map&lt;String, String[]&gt; keyMap = request.getParameterMap();</div><div class="line">Iterator&lt;Entry&lt;String, String[]&gt;&gt; it2 = keyMap.entrySet().iterator();</div><div class="line"><span class="keyword">int</span> totalScore = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> singleScore = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> moreScore = <span class="number">0</span>;</div><div class="line"><span class="keyword">while</span> (it2.hasNext()) &#123;</div><div class="line">	Entry&lt;String, String[]&gt; entry = it2.next();</div><div class="line">	String keyStr = entry.getKey();</div><div class="line">	String values[] = entry.getValue();</div><div class="line">	String key;</div><div class="line">	String value = <span class="string">""</span>;</div><div class="line">	<span class="keyword">if</span> (keyStr.equals(<span class="string">"exam.student.id"</span>) <span class="comment">//如果id不是提示类型的，直接跳过</span></div><div class="line">			|| keyStr.equals(<span class="string">"exam.paper.id"</span>)</div><div class="line">			|| keyStr.equals(<span class="string">"method"</span>)) &#123;</div><div class="line">		<span class="keyword">continue</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (keyStr.split(<span class="string">"-"</span>)[<span class="number">1</span>].equals(<span class="string">"r"</span>)) &#123; </div><div class="line">		key = keyStr.split(<span class="string">"-"</span>)[<span class="number">2</span>];</div><div class="line">		value = values[<span class="number">0</span>];</div><div class="line">		singleScore += <span class="keyword">this</span>.calScore(key, value, <span class="string">"1"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		key = keyStr.split(<span class="string">"-"</span>)[<span class="number">2</span>];</div><div class="line">		<span class="keyword">for</span> (String s : values) &#123;</div><div class="line">			value += s + <span class="string">","</span>;</div><div class="line">		&#125;</div><div class="line">		value = value.substring(<span class="number">0</span>, value.length() - <span class="number">1</span>);</div><div class="line">		moreScore += <span class="keyword">this</span>.calScore(key, value, <span class="string">"2"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Exam exam = <span class="keyword">new</span> Exam();</div><div class="line">totalScore = singleScore + moreScore;</div><div class="line">exam.setSingleScore(singleScore);</div><div class="line">exam.setMoreScore(moreScore);</div><div class="line">exam.setScore(totalScore);</div><div class="line">exam.setExamDate(<span class="keyword">new</span> java.util.Date());</div><div class="line">exam.setStudent((Student) request.getSession().getAttribute(<span class="string">"user"</span>));</div><div class="line">Paper p = <span class="keyword">new</span> Paper();</div><div class="line">p.setId(Integer.parseInt(request.getParameter(<span class="string">"exam.paper.id"</span>)));</div><div class="line">exam.setPaper(p);</div><div class="line"><span class="keyword">int</span> eid = examService.saveExam(exam);</div><div class="line">Map&lt;String, String[]&gt; parameterMap = request.getParameterMap();</div><div class="line">List&lt;Exam_Resume&gt; list = <span class="keyword">new</span> ArrayList&lt;Exam_Resume&gt;();</div><div class="line">Set&lt;String&gt; keySet = parameterMap.keySet();</div><div class="line">Iterator&lt;String&gt; iterator = keySet.iterator();</div><div class="line"></div><div class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</div><div class="line">	String tigan = iterator.next();</div><div class="line">	<span class="keyword">if</span> (tigan.contains(<span class="string">"id-t-"</span>)) &#123;</div><div class="line">		String quest = parameterMap.get(tigan)[<span class="number">0</span>];</div><div class="line">		String id = tigan.substring(tigan.lastIndexOf(<span class="string">"-"</span>) + <span class="number">1</span>);</div><div class="line">		String answer = parameterMap.get(<span class="string">"id-j-"</span> + id)[<span class="number">0</span>];</div><div class="line">		Exam_Resume e = <span class="keyword">new</span> Exam_Resume();</div><div class="line">		e.setAnswer(answer);</div><div class="line">		e.setEdate(<span class="keyword">new</span> Date().toLocaleString());</div><div class="line">		e.setEid(eid);</div><div class="line">		e.setEquest(quest);</div><div class="line">		list.add(e);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实实现一个在线做题的功能，比较简单，只不过我从没有做过相关需求，开始觉得难，但是其实实现起来，也就用了不到半天的功夫，所以同学们不管做什么事情，都要对自己有信心，可能结果想的比你要简单的多。上述就是我的在线试题实现的基本过程，如果有同学要实现类似功能，不乏提供一种设计思路吧，当然这种设计只是实现功能，从效率和性能上可能差的很远，但是项目需求不是很强烈，所以不需要太过纠结在这里。</p>
 </span>
       
     </div>
@@ -427,13 +363,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/24/ms-4/" rel="prev">Java设计模式（五）抽象工厂模式</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/20/WebService/" rel="next">WebService</a>
+              <a href="/2017/04/07/java poi/" rel="next">论小型在线文档预览处理方案</a>
             
           </div>
         </div>
@@ -562,7 +496,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目前言"><span class="nav-number">1.</span> <span class="nav-text">项目前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">2.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来一波截图看看效果吧"><span class="nav-number">2.0.1.</span> <span class="nav-text">先来一波截图看看效果吧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件层架构"><span class="nav-number">3.</span> <span class="nav-text">软件层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Home-主页"><span class="nav-number">3.1.</span> <span class="nav-text"> Home  主页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Send-发布"><span class="nav-number">3.2.</span> <span class="nav-text"> Send  发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UserInfo-个人中心"><span class="nav-number">3.3.</span> <span class="nav-text"> UserInfo 个人中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AllByby-F-购物车"><span class="nav-number">3.4.</span> <span class="nav-text"> AllByby_F  购物车</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-搜索"><span class="nav-number">3.5.</span> <span class="nav-text"> Category 搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信工具-amp-图片缓存"><span class="nav-number">4.</span> <span class="nav-text">通信工具&图片缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie缓存"><span class="nav-number">5.</span> <span class="nav-text">cookie缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实时推送"><span class="nav-number">6.</span> <span class="nav-text">实时推送</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#短信功能"><span class="nav-number">7.</span> <span class="nav-text">短信功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他模块"><span class="nav-number">8.</span> <span class="nav-text">其他模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求分析"><span class="nav-number">2.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">3.1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">3.2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#试卷展示"><span class="nav-number">3.2.1.</span> <span class="nav-text">试卷展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#答题"><span class="nav-number">3.2.2.</span> <span class="nav-text">答题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交之后"><span class="nav-number">3.2.3.</span> <span class="nav-text">提交之后</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
