@@ -31,7 +31,7 @@
 
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="项目," />
 
 
 
@@ -42,20 +42,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="刷完了jvm虚拟机,再研究点算法  关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现因为的对java熟悉，就用java实现吧,语言不分家嘛,意思都一样">
+<meta name="description" content="前言最近在做一个类似于慕课的在线学习视频学习网站，那么根据需求，要实现在线预览代课老师上传的课件、文档等。通过查询一些资料整理如下方案：
+1. 第三方收费服务（没办法有钱就是任性，相对服务比较完美，如果不差钱建议这种方案）
+2. OpenOffic+JodConverter 将文档转换为PDF,需要搭建单独的OpenOffic服务
+3. MSOffice+JACOB 转PDF,但是只能在win系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论kmp算法">
-<meta property="og:url" content="https://vincelz.github.io/2017/02/10/论kmp算法/index.html">
+<meta property="og:title" content="论小型在线文档预览处理方案">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/07/java poi/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="刷完了jvm虚拟机,再研究点算法  关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现因为的对java熟悉，就用java实现吧,语言不分家嘛,意思都一样">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/10.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/11.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/12.bmp">
-<meta property="og:updated_time" content="2017-02-13T02:39:06.395Z">
+<meta property="og:description" content="前言最近在做一个类似于慕课的在线学习视频学习网站，那么根据需求，要实现在线预览代课老师上传的课件、文档等。通过查询一些资料整理如下方案：
+1. 第三方收费服务（没办法有钱就是任性，相对服务比较完美，如果不差钱建议这种方案）
+2. OpenOffic+JodConverter 将文档转换为PDF,需要搭建单独的OpenOffic服务
+3. MSOffice+JACOB 转PDF,但是只能在win系统">
+<meta property="og:updated_time" content="2017-05-16T06:56:23.885Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="论kmp算法">
-<meta name="twitter:description" content="刷完了jvm虚拟机,再研究点算法  关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现因为的对java熟悉，就用java实现吧,语言不分家嘛,意思都一样">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/10.png">
+<meta name="twitter:title" content="论小型在线文档预览处理方案">
+<meta name="twitter:description" content="前言最近在做一个类似于慕课的在线学习视频学习网站，那么根据需求，要实现在线预览代课老师上传的课件、文档等。通过查询一些资料整理如下方案：
+1. 第三方收费服务（没办法有钱就是任性，相对服务比较完美，如果不差钱建议这种方案）
+2. OpenOffic+JodConverter 将文档转换为PDF,需要搭建单独的OpenOffic服务
+3. MSOffice+JACOB 转PDF,但是只能在win系统">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -65,7 +70,7 @@
   };
 </script>
 
-  <title> 论kmp算法 | 1000 words a Day </title>
+  <title> 论小型在线文档预览处理方案 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -299,7 +304,7 @@
           
           
             
-              论kmp算法
+              论小型在线文档预览处理方案
             
           
         </h1>
@@ -308,8 +313,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-02-10T19:11:58+08:00" content="2017-02-10">
-            2017-02-10
+          <time itemprop="dateCreated" datetime="2017-04-07T16:01:23+08:00" content="2017-04-07">
+            2017-04-07
           </time>
         </span>
 
@@ -327,82 +332,29 @@
       
 
       
-        <span itemprop="articleBody"><p>刷完了jvm虚拟机,再研究点算法<br>  关于字符串,建议大家去看看数据结构中字符串那一章,我就在这里不班门弄斧了,进入我们的主题<br>假如给你2个字符串A和字符串B,现在要你实现在字符串A中寻找字符串B(假设A串比B串长),并且返回开始的位置,如何实现呢?<br>最简单的方案就是一个一个的比较,不成功就主串回溯到开始位置,副串后移一位 代码实现<br>因为的对java熟悉，就用java实现吧,语言不分家嘛,意思都一样    </p>
-<pre><code>                public int bf(String str1,String str2){
-                   char[] ch1=str1.toCharArray();
-                   char[] ch2=str2.toCharArray();  //将字符串转换成字符数组
-                   int i=0;
-                   int j=0;
-                    while(i&lt;ch1.length&amp;&amp;j&lt;ch2.lenth)
-                  {
-                     if(ch1[i]==ch2[j])
-                     {  //说明当前字符匹配成功 i  j指标都向后移动，比较后面的
-                        i++；
-                       j++;
-
-                     }else{//匹配失败  则主串移动到最开始的位置+1  副串从头开始
-                      i=i-j+1;
-                      j=0
-                    }
-                 }
-                   if(j==ch2.length)
-                    {
-                        return i-j;
-
-                        }else{
-
-                            return -1;  //-1表示没有匹配成功
-
-                        }
-                    }
-
-上述代码示例 如A B C D E F        C D E F 
-
-开始比较  A  B  C D E F
-         C  D  E F         当A!=C  所以     A B C D E F    B!=C      A B C D E F
-                                              C D E F                   C D E F 成功  则返回C在主串中的数组下标
-</code></pre><p>   但是这种方法明显的缺陷是每次副串都会回溯到开始，主串也会回溯回去。也就会造成性能瓶颈。所以我们的前辈肯定不干这种出力不讨好的事情了<br>   D.E.Knuth、J.H.Morris和V.R.Pratt这三位大牛同时发现了一种新的算法,可以很大程度上提高效率,上述代码的时间复杂度n(m*n),而我们今天要介<br>   绍的KMP算法可以实现复杂度n(m+n)—-不得不佩服这些大牛<br>    KMP的核心思想就是利用已经部分匹配过的字符 这个有效的信息，保存i指针不回溯,通过修改j指针，让副串劲量移动到有效的位置，而不是一<br>    个一个的移动,效率太低,所以使用kmp算法的话，每当遇到不匹配的时候，j指针如何移动呢，这就是next[]数组的职责，下面将next职责。</p>
-<p>例如:如图进行匹配：(偷的图，见谅)<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/10.png" alt=""><br> 其中C D发生不匹配了,如何移动j指针呢?那肯定是移动到第2位呀，当我们把j移动到B字符上，然后把i  j对其，<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/11.png" alt=""></p>
-<p> 那我们如何寻找移动j的规律呢<br> <img src="http://ok9vfjkgl.bkt.clouddn.com/12.bmp" alt=""><br> 有没有发现,当匹配失败后,j要移动的的下一个位置k有一个小规律就是副串中前k指针前的字符和j指针前k个字符相同,如上图中的<br> k指针是B 他前面的字符是A   J指针D的前1个字符是A  相同，大家可以找找其他的字符进行测试都是如此！<br> 个人理解就是 当我们进行匹配时候，如果遇到不匹配了,但是在我们已经匹配过的中都是可以匹配的，如上图中的A B A 都是匹配成<br>功的,当我们到D的时候不匹配了,那么他前面的A是已经匹配到了，我们如何做呢，找在这个串中是否有和A相同的字符串,然后已2个<br>相同的A 为分区，找他们的中间那个作为k,K前面的A已经被D前面的那个A匹配成功，我们可以用K指针前面那个A替代D后面的A，这样<br>我们只要比较当前K指针的字符和i指针的字符，前面肯定是匹配的，因为我们完全利用了已经匹配过的这个有效信息，寻找替代来缩短<br>比较过程!!!所以kmp的思想真的很好，利用已经匹配过的这个信息，减少我们后续的比较。</p>
-<p>以上纯属个人简介,既然我们知道了k这个坐标的重要性,如何求呢?<br>其实上面说的next[]数组就是用来保存k这个值的 next[j]=k;  直到这里才明白了  栾一峰  大神的文章中的前缀和后缀计算原理,<br>说白了我们前面的那个k就是 以k为分界点,找一个对称点，而前缀就是对称点的左半边，同理后面就是右半边, 有兴趣的可以百度下<br>  栾一峰 kmp算法  </p>
-<p>  现在贴出next的代码</p>
-<pre><code>public static int[] getNext(String ps) {
- char[] p = ps.toCharArray();
-       int[] next = new int[p.length];
-       next[0] = -1;  //第一个字符肯定不能向后移动了，所以用-1初始化
-       int j = 0;
-       int k = -1;
-       while (j &lt; p.length - 1) {
-          if (k == -1 || p[j] == p[k]) {
-      if (p[++j] == p[++k]) { // 当两个字符相等时要跳过
-          next[j] = next[k];
-       } else {
-          next[j] = k;
-           }
-                 } else {
-       k = next[k];
-       }
-    }
-        return next;
-}
-</code></pre><p>KMP算法</p>
-<pre><code>            public static int[] getNext(String ps) {
-                char[] p = ps.toCharArray();
-                int[] next = new int[p.length];
-                next[0] = -1;
-                int j = 0;
-                int k = -1;
-                while (j &lt; p.length - 1) {
-                   if (k == -1 || p[j] == p[k]) {
-                       next[++j] = ++k;
-                   } else {
-                       k = next[k];
-                   }
-                }
-                return next;
-            }
-眼熟不,其实kmp算法的核心是求那个next[]数组,而kmp只是在传统算法中修改了几行.
-</code></pre><p>其实有时候学习真的要静下心来,不然很多事情草草了事,觉得懂了，其实只是似懂非懂。</p>
+        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做一个类似于慕课的在线学习视频学习网站，那么根据需求，要实现在线预览代课老师上传的课件、文档等。通过查询一些资料整理如下方案：</p>
+<pre><code>1. 第三方收费服务（没办法有钱就是任性，相对服务比较完美，如果不差钱建议这种方案）
+2. OpenOffic+JodConverter 将文档转换为PDF,需要搭建单独的OpenOffic服务
+3. MSOffice+JACOB 转PDF,但是只能在win系统上使用该服务，对于Java 我们可以pass了
+4. POI apche下的一个文档操作框架，相对提供的API比较完善
+</code></pre><p>对于上述方案，如果要对预览体验比较要求高的话，建议大家使用1/2 方案，如果不差钱就直接买别人的服务吧，毕竟人家专业，对于我们这个项目，他对于在线预览的需求不是很刚性，所以我们采用了POI进行处理，相比是一个不错的方案。</p>
+<h1 id="POI-介绍"><a href="#POI-介绍" class="headerlink" title="POI 介绍"></a>POI 介绍</h1><p>Apache POI 是用Java编写的免费开源的跨平台的 Java API，Apache POI提供API给Java程式对Microsoft Office格式档案读和写的功能。POI为“Poor Obfuscation Implementation”的首字母缩写，意为“可怜的模糊实现”。<br>Apache POI 是创建和维护操作各种符合Office Open XML（OOXML）标准和微软的OLE 2复合文档格式（OLE2）的Java API。用它可以使用Java读取和创建,修改MS Excel文件.而且,还可以使用Java读取和创建MS Word和MSPowerPoint文件。Apache POI 提供Java操作Excel解决方案（适用于Excel97-2008）。</p>
+<p>基本结构：</p>
+<p>HSSF －提供读写Microsoft Excel XLS格式档案的功能。</p>
+<p>XSSF －提供读写Microsoft Excel OOXML XLSX格式档案的功能。</p>
+<p>HWPF －提供读写Microsoft Word DOC格式档案的功能。</p>
+<p>HSLF －提供读写Microsoft PowerPoint格式档案的功能。</p>
+<p>HDGF －提供读Microsoft Visio格式档案的功能。</p>
+<p>HPBF －提供读Microsoft Publisher格式档案的功能。</p>
+<p>HSMF －提供读Microsoft Outlook格式档案的功能。</p>
+<p>其实，POI比较拿手的是处理Excel表格，即上面的HSSF及XSSF，我们的很多项目，只要涉及报表的，基本上都有用到它吧。用对于HWPF即处理DOC的包，功能就没有那么健全了，且API也不完善。</p>
+<h1 id="文档预览分析"><a href="#文档预览分析" class="headerlink" title="文档预览分析"></a>文档预览分析</h1><p>我们要实现的预览是在网页中的，也就是说我们需要在我们的网页中进行文档显示，那么对于网页，如果是PDF的话，是可以直接预览的，这是因为游览器的自带属性，但是尽量让PDF小一些，比较太吃内存会导致游览器直接崩掉的。那么对于非PDF的，我们如何操作呢，最多的应该就是doc,docx,xls等。那么我们就需要将这些文档转换成html格式的，也就是要保证文档的原格式，就必须使用html的标签来实现。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="DOC–-gt-HTML"><a href="#DOC–-gt-HTML" class="headerlink" title="DOC–&gt;HTML"></a>DOC–&gt;HTML</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="comment">//sourceFileName 源文件名字   targetFileName 目标文件名   //root 根目录 我是在tomcat环境下，操作本地文件需要根目录</span></div><div class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">docToHtml</span><span class="params">(String sourceFileName, String targetFileName,</span></span></div><div class="line">		String root) <span class="keyword">throws</span> Exception &#123;</div><div class="line">	<span class="keyword">final</span> String imagePathStr = root + <span class="string">"\\image\\"</span>;</div><div class="line">	HWPFDocument wordDocument = <span class="keyword">new</span> HWPFDocument(<span class="keyword">new</span> FileInputStream(</div><div class="line">			sourceFileName));</div><div class="line">	Document document = DocumentBuilderFactory.newInstance()</div><div class="line">			.newDocumentBuilder().newDocument();</div><div class="line">	WordToHtmlConverter wordToHtmlConverter = <span class="keyword">new</span> WordToHtmlConverter(</div><div class="line">			document);</div><div class="line">	<span class="comment">// 保存图片，并返回图片的相对路径</span></div><div class="line">	wordToHtmlConverter.setPicturesManager(<span class="keyword">new</span> PicturesManager() &#123;</div><div class="line"></div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> String <span class="title">savePicture</span><span class="params">(<span class="keyword">byte</span>[] arg0, PictureType arg1,</span></span></div><div class="line">				String arg2, <span class="keyword">float</span> arg3, <span class="keyword">float</span> arg4) &#123;</div><div class="line"></div><div class="line">			FileOutputStream out;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				out = <span class="keyword">new</span> FileOutputStream(imagePathStr + arg2);</div><div class="line">				out.write(arg0);</div><div class="line">			&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> <span class="string">"image/"</span> + arg2;</div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line">	wordToHtmlConverter.processDocument(wordDocument);</div><div class="line">	Document htmlDocument = wordToHtmlConverter.getDocument();</div><div class="line">	DOMSource domSource = <span class="keyword">new</span> DOMSource(htmlDocument);</div><div class="line">	StreamResult streamResult = <span class="keyword">new</span> StreamResult(<span class="keyword">new</span> File(targetFileName));</div><div class="line"></div><div class="line">	TransformerFactory tf = TransformerFactory.newInstance();</div><div class="line">	Transformer serializer = tf.newTransformer();</div><div class="line">	serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">"utf-8"</span>);</div><div class="line">	serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">"yes"</span>);</div><div class="line">	serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">"html"</span>);</div><div class="line">	serializer.transform(domSource, streamResult);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##DOCX==&gt;html</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// docx转换为html</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">docxToHtml</span><span class="params">(String sourceFileName, String targetFileName,</span></span></div><div class="line">		String root) <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">	String imagePathStr = root + <span class="string">"\\image\\"</span>;</div><div class="line">	OutputStreamWriter outputStreamWriter = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		XWPFDocument document = <span class="keyword">new</span> XWPFDocument(<span class="keyword">new</span> FileInputStream(</div><div class="line">				sourceFileName));</div><div class="line">		XHTMLOptions options = XHTMLOptions.create();</div><div class="line">		<span class="comment">// 存放图片的文件夹</span></div><div class="line">		options.setExtractor(<span class="keyword">new</span> FileImageExtractor(<span class="keyword">new</span> File(imagePathStr)));</div><div class="line">		<span class="comment">// html中图片的路径</span></div><div class="line">		options.URIResolver(<span class="keyword">new</span> BasicURIResolver(<span class="string">"image"</span>));</div><div class="line">		outputStreamWriter = <span class="keyword">new</span> OutputStreamWriter(<span class="keyword">new</span> FileOutputStream(</div><div class="line">				targetFileName), <span class="string">"utf-8"</span>);</div><div class="line">		XHTMLConverter xhtmlConverter = (XHTMLConverter) XHTMLConverter</div><div class="line">				.getInstance();</div><div class="line">		xhtmlConverter.convert(document, outputStreamWriter, options);</div><div class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">		e.printStackTrace();</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		<span class="keyword">if</span> (outputStreamWriter != <span class="keyword">null</span>) &#123;</div><div class="line">			outputStreamWriter.close();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##XLS==&gt;Html</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">xlsToHtml</span><span class="params">(String sourceFileName, String targetFileName)</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		Document doc = ExcelToHtmlConverter</div><div class="line">				.process(<span class="keyword">new</span> File(sourceFileName));</div><div class="line">		DOMSource domSource = <span class="keyword">new</span> DOMSource(doc);</div><div class="line">		StreamResult streamResult = <span class="keyword">new</span> StreamResult(<span class="keyword">new</span> File(</div><div class="line">				targetFileName));</div><div class="line">		TransformerFactory tf = TransformerFactory.newInstance();</div><div class="line">		Transformer serializer = tf.newTransformer();</div><div class="line">		serializer.setOutputProperty(OutputKeys.ENCODING, <span class="string">"UTF-8"</span>);</div><div class="line">		serializer.setOutputProperty(OutputKeys.INDENT, <span class="string">"yes"</span>);</div><div class="line">		serializer.setOutputProperty(OutputKeys.METHOD, <span class="string">"html"</span>);</div><div class="line">		serializer.transform(domSource, streamResult);</div><div class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">		e.printStackTrace();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>#总结<br>对于doc/docx/xln相对而言比较好转，但是对于ppt的就无能无力了，所以大家需要根据自己的项目对于预览需求程度来选择对应的方案。基本上都是使用了POI框架提供的一些API实现上述功能的。具体jar 我就不在这里提供了，大家可以直接搜jar包或者maven依赖，很方便。</p>
 </span>
       
     </div>
@@ -411,7 +363,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag">#算法</a>
+            <a href="/tags/项目/" rel="tag">#项目</a>
           
         </div>
       
@@ -420,13 +372,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/13/常用的排序算法总结/" rel="prev">几种经常用的排序算法总结</a>
+              <a href="/2017/04/10/doc&pdf/" rel="prev">记在线预览文档&文档格式转换实现思路</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/24/java虚拟机总结(2)/" rel="next">java虚拟机总结(2)</a>
+              <a href="/2017/04/02/sql/" rel="next">行吧云购&利用mysql存储过程解决业务处理心得&优惠劵设计</a>
             
           </div>
         </div>
@@ -555,7 +507,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POI-介绍"><span class="nav-number">2.</span> <span class="nav-text">POI 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文档预览分析"><span class="nav-number">3.</span> <span class="nav-text">文档预览分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">4.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOC–-gt-HTML"><span class="nav-number">4.1.</span> <span class="nav-text">DOC–>HTML</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
