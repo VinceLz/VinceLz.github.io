@@ -1,0 +1,784 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="nginxnginx一款轻量级而又高性能的http和反向代理服务器，来自俄罗斯，目前阿里、腾讯、百度、搜狐等在用这款，足以说明它的性能和功能有多强大了。具体的描述大家百度一下吧。
+nginx功能反向代理反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx总结">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/20/nginx/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="nginxnginx一款轻量级而又高性能的http和反向代理服务器，来自俄罗斯，目前阿里、腾讯、百度、搜狐等在用这款，足以说明它的性能和功能有多强大了。具体的描述大家百度一下吧。
+nginx功能反向代理反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此">
+<meta property="og:updated_time" content="2017-05-18T11:44:31.183Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx总结">
+<meta name="twitter:description" content="nginxnginx一款轻量级而又高性能的http和反向代理服务器，来自俄罗斯，目前阿里、腾讯、百度、搜狐等在用这款，足以说明它的性能和功能有多强大了。具体的描述大家百度一下吧。
+nginx功能反向代理反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> nginx总结 | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              nginx总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-04-20T16:01:23+08:00" content="2017-04-20">
+            2017-04-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><p>nginx一款轻量级而又高性能的http和反向代理服务器，来自俄罗斯，目前阿里、腾讯、百度、搜狐等在用这款，足以说明它的性能和功能有多强大了。具体的描述大家百度一下吧。</p>
+<h1 id="nginx功能"><a href="#nginx功能" class="headerlink" title="nginx功能"></a>nginx功能</h1><h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。—摘自百度</p>
+<p>根据百度我们得知，反向代理是这样的：</p>
+<pre><code>http请求---&gt;nginx服务器---&gt;后端服务器    
+</code></pre><p>反向代理用我们的大白话就是，我找一个代理人去请求数据，并返回给我。那么这么做有什么用呢？ 其实一般反向代理用在动静分离，也就是静态&amp;动态页面。这也就说明当我们访问一个页面的时候，别看人家后缀是.html，就以为是静态页面，说不准，人家是通过nginx反向代理后还是去请求了后端服务器，这也叫做<strong><em>伪静态</em></strong>。</p>
+<h3 id="具体怎么用"><a href="#具体怎么用" class="headerlink" title="具体怎么用"></a>具体怎么用</h3><p>我们需要编辑nginx/conf/nginx.cong文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line">//server表示一个虚拟主机 可以有若干个</div><div class="line"></div><div class="line"></div><div class="line">server &#123;</div><div class="line">       	 listen  80;//监听端口	</div><div class="line">          server_name  localhost:80; //请求host</div><div class="line">   location / &#123; //location表示要映射的地址，后面跟的是地址后者正则匹配条件</div><div class="line">  </div><div class="line">   	proxy_pass http://localhost:8080；  //proxy_pass就是反向代理。他表示如果匹配成功location，那么就进来反向代理到http:localhsot:8080 这里可以使后端服务器地址接口</div><div class="line">   &#125;</div><div class="line">location  ~ \.jsp$ &#123; //同过正则条件匹配所以的.jsp后缀的请求</div><div class="line">	#proxy_set_header X-real-ip $remote_addr;	//proxy_set_header X-real-ip 值 表示将这个请求转发到后端，并且设置请求头X-real-ip</div><div class="line">	 proxy_pass http://192.168.1.171:8080;</div><div class="line">&#125;</div><div class="line"></div><div class="line"> location = /50x.html &#123;  </div><div class="line">	</div><div class="line">           root   html;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">location ~ test &#123; //匹配含有test的url</div><div class="line">		if ($remote_addr = 192.168.1.200) &#123; //$remote_addr是一个变量，表示请求的url地址host</div><div class="line">		       return 401;</div><div class="line">		&#125;		</div><div class="line">		if ($http_user_agent ~* firefox) &#123;	</div><div class="line">			   rewrite ^.*$ /firefox.html;  //rewrite 类似转发 重定向</div><div class="line">			   break;</div><div class="line">		&#125;			</div><div class="line">		root bhz.com;</div><div class="line">		index index.html;</div><div class="line">	&#125;	</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">		</div><div class="line">		已=开头表示精确匹配</div><div class="line">		如 A 中只匹配根目录结尾的请求，后面不能带任何字符串。</div><div class="line">		^~ 开头表示uri以某个常规字符串开头，不是正则匹配</div><div class="line">		~ 开头表示区分大小写的正则匹配;</div><div class="line">		~* 开头表示不区分大小写的正则匹配</div><div class="line">		/ 通用匹配, 如果没有其它匹配,任何请求都会匹配到  </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">			以实际使用中，个人觉得至少有三个匹配规则定义，如下：</div><div class="line">			#直接匹配网站根，通过域名访问网站首页比较频繁，使用这个会加速处理，官网如是说。</div><div class="line">			#这里是直接转发给后端应用服务器了，也可以是一个静态首页</div><div class="line">			# 第一个必选规则</div><div class="line">			location = / &#123;</div><div class="line">			    proxy_pass http://tomcat:8080/index</div><div class="line">			&#125;</div><div class="line">			# 第二个必选规则是处理静态文件请求，这是nginx作为http服务器的强项</div><div class="line">			# 有两种配置模式，目录匹配或后缀匹配,任选其一或搭配使用</div><div class="line">			location ^~ /static/ &#123;</div><div class="line">			    root /webroot/static/;</div><div class="line">			&#125;</div><div class="line">			location ~* \.(gif|jpg|jpeg|png|css|js|ico)$ &#123;</div><div class="line">			    root /webroot/res/;</div><div class="line">			&#125;</div><div class="line">			#第三个规则就是通用规则，用来转发动态请求到后端应用服务器</div><div class="line">			#非静态文件请求就默认是动态请求，自己根据实际把握</div><div class="line">			#毕竟目前的一些框架的流行，带.php,.jsp后缀的情况很少了</div><div class="line">			location / &#123;</div><div class="line">			    proxy_pass http://tomcat:8080/</div><div class="line">			&#125; </div><div class="line"></div><div class="line">		//特别的需要注意的是rewrite的使用</div><div class="line">		rewrite功能就是，使用nginx提供的全局变量或自己设置的变量，结合正则表达式和标志位实现url重写以及</div><div class="line">		重定向。rewrite只能放在server&#123;&#125;,location&#123;&#125;,if&#123;&#125;中，并且只能对域名后边的除去传递的参数外的字符串起作用，例如</div><div class="line">		 http://seanlook.com/a/we/index.php?id=1&amp;u=str 只对/a/we/index.php重写。语法rewrite regex replacement [flag];</div><div class="line">		表明看rewrite和location功能有点像，都能实现跳转，主要区别在于rewrite是在同一域名内更改获取资的</div><div class="line">		路径，而location是对一类路径做控制访问或反向代理，可以proxy_pass到其他机器。很多情况下rewrite</div><div class="line">		也会写在location里，它们的执行顺序是：</div><div class="line"></div><div class="line">		执行server块的rewrite指令</div><div class="line">		执行location匹配</div><div class="line">		执行选定的location中的rewrite指令</div><div class="line">	</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">	//附带全局变量 根据请求中获取到的一些数据</div><div class="line">	$args ： #这个变量等于请求行中的参数，同$query_string</div><div class="line">	$content_length ： 请求头中的Content-length字段。</div><div class="line">	$content_type ： 请求头中的Content-Type字段。</div><div class="line">	$document_root ： 当前请求在root指令中指定的值。</div><div class="line">	$host ： 请求主机头字段，否则为服务器名称。</div><div class="line">	$http_user_agent ： 客户端agent信息</div><div class="line">	$http_cookie ： 客户端cookie信息</div><div class="line">	$limit_rate ： 这个变量可以限制连接速率。</div><div class="line">	$request_method ： 客户端请求的动作，通常为GET或POST。</div><div class="line">	$remote_addr ： 客户端的IP地址。</div><div class="line">	$remote_port ： 客户端的端口。</div><div class="line">	$remote_user ： 已经经过Auth Basic Module验证的用户名。</div><div class="line">	$request_filename ： 当前请求的文件路径，由root或alias指令与URI请求生成。</div><div class="line">	$scheme ： HTTP方法（如http，https）。</div><div class="line">	$server_protocol ： 请求使用的协议，通常是HTTP/1.0或HTTP/1.1。</div><div class="line">	$server_addr ： 服务器地址，在完成一次系统调用后可以确定这个值。</div><div class="line">	$server_name ： 服务器名称。</div><div class="line">	$server_port ： 请求到达服务器的端口号。</div><div class="line">	$request_uri ： 包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”。</div><div class="line">	$uri ： 不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”。</div><div class="line">	$document_uri ： 与$uri相同。</div></pre></td></tr></table></figure>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>负载均衡，有什么用呢，当我们有这样一个场景：后端只有一台服务器在运行，但是前端大量用户访问，那么可以肯定的是这台服务器迟早支撑不住的，那么就需要我们扩展几台服务器，同时运行一个项目，那么问题就来了，前端去访问谁呢？如何访问才能让请求平均分配，而不是集中一台，不然问题又回到原点了。那么nginx就可以满足我们上述的所有需求。</p>
+<pre><code>                                后端服务器A
+http请求----&gt;nginx服务器          后端服务器B
+                                后端服务器C
+</code></pre><p>我们可以在nginx中配置权重，实现负载均衡。</p>
+<h3 id="怎么用"><a href="#怎么用" class="headerlink" title="怎么用"></a>怎么用</h3><p>还是编辑conf/nginx.conf文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="comment">//upstream 名字 他是一个独立的接口，不在server里面，跟server是同级的</span></div><div class="line">    upstream web_app &#123;   </div><div class="line"><span class="comment">//服务    服务地址          权重		 最大的失败次数（如果超过就认为服务无效，将不参与负载)</span></div><div class="line"> 	 server <span class="number">192.168</span>.1.172:<span class="number">8080</span> weight=<span class="number">1</span> max_fails=<span class="number">2</span> fail_timeout=<span class="number">30</span>s;    <span class="comment">//fail_timeout表示超时时间（如果判断失败，当超时超过这个值，就将失败次数+1</span></div><div class="line"> server <span class="number">192.168</span>.1.173:<span class="number">8080</span> weight=<span class="number">1</span> max_fails=<span class="number">2</span> fail_timeout=<span class="number">30</span>s;   </div><div class="line">   &#125;  </div><div class="line"></div><div class="line">server&#123;</div><div class="line">	listen <span class="number">80</span>;</div><div class="line">	server_name  localhost;</div><div class="line">	location /&#123; <span class="comment">//表示匹配到/就进来执行，同上</span></div><div class="line">	proxy_pass:http:<span class="comment">//web_app(  这个web_app就是你上面upstream结点的名字);</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="其他参数配置"><a href="#其他参数配置" class="headerlink" title="其他参数配置"></a>其他参数配置</h1><p>我们只是说明了负载均衡和反向代理的配置，那么nginx还有很多参数，配置好这些参数，那么就很大程度剩优化了服务。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#开启进程数 &lt;=CPU数 </div><div class="line">worker_processes  1;</div><div class="line">#错误日志保存位置</div><div class="line">#error_log  logs/error.log;</div><div class="line">#error_log  logs/error.log  notice;</div><div class="line">#error_log  logs/error.log  info;</div><div class="line">#进程号保存文件</div><div class="line">#pid        logs/nginx.pid;</div><div class="line">#每个进程最大连接数（最大连接=连接数x进程数）每个worker允许同时产生多少个链接，默认1024</div><div class="line">events &#123;</div><div class="line">    worker_connections  1024;</div><div class="line">&#125;</div><div class="line">http&#123;</div><div class="line">	#文件扩展名与文件映射表</div><div class="line">	include   mime.types</div><div class="line">	#默认文件类型</div><div class="line">   	default_type  application/octet-stream;</div><div class="line"></div><div class="line">		</div><div class="line">	#日志文件输出格式 这个位置相于全局设置</div><div class="line">    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</div><div class="line">                      '$status $body_bytes_sent "$http_referer" '</div><div class="line">                      '"$http_user_agent" "$http_x_forwarded_for"';</div><div class="line"></div><div class="line">		#请求日志保存位置</div><div class="line">    #access_log  logs/access.log  main;</div><div class="line">	</div><div class="line">	#打开发送文件</div><div class="line">    sendfile        on;</div><div class="line">    #tcp_nopush     on;</div><div class="line"></div><div class="line">    #keepalive_timeout  0;</div><div class="line">	#连接超时时间</div><div class="line">    keepalive_timeout  65;</div><div class="line"></div><div class="line">	#打开gzip压缩</div><div class="line">    #gzip  on;</div><div class="line">	</div><div class="line">	#设定请求缓冲</div><div class="line">	#client_header_buffer_size 1k;</div><div class="line">	#large_client_header_buffers 4 4k;</div><div class="line">	</div><div class="line">	server &#123;</div><div class="line">	#监听端口</div><div class="line">       listen       80;</div><div class="line">	#监听域名</div><div class="line">       server_name  localhost;</div><div class="line"></div><div class="line">       #charset koi8-r;</div><div class="line">	</div><div class="line">	#nginx访问日志放在logs/host.access.log下，并且使用main格式（还可以自定义格式）</div><div class="line">       #access_log  logs/host.access.log  main; //进入该结点的日志</div><div class="line"></div><div class="line">	#返回的相应文件地址</div><div class="line">       location / &#123;</div><div class="line">           #设置客户端真实ip地址</div><div class="line">           #proxy_set_header X-real-ip $remote_addr;		</div><div class="line">		#负载均衡反向代理</div><div class="line">		#proxy_pass http://myapp;</div><div class="line">		</div><div class="line">		#返回根路径地址（相对路径:相对于/usr/local/nginx/）</div><div class="line">           root   html;</div><div class="line">		#默认访问文件</div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">	#配置反向代理tomcat服务器：拦截.jsp结尾的请求转向到tomcat</div><div class="line">       #location ~ \.jsp$ &#123;</div><div class="line">       #    proxy_pass http://192.168.1.171:8080;</div><div class="line">       #&#125;		</div><div class="line">	</div><div class="line">       #error_page  404              /404.html;</div><div class="line">       # redirect server error pages to the static page /50x.html</div><div class="line">       #</div><div class="line">	</div><div class="line">	#错误页面及其返回地址</div><div class="line">       error_page   500 502 503 504  /50x.html;</div><div class="line">       location = /50x.html &#123;</div><div class="line">           root   html;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       # proxy the PHP scripts to Apache listening on 127.0.0.1:80</div><div class="line">       #</div><div class="line">       #location ~ \.php$ &#123;</div><div class="line">       #    proxy_pass   http://127.0.0.1;</div><div class="line">       #&#125;</div><div class="line"></div><div class="line">       # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</div><div class="line">       #</div><div class="line">       #location ~ \.php$ &#123;</div><div class="line">       #    root           html;</div><div class="line">       #    fastcgi_pass   127.0.0.1:9000;</div><div class="line">       #    fastcgi_index  index.php;</div><div class="line">       #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</div><div class="line">       #    include        fastcgi_params;</div><div class="line">       #&#125;</div><div class="line"></div><div class="line">       # deny access to .htaccess files, if Apache's document root</div><div class="line">       # concurs with nginx's one</div><div class="line">       #</div><div class="line">       #location ~ /\.ht &#123;</div><div class="line">       #    deny  all;</div><div class="line">       #&#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">#虚拟主机配置：</div><div class="line">server &#123;</div><div class="line">	listen 1234;</div><div class="line">	server_name bhz.com;</div><div class="line">	location / &#123;</div><div class="line">	#正则表达式匹配uri方式：在/usr/local/nginx/bhz.com下 建立一个test123.html 然后使用正则匹配</div><div class="line">	#location ~ test &#123;</div><div class="line">		## 重写语法：if return （条件 = ~ ~*）</div><div class="line">		#if ($remote_addr = 192.168.1.200) &#123;</div><div class="line">		#       return 401;</div><div class="line">		#&#125;		</div><div class="line">		</div><div class="line">		#if ($http_user_agent ~* firefox) &#123;</div><div class="line">		#	   rewrite ^.*$ /firefox.html;</div><div class="line">		#	   break;</div><div class="line">		#&#125;			</div><div class="line">					</div><div class="line">		root bhz.com;</div><div class="line">		index index.html;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	#location /goods &#123;</div><div class="line">	#		rewrite "goods-(\d&#123;1,5&#125;)\.html" /goods-ctrl.html;</div><div class="line">	#		root bhz.com;</div><div class="line">	#		index index.html;</div><div class="line">	#&#125;</div><div class="line">	</div><div class="line">	#配置访问日志</div><div class="line">	access_log logs/bhz.com.access.log main;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">   # another virtual host using mix of IP-, name-, and port-based configuration</div><div class="line">   #</div><div class="line">   #server &#123;</div><div class="line">   #    listen       8000;</div><div class="line">   #    listen       somename:8080;</div><div class="line">   #    server_name  somename  alias  another.alias;</div><div class="line"></div><div class="line">   #    location / &#123;</div><div class="line">   #        root   html;</div><div class="line">   #        index  index.html index.htm;</div><div class="line">   #    &#125;</div><div class="line">   #&#125;</div><div class="line"></div><div class="line"></div><div class="line">   # HTTPS server</div><div class="line">   #</div><div class="line">   #server &#123;</div><div class="line">   #    listen       443 ssl;</div><div class="line">   #    server_name  localhost;</div><div class="line"></div><div class="line">   #    ssl_certificate      cert.pem;</div><div class="line">   #    ssl_certificate_key  cert.key;</div><div class="line"></div><div class="line">   #    ssl_session_cache    shared:SSL:1m;</div><div class="line">   #    ssl_session_timeout  5m;</div><div class="line"></div><div class="line">   #    ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">   #    ssl_prefer_server_ciphers  on;</div><div class="line"></div><div class="line">   #    location / &#123;</div><div class="line">   #        root   html;</div><div class="line">   #        index  index.html index.htm;</div><div class="line">   #    &#125;</div><div class="line">   #&#125;</div></pre></td></tr></table></figure>
+<p>特别的，nginx有局部变量和全局变量，我们一般使用set key values 表示设置的是局部变量，那么nginx自带的一些如上面中的args 就是全局变量，我们可以随时访问到$args。</p>
+<h1 id="一些优化"><a href="#一些优化" class="headerlink" title="一些优化"></a>一些优化</h1><p>我们不仅可以使用负载均衡和反向代理，还可以使用nginx对网站进行一些优化，那么应该下这几方面优化：</p>
+<ul>
+<li></li>
+</ul>
+<ol>
+<li>对于开发人员—-合并css, 背景图片, 减少mysql查询等.</li>
+<li>对于运维 nginx的expires ,利用浏览器缓存等,减少查询.</li>
+<li>利用cdn来响应请求</li>
+<li>使用阿里的nginx一款插件，可以请求一次，下载多个文件。</li>
+</ol>
+<h1 id="其他负载均衡策略"><a href="#其他负载均衡策略" class="headerlink" title="其他负载均衡策略"></a>其他负载均衡策略</h1><ol>
+<li>使用F5硬件实现负载均衡</li>
+<li>使用zookeeper实现负载均衡</li>
+</ol>
+<p>这些我后续更新。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag">#项目</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/16/xingbas/" rel="next">行吧云购&支付日志&认证机制</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx"><span class="nav-number">1.</span> <span class="nav-text">nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx功能"><span class="nav-number">2.</span> <span class="nav-text">nginx功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理"><span class="nav-number">2.1.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体怎么用"><span class="nav-number">2.1.1.</span> <span class="nav-text">具体怎么用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">2.2.</span> <span class="nav-text">负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么用"><span class="nav-number">2.2.1.</span> <span class="nav-text">怎么用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他参数配置"><span class="nav-number">3.</span> <span class="nav-text">其他参数配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些优化"><span class="nav-number">4.</span> <span class="nav-text">一些优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他负载均衡策略"><span class="nav-number">5.</span> <span class="nav-text">其他负载均衡策略</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
