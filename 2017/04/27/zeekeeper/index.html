@@ -3,6 +3,8 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
+    
+
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -31,7 +33,7 @@
 
 
 
-  <meta name="keywords" content="Java模式," />
+  <meta name="keywords" content="zeekeeper," />
 
 
 
@@ -42,22 +44,46 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="什么是状态模式什么是状态模式？我们单从字面无法理解状态模式的概念，但是如果我们需要设计一个类，根据某些变量相应的类的行为会发生改变，那么我们就可以把这个变量叫做这个类的状态，也就是说，状态决定了我们类的行为，性质等。
+<meta name="description" content="什么是zeekeeper刚开始学的时候，一直不是很明白zeekeeper是什么东西，经常听到zeekeeper实现分布式的，但是学完zeekeeper你会发现zk不仅可以实现分布式的，还可以实现其他功能，例如:
 
-没有状态模式之前，我们是这样设计代码的 123456789101112131415public class Main&amp;#123;  int status;  public Stri">
+配置中心
+负载均衡
+命名服务
+分布式通知、协调
+集群管理&amp;amp;master选举
+分布式锁
+分布式队列
+
+我会在后面介绍着几种运用的场景，那么我们先开始简单介绍下zk的一些基本功能和属">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java设计模式（七）状态模式">
-<meta property="og:url" content="https://vincelz.github.io/2017/01/12/ms-6/index.html">
+<meta property="og:title" content="zeekeeper总结">
+<meta property="og:url" content="https://vincelz.github.io/2017/04/27/zeekeeper/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="什么是状态模式什么是状态模式？我们单从字面无法理解状态模式的概念，但是如果我们需要设计一个类，根据某些变量相应的类的行为会发生改变，那么我们就可以把这个变量叫做这个类的状态，也就是说，状态决定了我们类的行为，性质等。
+<meta property="og:description" content="什么是zeekeeper刚开始学的时候，一直不是很明白zeekeeper是什么东西，经常听到zeekeeper实现分布式的，但是学完zeekeeper你会发现zk不仅可以实现分布式的，还可以实现其他功能，例如:
 
-没有状态模式之前，我们是这样设计代码的 123456789101112131415public class Main&amp;#123;  int status;  public Stri">
-<meta property="og:updated_time" content="2017-03-05T02:50:33.306Z">
+配置中心
+负载均衡
+命名服务
+分布式通知、协调
+集群管理&amp;amp;master选举
+分布式锁
+分布式队列
+
+我会在后面介绍着几种运用的场景，那么我们先开始简单介绍下zk的一些基本功能和属">
+<meta property="og:updated_time" content="2017-05-23T13:41:33.557Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java设计模式（七）状态模式">
-<meta name="twitter:description" content="什么是状态模式什么是状态模式？我们单从字面无法理解状态模式的概念，但是如果我们需要设计一个类，根据某些变量相应的类的行为会发生改变，那么我们就可以把这个变量叫做这个类的状态，也就是说，状态决定了我们类的行为，性质等。
+<meta name="twitter:title" content="zeekeeper总结">
+<meta name="twitter:description" content="什么是zeekeeper刚开始学的时候，一直不是很明白zeekeeper是什么东西，经常听到zeekeeper实现分布式的，但是学完zeekeeper你会发现zk不仅可以实现分布式的，还可以实现其他功能，例如:
 
-没有状态模式之前，我们是这样设计代码的 123456789101112131415public class Main&amp;#123;  int status;  public Stri">
+配置中心
+负载均衡
+命名服务
+分布式通知、协调
+集群管理&amp;amp;master选举
+分布式锁
+分布式队列
+
+我会在后面介绍着几种运用的场景，那么我们先开始简单介绍下zk的一些基本功能和属">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -67,7 +93,7 @@
   };
 </script>
 
-  <title> Java设计模式（七）状态模式 | 1000 words a Day </title>
+  <title> zeekeeper总结 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -301,7 +327,7 @@
           
           
             
-              Java设计模式（七）状态模式
+              zeekeeper总结
             
           
         </h1>
@@ -310,8 +336,8 @@
       <div class="post-meta">
         <span class="post-time">
           Veröffentlicht am
-          <time itemprop="dateCreated" datetime="2017-01-12T14:37:33+08:00" content="2017-01-12">
-            2017-01-12
+          <time itemprop="dateCreated" datetime="2017-04-27T15:24:55+08:00" content="2017-04-27">
+            2017-04-27
           </time>
         </span>
 
@@ -329,14 +355,60 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="什么是状态模式"><a href="#什么是状态模式" class="headerlink" title="什么是状态模式"></a>什么是状态模式</h1><p>什么是状态模式？我们单从字面无法理解状态模式的概念，但是如果我们需要设计一个类，根据某些变量<br>相应的类的行为会发生改变，那么我们就可以把这个变量叫做这个类的状态，也就是说，状态决定了我们<br>类的行为，性质等。</p>
-<ul>
-<li>没有状态模式之前，我们是这样设计代码的 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> status;</div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getTODo</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">switch</span>(status)</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">case</span> <span class="number">0</span>:<span class="keyword">return</span> <span class="string">"你需要睡觉了"</span>;<span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="number">1</span>:<span class="keyword">return</span> <span class="string">"你需要睡觉了"</span>;<span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="number">2</span>:<span class="keyword">return</span> <span class="string">"你需要睡觉了"</span>;<span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="number">3</span>:<span class="keyword">return</span> <span class="string">"你需要睡觉了"</span>;<span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="number">4</span>:<span class="keyword">return</span> <span class="string">"你需要睡觉了"</span>;<span class="keyword">break</span>;</div><div class="line">      .....</div><div class="line">      <span class="keyword">case</span> <span class="number">7</span>:<span class="keyword">return</span> <span class="string">"你该起床了哦"</span>;<span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>大家可以看，我们的getTODo方法的返回值是由status这个变量来决定的，那么我们就可以很容易的理解<br>了状态，但是这么简单，我们也就没必要引出今天的主题《状态模式》了，假如我们的状态有N种，咋么办？<br>假如我们要临时改正状态对应的行为，杂么办？上述代码只能实现功能，但是从设计优良的代码角度来看，<br>是很不友好的。那么我们就需要学会状态模式了</p>
-<h1 id="优秀的状态模式"><a href="#优秀的状态模式" class="headerlink" title="优秀的状态模式"></a>优秀的状态模式</h1><p>状态模式：当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。状态模式主要解决了当一个控制对象行为的状态变的非常复杂困难时，那么就需要把状态的判断逻辑转移到表示不同状态的一系列类中。—–摘自大话模式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">State</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Handle</span><span class="params">(Context Context)</span></span>;</div><div class="line"> &#125;</div><div class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Morning</span> <span class="keyword">extends</span> <span class="title">State</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Context ocntext)</span></span>&#123;</div><div class="line">     <span class="keyword">if</span>(ocntext.hour&lt;<span class="number">12</span>)&#123;</div><div class="line">       System.out.println(<span class="string">"大早上的，我肯定是精神充足，好好工作"</span>);</div><div class="line">     &#125;<span class="keyword">else</span>&#123;</div><div class="line">         <span class="comment">//超过12点，转入中午状态</span></div><div class="line">         ocntext.setState(<span class="keyword">new</span> NoonState());ocntext.todo();</div><div class="line">     &#125;</div><div class="line">   &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoonState</span> <span class="keyword">extends</span> <span class="title">State</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Context context)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(context.hour&lt;<span class="number">18</span>)&#123;</div><div class="line">      System.out.println(<span class="string">"下午，好没精神，咋么办"</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="comment">//</span></div><div class="line">      context.setState(<span class="keyword">new</span> nightState());context.todo();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span></span>&#123;</div><div class="line">  <span class="keyword">private</span> State state;</div><div class="line">  <span class="keyword">int</span> hour;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">setState</span><span class="params">(State <span class="keyword">static</span>)</span></span>&#123;</div><div class="line">     <span class="keyword">this</span>.state=<span class="keyword">static</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">todo</span><span class="params">()</span></span>&#123;</div><div class="line">    state.handle(<span class="keyword">this</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">   Context con=<span class="keyword">new</span> Context();</div><div class="line">   con.setState(<span class="keyword">new</span> Morning());</div><div class="line">   con.hour=<span class="number">10</span>;</div><div class="line">   con.todo();</div><div class="line">   con.hour=<span class="number">17</span>;</div><div class="line">   con.todo();</div><div class="line">   ........</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>大家有没有发现，我们在主类中Context就没有多少case/if判断了，而是把这些判断都转移到了State<br>中这样，当我们需要一个新的状态时，只要继承State，然后把对应的逻辑写好，然后调用在对应状态中<br>进行转移，就可以实现对代码的业务增加，对主类，我们没有进行半点改动，是不是很神奇！！<br>状态模式就是把各种转台转移逻辑分布到 State的子类之间，来减少互相间的依赖。</p>
+        <span itemprop="articleBody"><h1 id="什么是zeekeeper"><a href="#什么是zeekeeper" class="headerlink" title="什么是zeekeeper"></a>什么是zeekeeper</h1><p>刚开始学的时候，一直不是很明白zeekeeper是什么东西，经常听到zeekeeper实现分布式的，但是学完zeekeeper你会发现zk不仅可以实现分布式的，还可以实现其他功能，例如:</p>
+<ol>
+<li>配置中心</li>
+<li>负载均衡</li>
+<li>命名服务</li>
+<li>分布式通知、协调</li>
+<li>集群管理&amp;master选举</li>
+<li>分布式锁</li>
+<li>分布式队列</li>
+</ol>
+<p>我会在后面介绍着几种运用的场景，那么我们先开始简单介绍下zk的一些基本功能和属性吧。</p>
+<h1 id="zeekeeper属性"><a href="#zeekeeper属性" class="headerlink" title="zeekeeper属性"></a>zeekeeper属性</h1><h2 id="树形结构"><a href="#树形结构" class="headerlink" title="树形结构"></a>树形结构</h2><p>zeekeeper它是一个树形的文件结构，例如 /a/b/c/d ，学过linux的都知道，linux的文件目录结构就是树形，我们就拿linux做个比喻吧，假如我们要获取/etc目录下的文件，那么就是ls /etc ，那么zk也一样，ls /etc，只不过我们的zk下的每一个目录都可以放数据（文本、二进制），当然每一个目录下面还可以有下级目录，那么这就是zk的文件结构组织方式。</p>
+<h2 id="zk的角色"><a href="#zk的角色" class="headerlink" title="zk的角色"></a>zk的角色</h2><p>zk有3种角色，领导者（leader) follower(跟随者） observer（观察者) ,他们的作用：</p>
+<pre><code>leader 领导者，只能有一个，负责进行投票的发起和决议，更新状态。
+
+follower 跟随者 可以有若干个（集群）  负责接受客户端请求，并返回数据，在选举中负责参与投
+票。
+
+Observer 观察者 可以接受客户端请求，将写请求转发给leader，但observer不参加投票过程，只同步
+leader的状态，observer的目的是为了扩展系统，提高读取速度。
+</code></pre><p>zk中的leader和follower区别：leader负责投票的发起和选举，而follower是负责投票。  当一个请求来的话，follower会直接处理请求，但是如果遇到写请求，那么follower会请求leader,确认后才会执行写操作，并写入日志，最终同步到其他节点中。</p>
+<h2 id="zk的选举方式"><a href="#zk的选举方式" class="headerlink" title="zk的选举方式"></a>zk的选举方式</h2><p>zk使用了<strong>paxos</strong>算法实现了选举。在选举的时候，尽量保证奇数，这样可以很大程度上利于选举。</p>
+<h2 id="zk中节点Znode"><a href="#zk中节点Znode" class="headerlink" title="zk中节点Znode"></a>zk中节点Znode</h2><p>zk中的节点是以Znode形式存在，每个结点具有原子性，但是他被设计的并不是存储大型数据，只能存储1M左右的数据。znode节点由3部分组成：</p>
+<pre><code>1. stat 状态信息 描述该znode的版本、权限信息。zk使用了乐观锁机制，对版本号检查判断设置值。
+2. data是znode关联的数据
+3. children 是znode下的子节点
+</code></pre><p> znode中的数据可以有多个版本，在查询该znode数据时就需要带上版本信息。如：set path version / delete path version</p>
+<p>znode可以是临时znode，由create -e 生成的节点，一旦创建这个znode的client与server断开连接，该znode将被自动删除。</p>
+<p>  client和server之间通过heartbeat来确认连接正常，这种状态称之为session，断开连接后session失效。<br> 临时znode不能有子znode。</p>
+<p>znode可以自动编号，由create -s 生成的节点，例如在 create -s /app/node 已存在时，将会生成 /app/node00<em>*</em>001节点。</p>
+<p>znode可以被监控，该目录下某些信息的修改，例如节点数据、子节点变化等，可以主动通知监控注册的client。事实上，通过这个特性，可以完成许多重要应用，例如配置管理、信息同步、分布式锁等等。</p>
+<p>zk目录树中每一个节点对应着一个znode节点，每个znode节点维护着一个属性结构，包括版本号、时间戳等状态信息。当我们对zk的结点进行操作，那么就回对版本号进行增加，那么当我们检索数据时候，也同时会检索版本号。正是我们有版本号等一些属性，才可以实现一些特殊的操作，比如 乐观锁。我们每次操作，增删数据的时候，就需要提供版本号，如果版本号与目前的版本号不一致，那么就会导致操作失败，保证了原子操作。</p>
+<h2 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h2><p>watcher我理解的就是监听器，我们客户端可以给服务器上的某个节点配置watcher,当节点状态发送改变（增、删、改),那么就会触发客户端的监听程序，一旦服务器触发了客户端的监听器，那么就会取消该监听器，也就是说watcher只能监听一次，如果需要继续监听，那么就需要重新注册。</p>
+<h2 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h2><p>ZooKeeper中的每个节点存储的数据要被原子性的操作。也就是说读操作将获取与节点相关的所有数据，写操作也将替换掉节点的所有数据。另外，每一个节点都拥有自己的ACL(访问控制列表)，这个列表规定了用户的权限，即限定了特定用户对目标节点可以执行的操作。</p>
+<h2 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h2><p>ZooKeeper中的节点有两种，分别为临时节点和永久节点。节点的类型在创建时即被确定，并且不能改变。</p>
+<p>　ZooKeeper的<strong>临时节点</strong>：该节点的生命周期依赖于创建它们的会话。一旦会话结束，临时节点将被自动删除，当然可以也可以手动删除。另外，需要注意是，ZooKeeper的临时节点不允许拥有子节点。 </p>
+<p>　ZooKeeper的<strong>永久节点</strong>：该节点的生命周期不依赖于会话，并且只有在客户端显示执行删除操作的时候，他们才能被删除。</p>
+<pre><code>PERSISTENT：永久节点
+EPHEMERAL：临时节点
+PERSISTENT_SEQUENTIAL：永久节点、序列化
+EPHEMERAL_SEQUENTIAL：临时节点、序列化
+</code></pre><h1 id="实际运用场景"><a href="#实际运用场景" class="headerlink" title="实际运用场景"></a>实际运用场景</h1><h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>配置文件，我们实际开发中肯定有很多配置文件，每次发布、修改都需要修改配置信息，当我们是单机版的还好说，那么是分布式的呢？？总不能一台一台的去修改吧，这对于开发实在太低效，那么zk就出来证明存在感的时候了，（当然不止zk可以实现配置中心，其他中间件都可以实现），那么我选用模拟代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">String <span class="keyword">static</span> path=<span class="string">"/root"</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span>&#123;</div><div class="line">		</div><div class="line">	服务器端</div><div class="line">	String data=<span class="string">"我是配置文件"</span>;</div><div class="line">	ZooKeeper zk = <span class="keyword">new</span> ZooKeeper(<span class="string">"172.16.120.106:2181"</span>, <span class="number">2000</span>, <span class="keyword">null</span>);<span class="comment">//创建zk</span></div><div class="line">	zk.create(path,data.getByte(),Ids.CREATOR_ALL_ACL,CREATOR_ALL_ACL); <span class="comment">//创建一个结点，并将配置文件放入</span></div><div class="line"></div><div class="line"></div><div class="line">	客户端</div><div class="line">		ZooKeeper zk = <span class="keyword">new</span> ZooKeeper(<span class="string">"172.16.120.106:2181"</span>, <span class="number">2000</span>, <span class="keyword">null</span>);<span class="comment">//创建zk</span></div><div class="line">		zk.getData(path,<span class="keyword">new</span> MyWatcher(),<span class="keyword">null</span>);<span class="comment">//获取配置信息。</span></div><div class="line"></div><div class="line">	myWatcher是写的一个自定义监听，我们进行监听，当服务器端的/root结点数据发生改变后，我们就在</div><div class="line">	myWatcher代码中马上去请求服务器，并重写获取最新数据，并将之前缓存下来的数据删除并覆盖。</div><div class="line">	这样我们就实现了动态修改配置信息，甚至不用重启服务器都可以做到配置信息的重写加载，具体加载逻辑就需要在自定义的myWatcher()中写。 切记 原生的zk的监听器，一旦触发后就会消失，如果需要继续监听那么就需要重新注册。</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>负载均衡一般我们使用nginx+keeplive实现负载均衡&amp;高可用方案，但是其实我们的zk也可以实现，大体思路是：**我们在分布式的项目中加入zk，并创建临时结点（切记我们就是利用临时结点的特性来实现负载均衡），并将自己的ip地址作为结点名注册到某个固定的父结点下，那么当我们的前台服务器接受到用户请求后，决定转发到哪个服务器，那么我们就可以访问父结点并获取该结点下的所有子节点，那么也就可以获取到节点的ip地址，然后再根据相关的负载均衡策略实现转发。</p>
+<ol>
+<li>轮询法</li>
+<li>随机法</li>
+<li>hash映射法</li>
+<li>加权法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">String ip=<span class="string">""</span>;<span class="comment">//可以通过Java代码获取本机ip地址</span></div><div class="line">String path=<span class="string">"/root"</span>;</div><div class="line">后端服务器</div><div class="line">ZooKeeper zk = <span class="keyword">new</span> ZooKeeper(<span class="string">"172.16.120.106:2181"</span>, <span class="number">2000</span>, <span class="keyword">null</span>);<span class="comment">//创建zk</span></div><div class="line">zk.create(path,ip.getbyts(),Ids.CREATOR_ALL_ACL,CREATOR_ALL_ACL); <span class="comment">//创建一个结点，并将自己的ip地址放入</span></div><div class="line"></div><div class="line">前台服务器</div><div class="line">ZooKeeper zk = <span class="keyword">new</span> ZooKeeper(<span class="string">"172.16.120.106:2181"</span>, <span class="number">2000</span>, <span class="keyword">null</span>);<span class="comment">//创建zk</span></div><div class="line">List&lt;String&gt; list=zk.getChildren(path, watch);</div><div class="line"><span class="comment">//遍历整个list 然后根据相应的算法实现负载均衡</span></div><div class="line">watch同上，注册监听器，如果子节点发生变化，马上获取最新数据，并缓存到本地，当客户端请求则可以直接走缓存。</div><div class="line">当后端服务器挂了一个，那么他的session会话就会消失，那么它所创建的临时节点也就消失了，我们就是利用了这个特性可以动态的感知服务器状态。</div></pre></td></tr></table></figure>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>大体思路：Java的锁机制只能保证在一个JVM中，那么分布式集群的话，Java就不管用了，我们可以利用zk实现分布式锁。基本过程：当访问竞争资源的时候，先进入到，判断服务器某个结点是否存在，如果存在，那么也就不能获取锁，等待，或者放弃，当节点不存在，那么就进入执行代码，并创建该结点，锁住，当执行完毕后，删除该节点。这类似于文件锁，其实zk本来就可以理解为文件结构的形式。</p>
+<h2 id="分布式队列"><a href="#分布式队列" class="headerlink" title="分布式队列"></a>分布式队列</h2><p>分布式队列，基本也是利用结点的子结点，也就是说当我们要维护一个队列的时候，就可以利用结点和子结点的树形结构，这样就可以维护一个队列。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>zk其实很强大，它可以实现对分布式的集群进行管理、同步等，具体还需要在实际项目中实用，我这里只是总结下自己最近学习的过程，感觉自己对zk的掌握还不是很到位，我们一起共勉！！！</p>
 </span>
       
     </div>
@@ -345,7 +417,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java模式/" rel="tag">#Java模式</a>
+            <a href="/tags/zeekeeper/" rel="tag">#zeekeeper</a>
           
         </div>
       
@@ -354,13 +426,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/22/java虚拟机总结(1)/" rel="prev">java虚拟机总结(1)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/08/ms-5/" rel="next">Java设计模式（六）观察者模式</a>
+              <a href="/2017/04/20/nginx/" rel="next">nginx总结</a>
             
           </div>
         </div>
@@ -489,7 +559,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是状态模式"><span class="nav-number">1.</span> <span class="nav-text">什么是状态模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优秀的状态模式"><span class="nav-number">2.</span> <span class="nav-text">优秀的状态模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是zeekeeper"><span class="nav-number">1.</span> <span class="nav-text">什么是zeekeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zeekeeper属性"><span class="nav-number">2.</span> <span class="nav-text">zeekeeper属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#树形结构"><span class="nav-number">2.1.</span> <span class="nav-text">树形结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk的角色"><span class="nav-number">2.2.</span> <span class="nav-text">zk的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk的选举方式"><span class="nav-number">2.3.</span> <span class="nav-text">zk的选举方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zk中节点Znode"><span class="nav-number">2.4.</span> <span class="nav-text">zk中节点Znode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watcher"><span class="nav-number">2.5.</span> <span class="nav-text">Watcher</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据访问"><span class="nav-number">2.6.</span> <span class="nav-text">数据访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点类型"><span class="nav-number">2.7.</span> <span class="nav-text">节点类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实际运用场景"><span class="nav-number">3.</span> <span class="nav-text">实际运用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置中心"><span class="nav-number">3.1.</span> <span class="nav-text">配置中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">3.2.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式锁"><span class="nav-number">3.3.</span> <span class="nav-text">分布式锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式队列"><span class="nav-number">3.4.</span> <span class="nav-text">分布式队列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
