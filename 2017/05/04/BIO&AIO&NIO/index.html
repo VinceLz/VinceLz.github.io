@@ -3,6 +3,8 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
+    
+
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -31,7 +33,7 @@
 
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -42,22 +44,24 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
-拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
+<meta name="description" content="为什么要学习不同的IO其实基础到NIO&amp;amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。
+linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的几种IO">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图">
-<meta property="og:url" content="https://vincelz.github.io/2017/03/08/heap/index.html">
+<meta property="og:title" content="记不同的IO模型">
+<meta property="og:url" content="https://vincelz.github.io/2017/05/04/BIO&AIO&NIO/index.html">
 <meta property="og:site_name" content="1000 words a Day">
-<meta property="og:description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
-拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu2.png">
-<meta property="og:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu1.png">
-<meta property="og:updated_time" content="2017-03-14T06:22:07.222Z">
+<meta property="og:description" content="为什么要学习不同的IO其实基础到NIO&amp;amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。
+linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的几种IO">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icd1wvHaRoicVicLAg6BFhSjyKhb0sgkbHHFGROYo1IoQd6KySDHWfoMbeA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icddzMF7YS6LhrhD2ribEnU7knghz9deNva2ETw87kXzafjIPCKKgogxTw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdC0DOdXyooEQQzJiaIssjfRQmoVovzsVzIbgiae50qgK6VgBREWVCtP4A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdnlt8MsytJW9SjRE7IqWvUTMJqgl8wfRsibZFKia5pysWTINGzvD5w5Bg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:updated_time" content="2017-07-19T15:11:26.283Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图">
-<meta name="twitter:description" content="前言做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。
-拓扑排序拓扑排序，如何理解呢？这张图是我从&amp;lt;">
-<meta name="twitter:image" content="http://ok9vfjkgl.bkt.clouddn.com/tu2.png">
+<meta name="twitter:title" content="记不同的IO模型">
+<meta name="twitter:description" content="为什么要学习不同的IO其实基础到NIO&amp;amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。
+linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的几种IO">
+<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icd1wvHaRoicVicLAg6BFhSjyKhb0sgkbHHFGROYo1IoQd6KySDHWfoMbeA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -67,7 +71,7 @@
   };
 </script>
 
-  <title> 图 | 1000 words a Day </title>
+  <title> 记不同的IO模型 | 1000 words a Day </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -301,7 +305,7 @@
           
           
             
-              图
+              记不同的IO模型
             
           
         </h1>
@@ -310,8 +314,8 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2017-03-08T16:01:23+08:00" content="2017-03-08">
-            2017-03-08
+          <time itemprop="dateCreated" datetime="2017-05-04T08:24:55+08:00" content="2017-05-04">
+            2017-05-04
           </time>
         </span>
 
@@ -329,12 +333,42 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>做完了堆的一些操作，我们来看关于图的一些知识，图，我们比较直观，就是用一些形状来简单化<br>我们所要抽象的物品，那么在数据结构中，图也是很重要的一种，同时图在我们实际生活中也用到很<br>多，譬如多个货运站之间的建立关系，如何做到路程最短等等…..那么跟我的脚步一起去看看，关于<br>图的一些基本性质我在这里就不过多解释了,我在这里就介绍一些关于图的一些应用算法。</p>
-<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><p>拓扑排序，如何理解呢？<br><img src="http://ok9vfjkgl.bkt.clouddn.com/tu2.png" alt=""><br>这张图是我从&lt;算法与数据结构&gt;中截取的图，这张图表示美国高校的课程，如图，它有方向，也就是<br>我们所说的有向图,方向表示必须先选修完一门课程才可以根据方向选修下一门,那么就有人要问了,没有<br>方向的图就不在我们的讨论范围呢吗？当然,对于拓扑排序,没有不是有向图,我们还有研究的意义嘛,因为<br>无向图的方向是任意的,那么从理论上说任何一张排序都是拓扑排序,所以在这里我们限定在有向图。其实<br>我们要将的算法核心思想就是 <strong><em>先将整个图遍历一会，检测入度为0的结点，将它保存到一个队列中，当队列不为空的时候，就出队，将出队的结点删除，并与该结点相互连接的结点入度减少1，然后重复上述操作，继续检查是否有入度为0的，入队，出队，删除……..最终我们把删除的结点顺序排列，就是我们所要求的拓扑排序</em></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">topSort</span><span class="params">()</span></span>&#123;</div><div class="line">  Queue&lt;Vertex&gt; q=<span class="keyword">new</span> LinkedList&lt;Vertex&gt;();</div><div class="line">  <span class="keyword">for</span>(Vertex v:list)&#123;</div><div class="line">    <span class="comment">//list 就是保存整个图的list集合</span></div><div class="line">    <span class="keyword">if</span>(v.indegeree==<span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">      <span class="comment">//如果入度为0 ，则将该结点入队</span></div><div class="line">      q.enqueu(v);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!q.isEmply())&#123;</div><div class="line">      <span class="comment">//只要队列不为空，就出队并删除</span></div><div class="line">      Vertex x=q.dequeue();</div><div class="line">      x.topNum=num++; <span class="comment">//这里的 意思就是我们把拓扑排序的顺序用topNum来表示，出队一个就将tpoNUm++   最终这个顺序就是拓扑排序的顺序</span></div><div class="line">      <span class="keyword">for</span>(Vertex e:list)&#123;</div><div class="line">        <span class="keyword">if</span>(--e.indegree==<span class="number">0</span>)&#123;</div><div class="line">          <span class="comment">//出队，并将与之连接的结点入度-1  我们这里用list来抽象与之关联的结点</span></div><div class="line">          q.enqueu(e);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//算法大致就是这样，其实我们的核心是如何构造一个Vertex  来表示结点，既要描述结点之间的关联，还要描述结点的性质。</span></div></pre></td></tr></table></figure></p>
-<h1 id="广搜"><a href="#广搜" class="headerlink" title="广搜"></a>广搜</h1><p>广度搜索：广度，其实就是当我遍历到一个结点的时候，我会优先将该结点的所有子结点遍历完成后，才会遍历子结点下的子结点，不知道我这样说，大家是否明白呢？用图说明吧,需要说明一点深搜广搜我们一般研究的是有向图，毕竟无向图没有研究的价值。<br><img src="http://ok9vfjkgl.bkt.clouddn.com/tu1.png" alt=""><br>如图，这是一些图组成的,根据广搜的性质，我们先从0号结点开始，当然不是必须从0开始，只是我们默认找一个结点，如图 广搜的顺序:0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; 6，你看，我用语言叙述一次，广搜，就是<br>要凸显出它的广度，我遍历完0结点后，他有子节点，1 2 那我就先把子节点全部遍历完成后，才去遍历子节点的子节点，这就是广度遍历。在这里，我贴出代码的大概实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wfs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">  Queue que;  </div><div class="line">  <span class="comment">//传入的n表示我们要从哪个结点开始遍历</span></div><div class="line">  <span class="comment">//1.先将第n个结点的子结点按顺序入队</span></div><div class="line">  que.push();</div><div class="line">  Sysout.out.println(<span class="string">"输出结点信息"</span>);</div><div class="line">  <span class="comment">//上述2部操作是，每入队一个结点，就输出结点的信息</span></div><div class="line">  <span class="keyword">while</span>(que.isEmply!)&#123;</div><div class="line">    <span class="comment">//如果队列不为空的话，</span></div><div class="line">    v =que.pop();<span class="comment">//出队</span></div><div class="line">    Sysout.out.println(<span class="string">"输出结点信息"</span>);</div><div class="line">    wfs(v) <span class="comment">//递归调用</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="深搜"><a href="#深搜" class="headerlink" title="深搜"></a>深搜</h1><p>深度搜索：其实凸显的是深度这个词，就是当我遍历完一个结点后，在去遍历它的第一个结点，以此类推，<br>直到不能进去深入的时候，我才会退出来，从下一个开始。如上图中的遍历顺序是：0 -&gt; 1 -&gt; 3 -&gt; 4 -&gt;<br>2 -&gt; 5 -&gt; 6<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(conditon) &#123;  <span class="comment">//深搜结束的条件  </span></div><div class="line"></div><div class="line">    print;  </div><div class="line"></div><div class="line">    <span class="keyword">return</span>;  </div><div class="line"></div><div class="line">  &#125;  </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">3</span>; i++) &#123;<span class="comment">//与当前点联结的点,  一一遍历  </span></div><div class="line"></div><div class="line">     <span class="keyword">int</span> tx = nextx(i);  </div><div class="line"></div><div class="line">     <span class="keyword">int</span> ty = nexty(i);  </div><div class="line">    <span class="keyword">if</span>(condition(tx) &amp;&amp; condition(ty))  </div><div class="line">       dfs(tx, ty);</div><div class="line">      &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//其实我们使用的递归，递归本质也是栈，所以我们可以使用栈来替代递归</span></div></pre></td></tr></table></figure></p>
-<h1 id="深搜与广搜的区别"><a href="#深搜与广搜的区别" class="headerlink" title="深搜与广搜的区别"></a>深搜与广搜的区别</h1><p>深搜使用的是栈，广搜使用的是队列，深搜时间慢，但是省空间，深搜时间慢，但是占用空间多<br>深搜广搜一般用在无权有向图中。</p>
-<h1 id="图的其他算法"><a href="#图的其他算法" class="headerlink" title="图的其他算法"></a>图的其他算法</h1><p>关于图，还有很多算法，比如：求最短路径算法，求最小生成树算法，共有4种算法供我们学习，在接下来的时间，我会给大家分享这4种算法的思想以及代码。</p>
+        <span itemprop="articleBody"><h1 id="为什么要学习不同的IO"><a href="#为什么要学习不同的IO" class="headerlink" title="为什么要学习不同的IO"></a>为什么要学习不同的IO</h1><p>其实基础到NIO&amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。</p>
+<h1 id="linux下的不同IO模型"><a href="#linux下的不同IO模型" class="headerlink" title="linux下的不同IO模型"></a>linux下的不同IO模型</h1><p>在学习IO前，我们必须要明白常见linux下的几种IO模型。</p>
+<ol>
+<li>阻塞式IO</li>
+<li>非阻塞式IO</li>
+<li>IO复用</li>
+<li>信号驱动</li>
+<li>异步IO</li>
+</ol>
+<h2 id="阻塞式IO"><a href="#阻塞式IO" class="headerlink" title="阻塞式IO"></a>阻塞式IO</h2><p>阻塞式IO其实就是我们说的BIO</p>
+<p><strong>线程在执行中如果遇到磁盘读写或网络通信（统称为I/O 操作），通常要耗费较长的时间，这时操作系统会剥夺这个线程的CPU 控制权，使其暂停执行，同时将资源让给其他的工作线程，这种线程调度方式称为 阻塞。当I/O 操作完毕时，操作系统将这个线程的阻塞状态解除，恢复其对CPU的控制权，令其继续执行。这种I/O 模式就是通常的同步式I/O（Synchronous I/O）或阻塞式I/O （Blocking I/O）。</strong></p>
+<p>这个是我百度找到的比较好理解的描述，如上所说BIO就是停止线程，对于高并发的情景下就因为读一下数据，就把我们的程序停止下来，那是有多可怕呀。所以BIO在高并发场景下效率极度不友好。</p>
+<p>那么阻塞式式如何阻塞的呢？<strong><em>进程会一直阻塞，直到数据拷贝完成</em></strong><br>应用程序调用了一个IO函数（read、write)，就会导致程序被阻塞，静静的等待数据（有些人问，为什么我没感觉到程序停止呀,—-记住，计算机速度很快很快，它的停止你是感知不到的，如果能感知到，说明你程序坏了）如何说你数据还没准备好，那么程序就永远被阻塞，当数据准备好了（条件就是 数据被从内核拷贝到用户空间了，要切记阻塞的过程是系统正在从内核把数据搬用到Java程序中的用户内存中）当搬运成功后，IO函数就会提示成功，我们才可以在程序中读取数据。在此过程中，程序只能静静等待。 我从网上找的图，很便于理解：</p>
+<p>  <img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icd1wvHaRoicVicLAg6BFhSjyKhb0sgkbHHFGROYo1IoQd6KySDHWfoMbeA/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<p>其实从java角度看，我们经常用的serverSocket 对象的一个accept()函数，其实当java执行到这句函数的时候，程序就停止了不向下执行了，当有用户socket连接的时候，这个程序又被激活了，那么socket就是这样实现的。</p>
+<p>那么我们平时的socket如何实现的呢，socket可以接受若干用户访问，如果就这样简单的话，那肯定没人用了，其实它底层的原理基本是：当有一个请求过来的时候，就会new Thread去处理这个请求，在请求比较小的时候，系统会很稳定，充分利用了多线程的优势，但是大家有没有想，如果是高并发的请求，总不能一直new 新的线程吧，那么有些人就想到了线程池，确实，线程池在一定程度上是可以解决问题，但是线程池中的线程也不能没有限制吧。所以，BIO不适应高并发情景下。</p>
+<h2 id="非阻塞式IO"><a href="#非阻塞式IO" class="headerlink" title="非阻塞式IO"></a>非阻塞式IO</h2><p>非阻塞式IO，哇，正如上面说到，阻塞式IO弊端很大，那么非阻塞式IO应该完美了吧，可以充分解决问题吧。其实不然。<br><strong><em>非阻塞IO通过进程反复调用IO函数（多次系统调用，并马上返回）；在数据拷贝的过程中，进程是阻塞的</em></strong><br>我们把一个SOCKET接口设置为非阻塞就是告诉内核，当所请求的I/O操作无法完成时，不要将进程睡眠，而是返回一个错误。这样我们的I/O操作函数将不断的测试数据是否已经准备好，如果没有准备好，继续测试，直到数据准备好为止。在这个不断测试的过程中，会大量的占用CPU的时间。<br>也就是说，所以我们的程序是不会停止了，但是它还是不能自由的做事情，而是只能无限循环的问操作系统。这样想象的是这样的</p>
+<pre><code>while(1){
+    .....
+   }
+</code></pre><p> <img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icddzMF7YS6LhrhD2ribEnU7knghz9deNva2ETw87kXzafjIPCKKgogxTw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<p>其实这种IO模型在一定程度上对高并发也很友好，只不过使用的难度有点大，大家想，高并发，既然是高，那么就可以确定的是，他们的请求很频繁，那么就可以认为他和我们的while循环是同步的，他每次的while循环总能在高并发情况下概率命中。但是就是因为他是根据概率来命中的，所以使用的时候不是很好控制</p>
+<h2 id="select-IO复用模型"><a href="#select-IO复用模型" class="headerlink" title="select IO复用模型"></a>select IO复用模型</h2><p>select、poll、epoll这三个函数式系统级别的，他们的作用基本差不多，无非是一些改进罢了。那么使用这些函数如何实现IO模型呢？</p>
+<p>IO复用模型会使用select/poll/epoll函数，这几个函数会使进程阻塞，但是唯一和阻塞式IO不同的是，这些函数可以同时阻塞多个IO操作，并且可以同时对多个读操作、写操作进行检测，并调用对应的操作。</p>
+<h3 id="select、poll、epoll有什么区别"><a href="#select、poll、epoll有什么区别" class="headerlink" title="select、poll、epoll有什么区别"></a>select、poll、epoll有什么区别</h3><ol>
+<li>select 应该是第一代函数，通过设置或者检查存放fd标志位的数据结构来进行下一步处理。他基于数组实现的，那么必然有缺陷，那就是他可以检测的IO数量，32位的是1024，64位的是2048个，当然这是默认数量，其实32位的上限是32的32次方，同理64位的就是32的64次方，但是我们要明白，我们如果修改了默认的数量，那么不一定就会无限提升性能，这个需要看项目的实际测试。 还有一个必然的缺陷，就是空轮询，每次select()都会遍历整个数组，不管他是否活动。最后一个问题就是空间的浪费，select需要维护一张存放大量fd的数据结构，这对用户空间和内核都是空间的浪费。</li>
+</ol>
+<ol>
+<li>poll 在功能上可以认为它与select没有任何区别，只不过poll使用了链表实现了，那么数量没有限制，但是空轮询问题还是存在。如果遍历一遍后发现没有fd活动，那么进程就会被挂起，直到设备就绪或者主动超时，被唤醒后他有会主动去遍历fd,整个过程重复了无数次。但是有有问题是，如果第一次一个fd事件被报告后，如果你没有处理的话，他接下来还是会继续报告的。</li>
+<li>epoll 可以这样理解，只要有了IO操作，那么系统会回调告诉我们，与select对比，select是主动去询问系统，无限询问，但是epoll是你不需要询问，如果有了事件，系统会主动回调告诉你，有IO事件了，那么我们就可以避免了空轮询问题，一定程度上提高了效率，但是epoll函数一般在 kernel 2.6以上才可以使用。同上比较的话，如果第一次fd通知后，接下来就不会在报告该事件。</li>
+</ol>
+<p>继续挪用别人的一张图：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdC0DOdXyooEQQzJiaIssjfRQmoVovzsVzIbgiae50qgK6VgBREWVCtP4A/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<h1 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h1><p>异步IO模型才是真正意义上的非阻塞异步IO，可以这样理解，当一个异步IO发起后，你不需要管一些，调用这也不能立刻得到结果，你可以继续做你的工作，系统处理完了这个操作后，会通过一些 异步回调、通知等手段去通知你。<br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdnlt8MsytJW9SjRE7IqWvUTMJqgl8wfRsibZFKia5pysWTINGzvD5w5Bg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<p>上图中显示，我们的程序不需要阻塞，全程你只需要发起一个异步IO请求后，操作系统会帮助你将数据从内核拷贝到用户空间，并使用一些手段通知，当你得到这个消息的时候就可以直接处理这个数据了。从概念上理解，我们都可以知道异步IO确实是效率高。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实Java的NIO、AIO 就是使用了上面的基本思想，只不过是实现的更加细节。有兴趣的同学可以去看一下Reactor模式和Proctor模式。</p>
 </span>
       
     </div>
@@ -343,7 +377,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag">#算法</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
           
         </div>
       
@@ -352,13 +386,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/12/spring ioc/" rel="prev">spring IOC容器源码解析(一)</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/07/Tree/" rel="next">二叉查找树</a>
+              <a href="/2017/04/27/zeekeeper/" rel="next">zeekeeper总结</a>
             
           </div>
         </div>
@@ -487,7 +519,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拓扑排序"><span class="nav-number">2.</span> <span class="nav-text">拓扑排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广搜"><span class="nav-number">3.</span> <span class="nav-text">广搜</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深搜"><span class="nav-number">4.</span> <span class="nav-text">深搜</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深搜与广搜的区别"><span class="nav-number">5.</span> <span class="nav-text">深搜与广搜的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图的其他算法"><span class="nav-number">6.</span> <span class="nav-text">图的其他算法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要学习不同的IO"><span class="nav-number">1.</span> <span class="nav-text">为什么要学习不同的IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux下的不同IO模型"><span class="nav-number">2.</span> <span class="nav-text">linux下的不同IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞式IO"><span class="nav-number">2.1.</span> <span class="nav-text">阻塞式IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞式IO"><span class="nav-number">2.2.</span> <span class="nav-text">非阻塞式IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-IO复用模型"><span class="nav-number">2.3.</span> <span class="nav-text">select IO复用模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select、poll、epoll有什么区别"><span class="nav-number">2.3.1.</span> <span class="nav-text">select、poll、epoll有什么区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异步IO模型"><span class="nav-number">3.</span> <span class="nav-text">异步IO模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
