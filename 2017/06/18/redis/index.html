@@ -1,0 +1,793 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="纲要现在的状态就是每周写一个博文，记录下这周实习的内容，并对学到的东西进行总结，这周记录的就是redis、memcache,这次算不上实战，是在导师的要求下，实现一个缓存管理系统。
+技术要点
+要实现redis/memcache统一性，也就是说java层面上要屏蔽redis/memcache的差异
+按系统分类管理并配置一定的权限
+格式化显示缓存内容
+对缓存系统进行预警
+其他点的扩展
+
+代码实现屏蔽r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis">
+<meta property="og:url" content="https://vincelz.github.io/2017/06/18/redis/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="纲要现在的状态就是每周写一个博文，记录下这周实习的内容，并对学到的东西进行总结，这周记录的就是redis、memcache,这次算不上实战，是在导师的要求下，实现一个缓存管理系统。
+技术要点
+要实现redis/memcache统一性，也就是说java层面上要屏蔽redis/memcache的差异
+按系统分类管理并配置一定的权限
+格式化显示缓存内容
+对缓存系统进行预警
+其他点的扩展
+
+代码实现屏蔽r">
+<meta property="og:updated_time" content="2017-08-10T14:19:53.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis">
+<meta name="twitter:description" content="纲要现在的状态就是每周写一个博文，记录下这周实习的内容，并对学到的东西进行总结，这周记录的就是redis、memcache,这次算不上实战，是在导师的要求下，实现一个缓存管理系统。
+技术要点
+要实现redis/memcache统一性，也就是说java层面上要屏蔽redis/memcache的差异
+按系统分类管理并配置一定的权限
+格式化显示缓存内容
+对缓存系统进行预警
+其他点的扩展
+
+代码实现屏蔽r">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> redis | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              redis
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2017-06-18T01:22:15+08:00" content="2017-06-18">
+            2017-06-18
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="纲要"><a href="#纲要" class="headerlink" title="纲要"></a>纲要</h1><p>现在的状态就是每周写一个博文，记录下这周实习的内容，并对学到的东西进行总结，这周记录的就是redis、memcache,这次算不上实战，是在导师的要求下，实现一个缓存管理系统。</p>
+<h1 id="技术要点"><a href="#技术要点" class="headerlink" title="技术要点"></a>技术要点</h1><ol>
+<li>要实现redis/memcache统一性，也就是说java层面上要屏蔽redis/memcache的差异</li>
+<li>按系统分类管理并配置一定的权限</li>
+<li>格式化显示缓存内容</li>
+<li>对缓存系统进行预警</li>
+<li>其他点的扩展</li>
+</ol>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="屏蔽redis-memcache的差异"><a href="#屏蔽redis-memcache的差异" class="headerlink" title="屏蔽redis/memcache的差异"></a>屏蔽redis/memcache的差异</h2><p>我们都知道，redis/memcache差异很大，首先他们的数据结构不同 ,redis提供string set list zset ，而memcache只提供了string 形式的存储格式。那么我们要屏蔽他们的差异，就需要解决他们在数据结构的差异。修改源代码肯定是行不通的，那么只有我们在代码层面上解决。故而采用了面向接口编程，</p>
+<ul>
+<li>CacheOps  缓存操作接口 提供对缓存的增删改查等操作</li>
+<li>CacheServiceBuild 缓存连接接口，解决redis/memcache连接方式不同</li>
+<li>CacheFactory 工厂类，提供对redis/memcache的初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div><div class="line">438</div><div class="line">439</div><div class="line">440</div><div class="line">441</div><div class="line">442</div><div class="line">443</div><div class="line">444</div><div class="line">445</div><div class="line">446</div><div class="line">447</div><div class="line">448</div><div class="line">449</div><div class="line">450</div><div class="line">451</div><div class="line">452</div><div class="line">453</div><div class="line">454</div><div class="line">455</div><div class="line">456</div><div class="line">457</div><div class="line">458</div><div class="line">459</div><div class="line">460</div><div class="line">461</div><div class="line">462</div><div class="line">463</div><div class="line">464</div><div class="line">465</div><div class="line">466</div><div class="line">467</div><div class="line">468</div><div class="line">469</div><div class="line">470</div><div class="line">471</div><div class="line">472</div><div class="line">473</div><div class="line">474</div><div class="line">475</div><div class="line">476</div><div class="line">477</div><div class="line">478</div><div class="line">479</div><div class="line">480</div><div class="line">481</div><div class="line">482</div><div class="line">483</div><div class="line">484</div><div class="line">485</div><div class="line">486</div><div class="line">487</div><div class="line">488</div><div class="line">489</div><div class="line">490</div><div class="line">491</div><div class="line">492</div><div class="line">493</div><div class="line">494</div><div class="line">495</div><div class="line">496</div><div class="line">497</div><div class="line">498</div><div class="line">499</div><div class="line">500</div><div class="line">501</div><div class="line">502</div><div class="line">503</div><div class="line">504</div><div class="line">505</div><div class="line">506</div><div class="line">507</div><div class="line">508</div><div class="line">509</div><div class="line">510</div><div class="line">511</div><div class="line">512</div><div class="line">513</div><div class="line">514</div><div class="line">515</div><div class="line">516</div><div class="line">517</div><div class="line">518</div><div class="line">519</div><div class="line">520</div><div class="line">521</div><div class="line">522</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.cvte.cache.adapt;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by kernel on 2017/7/25.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CacheOps</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据key获取对应的value值</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span> String 字符串</div><div class="line">     */</div><div class="line">    <span class="function">String <span class="title">get</span><span class="params">(String key)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 将key&amp;value设置到缓存中</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *设置key&amp;value&amp;过期时间</div><div class="line">     * <span class="doctag">@param</span> key  key</div><div class="line">     * <span class="doctag">@param</span> v    value</div><div class="line">     * <span class="doctag">@param</span> time  过期时间 单位(s)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String v, <span class="keyword">long</span> time)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *获取key对应的过期时间</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getTime</span><span class="params">(String key)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取key字符的字符串</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function">String <span class="title">getValue</span><span class="params">(String key)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除key对应的值</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(String key)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据key更新value</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> val</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(String key, String val)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据key更新过期时间</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> exp 过期时间单位(s)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateExp</span><span class="params">(String key, <span class="keyword">long</span> exp)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除系统下的key&amp;value</div><div class="line">     * <span class="doctag">@param</span> sys  系统名</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteBySys</span><span class="params">(String sys, String key)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *添加key&amp;value到对应的系统下</div><div class="line">     * <span class="doctag">@param</span> sys 系统名</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addBySys</span><span class="params">(String sys, String key, String value)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *添加系统下的key&amp;value&amp;exp</div><div class="line">     * <span class="doctag">@param</span> sys 系统名</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     * <span class="doctag">@param</span> time 过期时间单位(s)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addBySys2Exp</span><span class="params">(String sys, String key, String value, <span class="keyword">long</span> time)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *获取某系统下的所有key</div><div class="line">     * <span class="doctag">@param</span> sys  系統名</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function">Set&lt;String&gt; <span class="title">zget</span><span class="params">(String sys)</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.cvte.cache.adapt;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.data.redis.connection.jedis.JedisConnectionFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by kernel on 2017/7/26.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisCacheOp</span> <span class="keyword">implements</span> <span class="title">CacheOps</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate = <span class="keyword">new</span> StringRedisTemplate();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RedisCacheOp</span><span class="params">(JedisConnectionFactory str)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.setConnectionFactory(str);</div><div class="line">        stringRedisTemplate.afterPropertiesSet();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据key获取缓存的值</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置缓存中的key&amp;value</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.opsForValue().set(key, value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置缓存中的key&amp;value&amp;</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> v    值</div><div class="line">     * <span class="doctag">@param</span> time 过期时间</div><div class="line">     */</div><div class="line">    <span class="comment">//设置过期时间</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String v, <span class="keyword">long</span> time)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.opsForValue().set(key, v, time, TimeUnit.SECONDS);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取key对应的过期时间</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="comment">//获取过期时间</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTime</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        Long expire = stringRedisTemplate.getExpire(key);</div><div class="line">        <span class="keyword">return</span> expire;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取key对应的value</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除key</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.delete(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更新key对应的值</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> val</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String key, String val)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.delete(key);</div><div class="line">        stringRedisTemplate.opsForValue().set(key, val);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更新key对应的过期时间</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> exp 过期时间 单位s</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateExp</span><span class="params">(String key, <span class="keyword">long</span> exp)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.expire(key, exp, TimeUnit.SECONDS);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 增加集合set</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">zadd</span><span class="params">(String key, String value)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.opsForZSet().add(key, value, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除集合</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">zdel</span><span class="params">(String sys, String key)</span> </span>&#123;</div><div class="line">        stringRedisTemplate.opsForZSet().remove(sys, key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//---------------------------------------------------------------------------------------------------</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">zRang</span><span class="params">(String set)</span> </span>&#123;</div><div class="line">        Set&lt;String&gt; range = stringRedisTemplate.opsForZSet().range(set, <span class="number">0</span>, -<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> range;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除系统下的key</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteBySys</span><span class="params">(String sys, String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.delete(key);</div><div class="line">        <span class="keyword">this</span>.zdel(sys,  key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 将key &amp;value 添加到对应的系统</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBySys</span><span class="params">(String sys, String key, String value)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.zadd(sys, sys + key);</div><div class="line">        <span class="keyword">this</span>.set(sys + key, value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     * <span class="doctag">@param</span> time  过期时间  单位秒</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBySys2Exp</span><span class="params">(String sys, String key, String value, <span class="keyword">long</span> time)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.zadd(sys, sys + key);</div><div class="line">        <span class="keyword">this</span>.set(sys + key, value, time);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取集合下的所有值</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set <span class="title">zget</span><span class="params">(String sys)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForZSet().range(sys, <span class="number">0</span>, -<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.cvte.cache.adapt;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.danga.MemCached.MemCachedClient;</div><div class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.net.URLDecoder;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by kernel on 2017/7/25.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemcacheOps</span> <span class="keyword">implements</span> <span class="title">CacheOps</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> MemCachedClient client;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MemcacheOps</span><span class="params">(MemCachedClient cachedClient)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.client = cachedClient;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取缓存系统中的value</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key 缓存中的key</div><div class="line">     * <span class="doctag">@return</span> 缓存value</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        Object o = client.get(key);</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">return</span> o.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> key   缓存key</div><div class="line">     * <span class="doctag">@param</span> value 缓存value</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span> </span>&#123;</div><div class="line">        client.set(key, value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> key  缓存key</div><div class="line">     * <span class="doctag">@param</span> v    缓存value</div><div class="line">     * <span class="doctag">@param</span> time 缓存过期时间 单位s</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String v, <span class="keyword">long</span> time)</span> </span>&#123;</div><div class="line">        client.set(key, v, (<span class="keyword">int</span>) time);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> key 缓存key</div><div class="line">     * <span class="doctag">@return</span> 缓存过期剩余时间</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTime</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> key 缓存key</div><div class="line">     * <span class="doctag">@return</span> 缓存value</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        Object o = client.get(key);</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> o.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除缓存系统中的数据</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key 缓存key</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        client.delete(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更新数据</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> val</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String key, String val)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 更新过期时间</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> exp</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateExp</span><span class="params">(String key, <span class="keyword">long</span> exp)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除部门下的key</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteBySys</span><span class="params">(String sys, String key)</span> </span>&#123;</div><div class="line">        client.delete(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 添加系统下的key</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBySys</span><span class="params">(String sys, String key, String value)</span> </span>&#123;</div><div class="line">        client.add(sys + key, value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 添加系统的key&amp;value</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys   系统名</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@param</span> value</div><div class="line">     * <span class="doctag">@param</span> time  过期时间</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBySys2Exp</span><span class="params">(String sys, String key, String value, <span class="keyword">long</span> time)</span> </span>&#123;</div><div class="line">        client.add(sys + key, value, (<span class="keyword">int</span>) time);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取系统下的所有key</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> sys</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set <span class="title">zget</span><span class="params">(String sys)</span> </span>&#123;</div><div class="line">        <span class="comment">//获取部门下的所有key</span></div><div class="line">        List&lt;String&gt; keys = getKeys();</div><div class="line">        HashSet set = <span class="keyword">new</span> HashSet();</div><div class="line">        <span class="keyword">for</span> (String str : keys) &#123;</div><div class="line">            <span class="keyword">if</span> (!StringUtils.isEmpty(str)) &#123;</div><div class="line">                String substring = str.substring(<span class="number">0</span>, sys.length());</div><div class="line">                <span class="keyword">if</span> (substring.equals(sys)) &#123;</div><div class="line">                    set.add(str.substring(<span class="number">0</span>, str.indexOf(<span class="string">"-"</span>) - <span class="number">1</span>));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> set;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 专属于memcache下的获取keys</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> List <span class="title">getKeys</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;String&gt; logs = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        System.out.println(client.stats());</div><div class="line">        <span class="comment">//ArrayList keys = new ArrayList();</span></div><div class="line">        <span class="comment">// 取得 所有 memcached server ,可能有多台 server</span></div><div class="line">        Map slabs = client.statsItems();</div><div class="line">        <span class="comment">// key= ip:port, ex: 192.168.1.2:11211,192.168.1.2:11212...</span></div><div class="line">        Iterator itemsItr = slabs.keySet().iterator();</div><div class="line">        <span class="comment">// 以server IP key值去迴圈,可能有多台 server</span></div><div class="line">        <span class="keyword">while</span> (itemsItr.hasNext()) &#123;</div><div class="line">            String serverInfo1 = itemsItr.next().toString();</div><div class="line">            <span class="comment">// 取得這個server的各種 status [itemname:number:field=value]</span></div><div class="line">            Map itemNames = (Map) slabs.get(serverInfo1);</div><div class="line">            Iterator itemNameItr = itemNames.keySet().iterator();</div><div class="line">            <span class="comment">// 以status key值去迴圈</span></div><div class="line">            <span class="keyword">while</span> (itemNameItr.hasNext()) &#123;</div><div class="line">                String itemName = itemNameItr.next().toString();</div><div class="line">                <span class="comment">// 拆解status 欄位</span></div><div class="line">                <span class="comment">// itemAtt[0] = itemname</span></div><div class="line">                <span class="comment">// itemAtt[1] = CacheDump的參數</span></div><div class="line">                <span class="comment">// itemAtt[2] = field:number or age</span></div><div class="line">                String[] itemAtt = itemName.split(<span class="string">":"</span>);</div><div class="line">                <span class="comment">// 要取得field為number的CacheDump參數</span></div><div class="line">                <span class="keyword">if</span> (itemAtt[<span class="number">2</span>].startsWith(<span class="string">"number"</span>)) &#123;</div><div class="line">                    <span class="comment">// 以status取到的參數,取得cachedDump Map...(下面Map名稱命錯了)</span></div><div class="line">                    <span class="comment">// ServerIP&lt;cachekey&lt;byte size;unix timestamp&gt;&gt;</span></div><div class="line">                    Map chcheDump = client.statsCacheDump(Integer.parseInt(itemAtt[<span class="number">1</span>]), <span class="number">0</span>);</div><div class="line">                    <span class="comment">//ystem.out.println(chcheDump);</span></div><div class="line">                    Iterator itr = chcheDump.keySet().iterator();</div><div class="line">                    <span class="comment">// 以server IP key值去迴圈,可能有多台 server</span></div><div class="line">                    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">                    <span class="keyword">while</span> (itr.hasNext()) &#123;</div><div class="line">                        <span class="comment">// key=ip:port</span></div><div class="line">                        String serverInfo2 = itr.next().toString();</div><div class="line">                        <span class="comment">// 取得Cached Key Map...&lt;-終於,這才是我要的Key集合</span></div><div class="line">                        Map items = (Map) chcheDump.get(serverInfo2);</div><div class="line">                        <span class="comment">//System.out.println(items);</span></div><div class="line">                        Iterator keyItr = items.keySet().iterator();</div><div class="line">                        <span class="comment">//以Cached Key 去迴圈,取key出來,或是要取size,unix timestamp 也有</span></div><div class="line">                        <span class="keyword">while</span> (keyItr.hasNext()) &#123;</div><div class="line">                            String key = keyItr.next().toString();</div><div class="line">                            String memKey = key;</div><div class="line">                            i++;</div><div class="line">                            <span class="keyword">try</span> &#123;</div><div class="line">                                key = URLDecoder.decode(key, <span class="string">"UTF-8"</span>);</div><div class="line">                                String value = ((String) items.get(memKey));</div><div class="line">                                value = value.substring(value.indexOf(<span class="string">";"</span>) + <span class="number">2</span>, value.indexOf(<span class="string">" s"</span>));</div><div class="line">                                Date date = <span class="keyword">new</span> Date();</div><div class="line">                                date.setTime(Long.valueOf(value + <span class="string">"000"</span>));</div><div class="line">                                logs.add(key + <span class="string">" --- "</span> + items.get(memKey) + <span class="string">" -- "</span> + value + <span class="string">" -- "</span> + date);</div><div class="line">                                <span class="comment">//System.out.println(key + " --- " + items.get(memKey) + " -- " + value + " -- " + date);</span></div><div class="line">                            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">                                System.out.println(<span class="string">"error:"</span> + ex.getMessage());</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> logs;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//其实大家主要看redisCacheOps和memcacheOps这2个类，他们实现了在代码层面上的屏蔽差异，如何做到的呢？ 我是如何解决redis/memcache的数据结构差异的呢？</span></div><div class="line"></div><div class="line">其实很简单，redis提供set，那么我们可以使用memcache的字符串，key进行拆分，已前缀-key为例，前缀一样的就是同属一个key。 那么zset如何实现呢，目前我能想到的就是一边保存key+value的同时，在用一个属性来保存排名值，这样虽然浪费内存，但是在一定程度上解决了差异性。</div></pre></td></tr></table></figure>
+<h2 id="后续分析"><a href="#后续分析" class="headerlink" title="后续分析"></a>后续分析</h2><p>这样我们在接口实现上完成了对redis和memcache的差异，那么在我们真正请求的时候，可以根据key计算出对于的服务器类型，如果是redis就初始一个redis的客户端，并进行实例rediOps操作类。</p>
+<p>其实我一直有疑问，谁会没事把redis和memcache同时用在项目里，最后得知，其实在一些老的项目里，一直使用的是memcache,如果要修改成redis,那么可能在一定程度上要修改很多代码，这个代价是很昂贵的，所以我们必须兼容老系统。</p>
+<p>通过上述代码实现了redis/memcache的差异屏蔽，但是效率可能最差的，所以在一定程度上还要优化，其实最大的优化部分就是如何使用memcache模拟出redis的数据结构。后续想想，肯定还会有更精妙的方法实现。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag">#redis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/03/fenbushi/" rel="prev">缓存系统扩展</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/12/zookeeper/" rel="next">zookeeper实战</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">categories</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#纲要"><span class="nav-number">1.</span> <span class="nav-text">纲要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术要点"><span class="nav-number">2.</span> <span class="nav-text">技术要点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#屏蔽redis-memcache的差异"><span class="nav-number">3.1.</span> <span class="nav-text">屏蔽redis/memcache的差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续分析"><span class="nav-number">3.2.</span> <span class="nav-text">后续分析</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2017
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

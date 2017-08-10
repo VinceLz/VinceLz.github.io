@@ -3,8 +3,6 @@
 <html class="theme-next use-motion theme-next-mala">
 <head>
   
-    
-
 
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -53,10 +51,7 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
 <meta property="og:description" content="为什么要学习不同的IO其实基础到NIO&amp;amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。
 linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的几种IO">
 <meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icd1wvHaRoicVicLAg6BFhSjyKhb0sgkbHHFGROYo1IoQd6KySDHWfoMbeA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
-<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icddzMF7YS6LhrhD2ribEnU7knghz9deNva2ETw87kXzafjIPCKKgogxTw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
-<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdC0DOdXyooEQQzJiaIssjfRQmoVovzsVzIbgiae50qgK6VgBREWVCtP4A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
-<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdnlt8MsytJW9SjRE7IqWvUTMJqgl8wfRsibZFKia5pysWTINGzvD5w5Bg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1">
-<meta property="og:updated_time" content="2017-07-19T15:11:26.283Z">
+<meta property="og:updated_time" content="2017-08-10T12:24:01.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记不同的IO模型">
 <meta name="twitter:description" content="为什么要学习不同的IO其实基础到NIO&amp;amp;AIO很晚，一直沉寂在传统的JDK的BIO模式下，已经很满足了，不够从客观角度来说，我们目前经常用到的也就只有BIO了，不过现在是web高并发、大数据时代，BIO已经满足不了开发需求，而NIO/AIO也分别在JDK 1.5 和 1.7实现了，并且他也是面试的高频问题哦。
@@ -353,8 +348,7 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
 <pre><code>while(1){
     .....
    }
-</code></pre><p> <img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icddzMF7YS6LhrhD2ribEnU7knghz9deNva2ETw87kXzafjIPCKKgogxTw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
-<p>其实这种IO模型在一定程度上对高并发也很友好，只不过使用的难度有点大，大家想，高并发，既然是高，那么就可以确定的是，他们的请求很频繁，那么就可以认为他和我们的while循环是同步的，他每次的while循环总能在高并发情况下概率命中。但是就是因为他是根据概率来命中的，所以使用的时候不是很好控制</p>
+</code></pre><p>其实这种IO模型在一定程度上对高并发也很友好，只不过使用的难度有点大，大家想，高并发，既然是高，那么就可以确定的是，他们的请求很频繁，那么就可以认为他和我们的while循环是同步的，他每次的while循环总能在高并发情况下概率命中。但是就是因为他是根据概率来命中的，所以使用的时候不是很好控制</p>
 <h2 id="select-IO复用模型"><a href="#select-IO复用模型" class="headerlink" title="select IO复用模型"></a>select IO复用模型</h2><p>select、poll、epoll这三个函数式系统级别的，他们的作用基本差不多，无非是一些改进罢了。那么使用这些函数如何实现IO模型呢？</p>
 <p>IO复用模型会使用select/poll/epoll函数，这几个函数会使进程阻塞，但是唯一和阻塞式IO不同的是，这些函数可以同时阻塞多个IO操作，并且可以同时对多个读操作、写操作进行检测，并调用对应的操作。</p>
 <h3 id="select、poll、epoll有什么区别"><a href="#select、poll、epoll有什么区别" class="headerlink" title="select、poll、epoll有什么区别"></a>select、poll、epoll有什么区别</h3><ol>
@@ -364,10 +358,8 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
 <li>poll 在功能上可以认为它与select没有任何区别，只不过poll使用了链表实现了，那么数量没有限制，但是空轮询问题还是存在。如果遍历一遍后发现没有fd活动，那么进程就会被挂起，直到设备就绪或者主动超时，被唤醒后他有会主动去遍历fd,整个过程重复了无数次。但是有有问题是，如果第一次一个fd事件被报告后，如果你没有处理的话，他接下来还是会继续报告的。</li>
 <li>epoll 可以这样理解，只要有了IO操作，那么系统会回调告诉我们，与select对比，select是主动去询问系统，无限询问，但是epoll是你不需要询问，如果有了事件，系统会主动回调告诉你，有IO事件了，那么我们就可以避免了空轮询问题，一定程度上提高了效率，但是epoll函数一般在 kernel 2.6以上才可以使用。同上比较的话，如果第一次fd通知后，接下来就不会在报告该事件。</li>
 </ol>
-<p>继续挪用别人的一张图：</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdC0DOdXyooEQQzJiaIssjfRQmoVovzsVzIbgiae50qgK6VgBREWVCtP4A/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
-<h1 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h1><p>异步IO模型才是真正意义上的非阻塞异步IO，可以这样理解，当一个异步IO发起后，你不需要管一些，调用这也不能立刻得到结果，你可以继续做你的工作，系统处理完了这个操作后，会通过一些 异步回调、通知等手段去通知你。<br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/Xruic8OIYw5vBRLSF5y6y6U3ZalLich2icdnlt8MsytJW9SjRE7IqWvUTMJqgl8wfRsibZFKia5pysWTINGzvD5w5Bg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
-<p>上图中显示，我们的程序不需要阻塞，全程你只需要发起一个异步IO请求后，操作系统会帮助你将数据从内核拷贝到用户空间，并使用一些手段通知，当你得到这个消息的时候就可以直接处理这个数据了。从概念上理解，我们都可以知道异步IO确实是效率高。</p>
+<h1 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h1><p>异步IO模型才是真正意义上的非阻塞异步IO，可以这样理解，当一个异步IO发起后，你不需要管一些，调用这也不能立刻得到结果，你可以继续做你的工作，系统处理完了这个操作后，会通过一些 异步回调、通知等手段去通知你。<br>.</p>
+<p>我们的程序不需要阻塞，全程你只需要发起一个异步IO请求后，操作系统会帮助你将数据从内核拷贝到用户空间，并使用一些手段通知，当你得到这个消息的时候就可以直接处理这个数据了。从概念上理解，我们都可以知道异步IO确实是效率高。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实Java的NIO、AIO 就是使用了上面的基本思想，只不过是实现的更加细节。有兴趣的同学可以去看一下Reactor模式和Proctor模式。</p>
 </span>
       
@@ -385,6 +377,8 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/free/" rel="prev">实习路</a>
             
           </div>
 
@@ -470,7 +464,7 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">41</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -484,7 +478,7 @@ linux下的不同IO模型在学习IO前，我们必须要明白常见linux下的
 
           <div class="site-state-item site-state-tags">
             
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">tags</span>
               
           </div>
