@@ -1,0 +1,821 @@
+
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="学习总结 思考感悟 知识管理" />
+
+
+
+  <meta name="keywords" content="java," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="1000 words a Day" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="java9新特性Jdk8&amp;amp;jdk9的目录结构变化
+jdk9目录下不包含jre目录
+legal 法律声明文件
+
+Java 模块化特性（jdk9最核心)产生的意义
+java 运行环境的膨胀臃肿,每次JVM启动时候，至少加载30-60M的内存加载，主要是因为JVM需要加载rt.jar,不管其中的类是否被classLoader加载，（而模块化可以根据模块的需要加载程序运行需要的class)
+当代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java9新特性">
+<meta property="og:url" content="https://vincelz.github.io/2018/01/12/java 9特性/index.html">
+<meta property="og:site_name" content="1000 words a Day">
+<meta property="og:description" content="java9新特性Jdk8&amp;amp;jdk9的目录结构变化
+jdk9目录下不包含jre目录
+legal 法律声明文件
+
+Java 模块化特性（jdk9最核心)产生的意义
+java 运行环境的膨胀臃肿,每次JVM启动时候，至少加载30-60M的内存加载，主要是因为JVM需要加载rt.jar,不管其中的类是否被classLoader加载，（而模块化可以根据模块的需要加载程序运行需要的class)
+当代码">
+<meta property="og:updated_time" content="2018-03-22T14:06:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java9新特性">
+<meta name="twitter:description" content="java9新特性Jdk8&amp;amp;jdk9的目录结构变化
+jdk9目录下不包含jre目录
+legal 法律声明文件
+
+Java 模块化特性（jdk9最核心)产生的意义
+java 运行环境的膨胀臃肿,每次JVM启动时候，至少加载30-60M的内存加载，主要是因为JVM需要加载rt.jar,不管其中的类是否被classLoader加载，（而模块化可以根据模块的需要加载程序运行需要的class)
+当代码">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> java9新特性 | 1000 words a Day </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Writing 1000 Words a Day Changes My Life</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-首页"></i> <br />
+            menu.首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时间轴">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-时间轴"></i> <br />
+            menu.时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-关于"></i> <br />
+            menu.关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+      
+
+      
+        <style type="text/css">
+
+    .circle {
+        width: 40px;
+        height: 40px;
+        background: #555 no-repeat;
+        cursor: move;
+    }
+
+    .assist-btn {
+        position: fixed;
+        top: 50％;
+        left: 10px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+        color: #87daff;
+    }
+
+</style>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript">
+    // 浮动圆点展开与收缩
+    /*
+    $(function () {
+        var assist_box = $('.assist-box');
+        $('#assist_btn').hover(function () {
+            assist_box.stop().show(300);
+        }, function () {
+            assist_box.stop().hide(150);
+        })
+    });
+    */  
+    //浮动圆点拖动
+    $(function () {
+        var box = document.getElementById('assist_btn');
+        box.onmousedown = function (event) {
+            var e = event || window.event,
+                t = e.target || e.srcElement,
+                // 鼠标按下时的坐标x1,y1
+                x1 = e.clientX,
+                y1 = e.clientY,
+                //鼠标按下时的左右偏移量
+                dragLeft = this.offsetLeft,
+                dragTop = this.offsetTop;
+
+            document.onmousemove = function (event) {
+                var e = event || window.event,
+                    t = e.target || e.srcElement,
+                    // 鼠标移动时的动态坐标
+                    x2 = e.clientX,
+                    y2 = e.clientY,
+                    // 鼠标移动时的坐标的变化量
+                    x = x2 - x1,
+                    y = y2 - y1;
+                box.style.left = (dragLeft + x) + 'px';
+                box.style.top = (dragTop + y) + 'px';
+            }
+
+            document.onmouseup = function () {
+                this.onmousemove = null;
+            }
+        }
+    });
+
+/*
+    $whitesmoke   = #f5f5f5
+    $gainsboro    = #eee
+    $gray-lighter = #ddd
+    $grey-light   = #ccc
+    $grey         = #bbb
+    $grey-dark    = #999
+    $grey-dim     = #666
+    $black-light  = #555
+    $black-deep   = #222
+    $red          = #ff2a2a
+    $blue-bright  = #87daff
+    $blue         = #0684bd
+    $blue-deep    = #262a30
+*/
+    // white theme
+    var body = {color: "#555", background: "white"};
+    var a_tag = {color: "#222"};
+    var header = { background: "#f5f5f5"};
+    var logo_line_i = {background: "#222"};
+    // var post_code = {background: "#eee", color: "#222"};
+
+    function switch_theme() {
+        $("body").css(body);
+        $("a:not('.links-of-author-item a, .site-state-item a, .site-state-posts a, .feed-link a, .motion-element a, .post-tags a, .show-commit-cls a, #donate_board a')").css(a_tag);
+        $(".header, .footer").css(header);
+        $(".logo-line-before i, .logo-line-after i").css(logo_line_i);
+        //$(".post code").css(post_code);
+        $("#idhyt-surprise-ball #idhyt-surprise-ball-animation .drag").css(a_tag);
+        $(".post-title-link, .posts-expand .post-meta, .post-comments-count, .disqus-comment-count, .post-category a, .post-nav-next a, .post-nav-item a").css(a_tag);
+        
+        // $("code").css({color: '#c5c8c6', background: '#1d1f21'});
+        $("#assist_btn").hide(1500);
+    }
+
+    $(function () {
+        $("#assist_btn").dblclick(function() {
+            switch_theme();
+        });
+    });
+
+</script>
+
+<div>
+
+    <button class="assist-btn circle" id="assist_btn" title="双击切换">
+        亮
+    </button>
+
+</div>
+
+
+
+
+
+
+
+
+
+      
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              java9新特性
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Veröffentlicht am
+          <time itemprop="dateCreated" datetime="2018-01-12T01:22:15+08:00" content="2018-01-12">
+            2018-01-12
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="java9新特性"><a href="#java9新特性" class="headerlink" title="java9新特性"></a>java9新特性</h1><h2 id="Jdk8-amp-jdk9的目录结构变化"><a href="#Jdk8-amp-jdk9的目录结构变化" class="headerlink" title="Jdk8&amp;jdk9的目录结构变化"></a>Jdk8&amp;jdk9的目录结构变化</h2><ul>
+<li>jdk9目录下不包含jre目录</li>
+<li>legal 法律声明文件</li>
+</ul>
+<h2 id="Java-模块化特性（jdk9最核心"><a href="#Java-模块化特性（jdk9最核心" class="headerlink" title="Java 模块化特性（jdk9最核心)"></a>Java 模块化特性（jdk9最核心)</h2><h3 id="产生的意义"><a href="#产生的意义" class="headerlink" title="产生的意义"></a>产生的意义</h3><ol>
+<li>java 运行环境的膨胀臃肿,每次JVM启动时候，至少加载30-60M的内存加载，主要是因为JVM需要加载rt.jar,不管<br>其中的类是否被classLoader加载，（而模块化可以根据模块的需要加载程序运行需要的class)</li>
+<li>当代码库大，创建复杂，盘根错节的增长，不同版本的类库交错依赖，导致让人头疼，阻碍了JAVA开发和运行效率。</li>
+<li>很难真正的对代码进行封装，而系统并没有对不同部门之间依赖的明确概念，每个公共类都可以在其他类访问，导致无意并不想被公开访问的API</li>
+<li>类路径本身存在问题， 你如果知晓所有需要的JAR都有了，或者是不是重复呢</li>
+</ol>
+<h3 id="模块化是什么"><a href="#模块化是什么" class="headerlink" title="模块化是什么"></a>模块化是什么</h3><ol>
+<li>本质上，模块其实就是package 外再裹一层，也就是说用模块来管理各个package,通过申明某个package暴露。不声明就是隐藏。</li>
+</ol>
+<h3 id="好处有哪些"><a href="#好处有哪些" class="headerlink" title="好处有哪些"></a>好处有哪些</h3><ol>
+<li>减少内存的使用</li>
+<li>只需要必要模块，而非所有JDK模块，简化开发和维护</li>
+<li>改进，使其适应不同大小的计算设备</li>
+<li>改进安全，可维护性，提高性能</li>
+</ol>
+<h3 id="代码体现"><a href="#代码体现" class="headerlink" title="代码体现"></a>代码体现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span> 先创建<span class="number">2</span>个模块项目</div><div class="line"><span class="number">2</span> 需要在项目A中声明</div><div class="line"></div><div class="line"><span class="keyword">module</span> XXXX&#123;</div><div class="line">    export xx.xxx.xx包;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="number">3</span> 在模块B中声明</div><div class="line"><span class="keyword">module</span> xxxx&#123;</div><div class="line">    require  <span class="class"><span class="keyword">class</span>类</span>;<span class="comment">//这里我们只能声明A中声明的包下的class类;</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">举例：</div><div class="line">    比如我们使用Loggger </div><div class="line">    Logger  log=Logger.get();<span class="comment">//平时我们需要引入jar包，那么现在就不需要了,直接在module 文件中require Logger即可实现。</span></div></pre></td></tr></table></figure>
+<h2 id="Jshell"><a href="#Jshell" class="headerlink" title="Jshell"></a>Jshell</h2><h3 id="什么是Jshell"><a href="#什么是Jshell" class="headerlink" title="什么是Jshell"></a>什么是Jshell</h3><ol>
+<li>REPL(read-evaluate-print-loop)像Python和Scala之类的语法，有了交互式的编程环境,开发者只需要输入一些代码，就可以编译前获得程序的反馈，而之前的Java必须执行代码，创建文件，声明类。</li>
+<li>设计理念–即写即用</li>
+</ol>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>cmd下直接输入jshell，就即可输入代码执行获取结果。（可以定以方法，变量，表达式等）</p>
+<h2 id="多版本兼容JAR包"><a href="#多版本兼容JAR包" class="headerlink" title="多版本兼容JAR包"></a>多版本兼容JAR包</h2><h3 id="意义何在"><a href="#意义何在" class="headerlink" title="意义何在"></a>意义何在</h3><p>当出现了新版本的话，我们的库需要花费大量时间去匹配新版本，这既是意味着没有动力去切换版本，那么<br>Java9 可以兼容不同版本的jar包，让你可以使用java9新特性，并且可以依旧兼容你的jar包</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">A.class</div><div class="line"></div><div class="line">-version</div><div class="line">    </div><div class="line">    <span class="number">9</span>:</div><div class="line">        A.class</div><div class="line"></div><div class="line">    <span class="number">10</span>:</div><div class="line">        A.class</div><div class="line"></div><div class="line">不同版本的A类还是需要人去写的，只不过这个jar做了声明，遇到<span class="number">9</span>版本就用<span class="number">9</span>版本的A类，以此类推。</div><div class="line"></div><div class="line"></div><div class="line">打包指令：</div><div class="line">    javac -d buil --release <span class="number">8</span> java类路径</div><div class="line">    javac -d build9 --release <span class="number">9</span> java类路径</div><div class="line">    jar --create --main-<span class="class"><span class="keyword">class</span></span>=xxxxx --file xxx.jar -C build --relese9 -C build9</div></pre></td></tr></table></figure>
+<h2 id="语法层面改进"><a href="#语法层面改进" class="headerlink" title="语法层面改进"></a>语法层面改进</h2><h3 id="接口的私有方法"><a href="#接口的私有方法" class="headerlink" title="接口的私有方法"></a>接口的私有方法</h3><ol>
+<li>jdk7中只能声明全局常量&amp;抽象方法</li>
+<li>JDK8 中可以声明静态方法和默认实现方法</li>
+<li>JDK9 增加了可以定义接口私有方法 private void method(){};</li>
+</ol>
+<h3 id="钻石操作符的使用"><a href="#钻石操作符的使用" class="headerlink" title="钻石操作符的使用"></a>钻石操作符的使用</h3><p>我们能够与匿名实现类共同使用钻石操作符了；</p>
+<p>XXX xx=new XXXX&lt;&gt;{};//jdk8中编译是通不过的</p>
+<p>那么JDK9中编译通过，他的主要意思是：创建了一个继承XXXX的一个匿名实现类。</p>
+<h3 id="异常try结构的升级"><a href="#异常try结构的升级" class="headerlink" title="异常try结构的升级"></a>异常try结构的升级</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">jdk9中升级了<span class="keyword">try</span>方法，如</div><div class="line"></div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;<span class="keyword">catch</span>()&#123;</div><div class="line">    </div><div class="line">&#125;finaly&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">这样我们每次<span class="keyword">try</span>都需要在finaly中释放资源，那么jdk9简化了代码</div><div class="line"></div><div class="line"><span class="keyword">try</span>()&#123;  <span class="comment">//我们的代码资源就直接放在try()里面，那么就不需要现实finaly释放了，他会自动释放。</span></div><div class="line">        <span class="comment">//所以我们只要吧实例放在()即可。多个资源实例使用;拼接。</span></div><div class="line">    </div><div class="line">&#125;<span class="keyword">catch</span>()&#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="下划线命名的限制"><a href="#下划线命名的限制" class="headerlink" title="下划线命名的限制"></a>下划线命名的限制</h3><ol>
+<li>Java8中可以独立使用标识符 如 String _=”hello”;</li>
+<li>java 9中规定“_”不再可以单独使用命名；否则编译不通过；</li>
+</ol>
+<h2 id="API层面变化"><a href="#API层面变化" class="headerlink" title="API层面变化"></a>API层面变化</h2><h3 id="String底层结构的变化"><a href="#String底层结构的变化" class="headerlink" title="String底层结构的变化"></a>String底层结构的变化</h3><p>Java9之前，String实现的底层是char[] 字符数组。char 使用了2个字节。这样会有内存的浪费。所以Java9变更了<br>String的底层结构为 byte[]数组。但是我们的中文使用了2个字节，也就是byte保持字母可以，但是中文则么办呢，<br>所以String底层还添加了Encode编码的概念，如果你使用utf编码，那么底层依旧是2个字节，而拉丁字符就使用1个字节，这样就可以达到节省内存的目的。（中文默认使用UTF-16，非中文使用IOS标准字符集）</p>
+<h3 id="创建只读集合-Collection"><a href="#创建只读集合-Collection" class="headerlink" title="创建只读集合(Collection)"></a>创建只读集合(Collection)</h3><p>传统的我们要创建一个只读不可变的集合，就需要创建实例，添加等操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list=<span class="keyword">new</span> xxx();</div><div class="line">list.add(<span class="string">"1"</span>);</div><div class="line">list.add(<span class="string">"2"</span>);</div><div class="line">list.add(<span class="string">"3"</span>);</div><div class="line"></div><div class="line">List&lt;String&gt; list2=Collections.unmodifyableList(list);<span class="comment">//Collections提供了一个将集合变成不可变的方法。</span></div><div class="line">list2.forEach();</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//Map</span></div><div class="line"></div><div class="line">Collections.unmodifyableMap(<span class="keyword">new</span> HashMap&lt;&gt;&#123;</div><div class="line">  put(<span class="string">"d"</span>,<span class="string">"2"</span>);</div><div class="line">  put(<span class="string">"3"</span>,<span class="string">"1"</span>);  <span class="comment">//JDK8 可以这样直接给Map 中put数据</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//jdk8 创建只读不可修改的集合很麻烦</span></div><div class="line"></div><div class="line">List&lt;String&gt; list=List.of(); <span class="comment">//这样就创建了不可变list</span></div></pre></td></tr></table></figure>
+<h3 id="增加Stream-API"><a href="#增加Stream-API" class="headerlink" title="增加Stream API"></a>增加Stream API</h3><p>java9中的Stream接口中添加了4个新的方法：dropWhile,takeWhile,ofNullable,还有一个新增iterate方法的重载方法</p>
+<p>提供了一个Predicate来指定什么时候结束迭代。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="number">1</span> takeWhile()  功能类似filt ，他会根据条件一直取，如果一旦不满足条件就退出，并打印之前取出来的值</div><div class="line"></div><div class="line"><span class="number">2</span> dropWhile() 与takeWhile()互补，取出来不满足条件的后面那部分</div><div class="line"></div><div class="line"><span class="number">3</span> ofNullable() JDK8中Stream不能为<span class="keyword">null</span>,而ofNullable()允许我们创建一个<span class="keyword">null</span>的stream。</div><div class="line"></div><div class="line"><span class="number">4</span> iterate重载</div><div class="line">    之前jdk8中 Stream.iterate(<span class="number">0</span>,x-&gt;x+<span class="number">1</span>);通过一个初始值，根据表达式进行迭代。那么</div><div class="line">    jdk9 中，添加了一个判断式来决定什么时候来结束迭代。</div></pre></td></tr></table></figure>
+<h3 id="Option的变更"><a href="#Option的变更" class="headerlink" title="Option的变更"></a>Option的变更</h3><p>jdk9中给Option中添加了一个stream()方法，获取到stream，这样就可以将option中保持的数据进行Stream流操作了。</p>
+<h3 id="图像多分辨率的API"><a href="#图像多分辨率的API" class="headerlink" title="图像多分辨率的API"></a>图像多分辨率的API</h3><p>暂不介绍</p>
+<h3 id="全新的HTTP请求客户端API"><a href="#全新的HTTP请求客户端API" class="headerlink" title="全新的HTTP请求客户端API"></a>全新的HTTP请求客户端API</h3><ol>
+<li>关于HTTP1/HTTP2 主要区别是如果在客户端和服务器端构建和传输数据，HTTP1.1依赖于请求/响应周期。HTTP/2允许服务器 push 数据，他可以发送比客户端请求更多的数据，使得他可以优先处理并发送对于首先加载网页的重要数据</li>
+<li>Java9中使用HTTPClient来替代HttpURLConnection ,并提供了webSocket和HTTP/2的支持。</li>
+<li>HTTP/2提供了流&amp;服务器推送等功能。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">HttpClient client=HttpClient.newHttpClient();</div><div class="line">HttpRequest req=HttpRequest.newBuilder(URL.create(<span class="string">"URL"</span>).GET().build();</div><div class="line">HttpResponse response=client.send(req,HttpResponse.BodyHandler.asString());</div><div class="line">    response 里面包含请求&amp;响应信息</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="仅供了解的功能"><a href="#仅供了解的功能" class="headerlink" title="仅供了解的功能"></a>仅供了解的功能</h2><h3 id="Deprecated相关API"><a href="#Deprecated相关API" class="headerlink" title="Deprecated相关API"></a>Deprecated相关API</h3><h3 id="智能JAVA编译功能-sjavac"><a href="#智能JAVA编译功能-sjavac" class="headerlink" title="智能JAVA编译功能(sjavac)"></a>智能JAVA编译功能(sjavac)</h3><h3 id="统一的JVM日志系统"><a href="#统一的JVM日志系统" class="headerlink" title="统一的JVM日志系统"></a>统一的JVM日志系统</h3><h3 id="jacadoc的HTML5支持"><a href="#jacadoc的HTML5支持" class="headerlink" title="jacadoc的HTML5支持"></a>jacadoc的HTML5支持</h3><h3 id="javascript的Nashorn引擎升级"><a href="#javascript的Nashorn引擎升级" class="headerlink" title="javascript的Nashorn引擎升级"></a>javascript的Nashorn引擎升级</h3><h3 id="java的动态编译器"><a href="#java的动态编译器" class="headerlink" title="java的动态编译器"></a>java的动态编译器</h3><h3 id="总结-amp-展望"><a href="#总结-amp-展望" class="headerlink" title="总结&amp;展望"></a>总结&amp;展望</h3></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/Tree-suanfa /" rel="next">谈谈Tree中权限过滤</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="kernel" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kernel</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">学习总结 思考感悟 知识管理</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">Kategorien</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">Tags</span>
+              
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java9新特性"><span class="nav-number">1.</span> <span class="nav-text">java9新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jdk8-amp-jdk9的目录结构变化"><span class="nav-number">1.1.</span> <span class="nav-text">Jdk8&jdk9的目录结构变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-模块化特性（jdk9最核心"><span class="nav-number">1.2.</span> <span class="nav-text">Java 模块化特性（jdk9最核心)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产生的意义"><span class="nav-number">1.2.1.</span> <span class="nav-text">产生的意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化是什么"><span class="nav-number">1.2.2.</span> <span class="nav-text">模块化是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#好处有哪些"><span class="nav-number">1.2.3.</span> <span class="nav-text">好处有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码体现"><span class="nav-number">1.2.4.</span> <span class="nav-text">代码体现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jshell"><span class="nav-number">1.3.</span> <span class="nav-text">Jshell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Jshell"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是Jshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">1.3.2.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多版本兼容JAR包"><span class="nav-number">1.4.</span> <span class="nav-text">多版本兼容JAR包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#意义何在"><span class="nav-number">1.4.1.</span> <span class="nav-text">意义何在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">1.4.2.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法层面改进"><span class="nav-number">1.5.</span> <span class="nav-text">语法层面改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口的私有方法"><span class="nav-number">1.5.1.</span> <span class="nav-text">接口的私有方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钻石操作符的使用"><span class="nav-number">1.5.2.</span> <span class="nav-text">钻石操作符的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常try结构的升级"><span class="nav-number">1.5.3.</span> <span class="nav-text">异常try结构的升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下划线命名的限制"><span class="nav-number">1.5.4.</span> <span class="nav-text">下划线命名的限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API层面变化"><span class="nav-number">1.6.</span> <span class="nav-text">API层面变化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String底层结构的变化"><span class="nav-number">1.6.1.</span> <span class="nav-text">String底层结构的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建只读集合-Collection"><span class="nav-number">1.6.2.</span> <span class="nav-text">创建只读集合(Collection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加Stream-API"><span class="nav-number">1.6.3.</span> <span class="nav-text">增加Stream API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Option的变更"><span class="nav-number">1.6.4.</span> <span class="nav-text">Option的变更</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像多分辨率的API"><span class="nav-number">1.6.5.</span> <span class="nav-text">图像多分辨率的API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全新的HTTP请求客户端API"><span class="nav-number">1.6.6.</span> <span class="nav-text">全新的HTTP请求客户端API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仅供了解的功能"><span class="nav-number">1.7.</span> <span class="nav-text">仅供了解的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deprecated相关API"><span class="nav-number">1.7.1.</span> <span class="nav-text">Deprecated相关API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能JAVA编译功能-sjavac"><span class="nav-number">1.7.2.</span> <span class="nav-text">智能JAVA编译功能(sjavac)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统一的JVM日志系统"><span class="nav-number">1.7.3.</span> <span class="nav-text">统一的JVM日志系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jacadoc的HTML5支持"><span class="nav-number">1.7.4.</span> <span class="nav-text">jacadoc的HTML5支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript的Nashorn引擎升级"><span class="nav-number">1.7.5.</span> <span class="nav-text">javascript的Nashorn引擎升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java的动态编译器"><span class="nav-number">1.7.6.</span> <span class="nav-text">java的动态编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-amp-展望"><span class="nav-number">1.7.7.</span> <span class="nav-text">总结&展望</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kernel
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+  <div class="busuanzi-info">
+    <div class="theme-info">
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<a class="theme-link"><span id="busuanzi_value_site_pv"></span></a>次
+    </span>
+</div>
+  </div>
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
